@@ -5,12 +5,10 @@
 #  - collect
 action="$1"
 
-[ -z "$action" ] && {
+if [ -z "$action" ]; then
 	echo "Usage: $(basename $0) <action>"  >&2
 	exit 1
-} || {
-	true
-}
+fi
 
 INCLUDE_ONLY=1
 . "$PWD/env.sh"
