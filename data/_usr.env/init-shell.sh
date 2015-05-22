@@ -75,4 +75,7 @@ _init_color() {
 	eval $(dircolors "$colors")
 }
 _init_color
-. "$PREFIX_USR_ENV/.env.sh"
+
+if [ -r "$PREFIX_USR_ENV/.env.sh" ]; then
+	. "$PREFIX_USR_ENV/.env.sh"
+fi
