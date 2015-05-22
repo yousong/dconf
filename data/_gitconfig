@@ -1,0 +1,22 @@
+[user]
+	name = Yousong Zhou
+	email = yszhou4tech@gmail.com
+
+[color]
+	ui = true
+
+[sendemail]
+	smtpserver = smtp.gmail.com
+	smtpserverport = 587
+	smtpencryption = tls
+	smtpuser = yszhou4tech@gmail.com
+	chainreplyto = false
+
+[sendemail]
+	signoff = true
+
+[push]
+	default = simple
+
+[oh-my-zsh]
+	hide-dirty = 1
