@@ -13,7 +13,12 @@ PREFIX_USR_ENV="$HOME/.usr.env"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
-export EDITOR=vi
+if type vim 1>/dev/null 2>&1; then
+	export EDITOR=vim
+	alias vi=vim
+else
+	export EDITOR=vi
+fi
 export CLICOLOR=1
 export GREP_OPTIONS="--color=auto"
 
