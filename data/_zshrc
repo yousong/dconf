@@ -55,10 +55,6 @@ plugins+=(copydir copyfile cp)
 
 # User configuration
 
-#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
-#export PATH="/Users/yousong/.vim/bundle/powerline/scripts:/Users/yousong/.gopath/bin:/Users/yousong/go/bin:/opt/local/libexec/gnubin:/opt/local/sbin:/opt/local/bin:/Users/yousong/.usr/bin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
-# export MANPATH="/usr/local/man:$MANPATH"
-
 # Use the GNU ls with --color.
 source ~/.usr.env/init-shell.sh
 
@@ -67,6 +63,12 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+# Append history to HISTFILE when I exit.
+# Contrary to INC_APPEND_HISTORY
+unsetopt SHARE_HISTORY
+unsetopt INC_APPEND_HISTORY
+setopt APPEND_HISTORY
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
