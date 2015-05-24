@@ -11,7 +11,8 @@ call vundle#begin()			"call with a path vundle#begin('~/some/path/here')
 Plugin 'gmarik/Vundle.vim'	"Github username/reponame
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'SirVer/ultisnips'
+Plugin 'SirVer/ultisnips'	"The engine
+Plugin 'honza/vim-snippets'	"The snippets
 Plugin 'mileszs/ack.vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'kien/ctrlp.vim'
@@ -85,6 +86,24 @@ nmap <C-N> :NERDTree<CR>
 " terryma/vim-multiple-cursors
 "   <C-N> for NERDTree
 let g:multi_cursor_next_key='<C-M>'
+
+" ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Valloric/YouCompleteMe
 "let g:ycm_server_use_vim_stdout = 1
