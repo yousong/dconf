@@ -17,6 +17,6 @@ collect() {
 	rm -rf "$DATA_DIR/.usr.env"
 	cp "$HOME/.usr.env" "$DATA_DIR/_usr.env"
 	rm -rf "$DATA_DIR/_usr.env/dircolors-solarized"
-	# dotfile within _usr.env/ are not copied
-	rm -rf "$DATA_DIR/_usr.env/."*
+	# .env.sh within _usr.env/ are not copied
+	rm -f "$DATA_DIR/_usr.env/.env.sh"
 }
