@@ -7,6 +7,7 @@ ohmyzsh_dir="$HOME/.oh-my-zsh"
 config() {
 	[ -d "$ohmyzsh_dir" ] || {
 		git clone https://github.com/robbyrussell/oh-my-zsh.git "$ohmyzsh_dir"
+		cd "$ohmyzsh_dir"
 		for f in "$PATCH_DIR/_oh-my-zsh"/*; do
 			patch -i "$f" -p1
 		done
