@@ -46,10 +46,17 @@ DISABLE_AUTO_TITLE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(osx web-search)
-plugins+=(git coffee macports)
+plugins+=(git coffee)
 plugins+=(colorize sprunge colored-man)
 plugins+=(django)
 plugins+=(copydir copyfile cp)
+if which yum &>/dev/null; then
+	plugins+=(yum)
+elif which apt-get &>/dev/null; then
+	plugins+=(debian)
+elif which port &>/dev/null; then
+	plugins+=(macports)
+fi
 #plugins+=(dirhistory)
 #
 
