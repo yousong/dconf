@@ -86,6 +86,17 @@ nmap <C-N> :NERDTree<CR>
 " terryma/vim-multiple-cursors
 "   <C-N> for NERDTree
 let g:multi_cursor_next_key='<C-M>'
+" Compatibility with neocomplete, https://github.com/terryma/vim-multiple-cursors#multiple_cursors_beforemultiple_cursors_after-default-nothing
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
 
 " ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
