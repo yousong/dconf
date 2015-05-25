@@ -12,6 +12,7 @@ on following platforms
 
 - Debian Wheezy
 - Mac OS X with MacPorts
+- CentOS 7
 
 ## How to use it.
 
