@@ -16,5 +16,7 @@ config() {
 }
 
 collect() {
-	cp "$HOME/.vimrc" "$DATA_DIR/_vimrc"
+	if [ -f "$HOME/.vimrc" ]; then
+		cp "$HOME/.vimrc" "$DATA_DIR/_vimrc"
+	fi
 }

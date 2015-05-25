@@ -17,5 +17,7 @@ config() {
 }
 
 collect() {
-	cp "$HOME/.zshrc" "$DATA_DIR/_zshrc"
+	if [ -f "$HOME/.zshrc" ]; then
+		cp "$HOME/.zshrc" "$DATA_DIR/_zshrc"
+	fi
 }

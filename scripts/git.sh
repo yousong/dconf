@@ -21,5 +21,7 @@ config() {
 }
 
 collect() {
-	cp "$HOME/.gitconfig" "$DATA_DIR/_gitconfig"
+	if [ -f "$HOME/.gitconfig" ]; then
+		cp "$HOME/.gitconfig" "$DATA_DIR/_gitconfig"
+	fi
 }

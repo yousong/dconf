@@ -13,5 +13,7 @@ config() {
 }
 
 collect() {
-	cp "$HOME/.tmux.conf" "$DATA_DIR/_tmux.conf"
+	if [ -f "$HOME/.tmux.conf" ]; then
+		cp "$HOME/.tmux.conf" "$DATA_DIR/_tmux.conf"
+	fi
 }

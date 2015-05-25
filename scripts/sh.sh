@@ -14,8 +14,10 @@ config() {
 }
 
 collect() {
-	rm -rf "$DATA_DIR/.usr.env"
-	cp "$HOME/.usr.env" "$DATA_DIR/_usr.env"
+	rm -rf "$DATA_DIR/_usr.env"
+	if [ -d "$HOME/.usr.env" ]; then
+		cp "$HOME/.usr.env" "$DATA_DIR/_usr.env"
+	fi
 	rm -rf "$DATA_DIR/_usr.env/dircolors-solarized"
 	# .env.sh within _usr.env/ are not copied
 	rm -f "$DATA_DIR/_usr.env/.env.sh"

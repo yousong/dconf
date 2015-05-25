@@ -7,5 +7,7 @@ config() {
 }
 
 collect() {
-	cp "$HOME/.bashrc" "$DATA_DIR/_bashrc"
+	if [ -f "$HOME/.bashrc" ]; then
+		cp "$HOME/.bashrc" "$DATA_DIR/_bashrc"
+	fi
 }
