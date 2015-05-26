@@ -9,7 +9,8 @@ filetype off				"required
 set rtp+=$HOME/.vim/bundle/Vundle.vim	" set the runtime path to include Vundle and initialize
 call vundle#begin()			"call with a path vundle#begin('~/some/path/here')
 Plugin 'gmarik/Vundle.vim'	"Github username/reponame
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fugitive' " Required by vim-airline for git repo.
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'SirVer/ultisnips'	"The engine
 Plugin 'honza/vim-snippets'	"The snippets
@@ -129,7 +130,6 @@ let g:molokai_original = 1
 let g:vim_markdown_folding_disabled = 1
 silent! colorscheme molokai
 if has("gui_running")
-	set guifont=Anonymice\ Powerline:h15
 else
     set t_Co=256
 endif
@@ -275,6 +275,4 @@ nmap <C-L> :tabnext<CR>
 
 " statusline: colorscheme resets all existing highlight definitions.
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
-" shoud try vim-airline or powerline
-" https://github.com/bling/vim-airline
 set laststatus=2		" always status line
