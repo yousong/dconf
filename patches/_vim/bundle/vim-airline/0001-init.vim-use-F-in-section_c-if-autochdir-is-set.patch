@@ -1,0 +1,37 @@
+From 2ff2fd7d09116d5978cf144453d774abd55cd279 Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <yszhou4tech@gmail.com>
+Date: Wed, 27 May 2015 10:11:01 +0800
+Subject: [PATCH] init.vim: use %F in section_c if autochdir is set.
+
+---
+ autoload/airline/init.vim | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/autoload/airline/init.vim b/autoload/airline/init.vim
+index 4f6db77..7345423 100644
+--- a/autoload/airline/init.vim
++++ b/autoload/airline/init.vim
+@@ -77,6 +77,7 @@ function! airline#init#bootstrap()
+         \ 'accent': 'red',
+         \ })
+   call airline#parts#define_raw('file', '%f%m')
++  call airline#parts#define_raw('path', '%F%m')
+   call airline#parts#define_raw('linenr', '%{g:airline_symbols.linenr}%#__accent_bold#%4l%#__restore__#')
+   call airline#parts#define_function('ffenc', 'airline#parts#ffenc')
+   call airline#parts#define_empty(['hunks', 'branch', 'tagbar', 'syntastic', 'eclim', 'whitespace','windowswap'])
+@@ -94,7 +95,11 @@ function! airline#init#sections()
+     let g:airline_section_b = airline#section#create(['hunks', 'branch'])
+   endif
+   if !exists('g:airline_section_c')
+-    let g:airline_section_c = airline#section#create(['%<', 'file', spc, 'readonly'])
++    if &autochdir == 1
++      let g:airline_section_c = airline#section#create(['%<', 'path', spc, 'readonly'])
++    else
++      let g:airline_section_c = airline#section#create(['%<', 'file', spc, 'readonly'])
++    endif
+   endif
+   if !exists('g:airline_section_gutter')
+     let g:airline_section_gutter = airline#section#create(['%='])
+-- 
+2.3.6
+
