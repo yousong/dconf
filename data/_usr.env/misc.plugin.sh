@@ -3,13 +3,14 @@ path_prepend() {
 	local new="$2"
 	local act="$3"
 	local orig=$(eval echo \$$var)
-	local pathes
+	local pathes p
 
 	pathes="$new"
 	eval set -- ${orig//:/ }
 	while [ -n "$1" ]; do
-		if [ "$1" != "$new" ]; then
-			pathes="$pathes:$1"
+		p="$(echo "$1" | sed 's:/\+$::')"
+		if [ "$p" != "$new" ]; then
+			pathes="$pathes:$p"
 		else
 			[ "$act" = "peek" ] && return
 		fi
