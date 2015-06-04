@@ -57,6 +57,8 @@ POWERLINE_REPO_ROOT="$HOME/.vim/bundle/powerline"
 
 [ -d "/sbin" ] && path_prepend PATH "/sbin"
 path_prepend PATH "$PREFIX_USR/bin"
+path_prepend PATH "$PREFIX_USR/sbin"
+path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
 
 [ "$__os" = "Darwin" ] && {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
