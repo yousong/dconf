@@ -1,6 +1,13 @@
 startup_message off
 
+# dont add an entry in /var/run/utmp
+#
+#     last -f /var/run/utmp
+#
+deflogin off
+
 # Window list at the bottom.
+# See "STRING ESCAPES" in screen manual.
 hardstatus alwayslastline
 hardstatus string '%{= kw}[%= %{= kw}%?%-Lw%?%{= kW}%n*%f %t%?%?%{= kw}%?%+Lw%?%?%= ][ %{r}%l%{w} ]%{w}'
 
