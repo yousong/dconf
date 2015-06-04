@@ -63,8 +63,8 @@ setup_dev_env() {
 	path_prepend PATH "$GOPATH/bin"
 }
 
-path_prepend PATH "$PREFIX_USR/bin"
 path_prepend PATH "$PREFIX_USR/sbin"
+path_prepend PATH "$PREFIX_USR/bin"
 path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
 
 _init_color() {
