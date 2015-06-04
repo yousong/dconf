@@ -39,19 +39,7 @@ setup_dev_env() {
 	export LDFLAGS="$LDFLAGS -I$PREFIX_USR/lib"
 }
 
-# golang
-[ -d "$HOME/go/bin" ] && {
-	export GOROOT="$HOME/go"
-	export GOPATH="$HOME/.gopath"
-	path_prepend PATH "$GOROOT/bin"
-	path_prepend PATH "$GOPATH/bin"
-}
-
 [ -d "/sbin" ] && path_prepend PATH "/sbin"
-path_prepend PATH "$PREFIX_USR/bin"
-path_prepend PATH "$PREFIX_USR/sbin"
-path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
-
 [ "$__os" = "Darwin" ] && {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
 
@@ -65,6 +53,18 @@ path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
 		path_prepend NODE_PATH /opt/local/lib/node_modules || \
 		true
 }
+
+# golang
+[ -d "$HOME/go/bin" ] && {
+	export GOROOT="$HOME/go"
+	export GOPATH="$HOME/.gopath"
+	path_prepend PATH "$GOROOT/bin"
+	path_prepend PATH "$GOPATH/bin"
+}
+
+path_prepend PATH "$PREFIX_USR/bin"
+path_prepend PATH "$PREFIX_USR/sbin"
+path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
 
 _init_color() {
 	local colors="$PREFIX_USR_ENV/dircolors-solarized/dircolors.ansi-dark"
