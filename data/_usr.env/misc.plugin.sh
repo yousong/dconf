@@ -1,13 +1,18 @@
 path_prepend() {
 	local var="$1"
 	local new="$2"
+	local act="$3"
 	local orig=$(eval echo \$$var)
 	local pathes
 
 	pathes="$new"
 	eval set -- ${orig//:/ }
 	while [ -n "$1" ]; do
-		[ "$1" != "$new" ] && pathes="$pathes:$1"
+		if [ "$1" != "$new" ]; then
+			pathes="$pathes:$1"
+		else
+			[ "$act" = "peek" ] && return
+		fi
 		shift
 	done
 	eval export $var=\"$pathes\"

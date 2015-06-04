@@ -39,7 +39,8 @@ setup_dev_env() {
 	export LDFLAGS="$LDFLAGS -I$PREFIX_USR/lib"
 }
 
-[ -d "/sbin" ] && path_prepend PATH "/sbin"
+[ -d "/sbin" ] && path_prepend PATH "/sbin" peek
+[ -d "/usr/sbin" ] && path_prepend PATH "/usr/sbin" peek
 [ "$__os" = "Darwin" ] && {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
 
