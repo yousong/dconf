@@ -1,0 +1,14 @@
+startup_message off
+
+# Window list at the bottom.
+hardstatus alwayslastline
+hardstatus string '%{= kw}[%= %{= kw}%?%-Lw%?%{= kW}%n*%f %t%?%?%{= kw}%?%+Lw%?%?%= ][ %{r}%l%{w} ]%{w}'
+
+# From Stephen Shirley
+# Don't block command output if the terminal stops responding
+# (like if the ssh connection times out for example).
+nonblock on
+
+# Allow editors etc. to restore display on exit
+# rather than leaving existing text in place
+altscreen on
