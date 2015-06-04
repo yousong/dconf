@@ -24,6 +24,7 @@ export GREP_OPTIONS="--color=auto"
 
 . $PREFIX_USR_ENV/misc.plugin.sh
 . $PREFIX_USR_ENV/sshfs.plugin.sh
+. $PREFIX_USR_ENV/openwrt.plugin.sh
 
 setup_dev_env() {
 	# MacPorts
