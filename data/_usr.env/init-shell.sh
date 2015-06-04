@@ -47,15 +47,6 @@ setup_dev_env() {
 	path_prepend PATH "$GOPATH/bin"
 }
 
-#powerline
-POWERLINE_REPO_ROOT="$HOME/.vim/bundle/powerline"
-[ -d "$POWERLINE_REPO_ROOT" ] && {
-	export POWERLINE_REPO_ROOT
-	export POWERLINE_ROOT="$POWERLINE_REPO_ROOT/powerline"
-	#path_prepend PATH "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin"
-	path_prepend PATH "$POWERLINE_REPO_ROOT/scripts"
-} || true
-
 [ -d "/sbin" ] && path_prepend PATH "/sbin"
 path_prepend PATH "$PREFIX_USR/bin"
 path_prepend PATH "$PREFIX_USR/sbin"
