@@ -2,6 +2,7 @@ My dotfiles for initializing configuration files for the following programs
 
 - Git
 - Tmux
+- Screen
 - Vim
 - Shell
 	- Common shell functions
@@ -35,6 +36,10 @@ Tmux
 
 - `$HOME/.tmux/`
 - `$HOME/.tmux.conf`
+
+Screen
+
+- `$HOME/.screenrc`
 
 Vim
 
