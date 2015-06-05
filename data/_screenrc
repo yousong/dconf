@@ -1,5 +1,9 @@
 startup_message off
 
+# bind <Shift-Left> <Shift-Right>
+bindkey ^[[1;2D prev
+bindkey ^[[1;2C next
+
 # dont add an entry in /var/run/utmp
 #
 #     last -f /var/run/utmp
