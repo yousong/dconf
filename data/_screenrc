@@ -13,7 +13,7 @@ startup_message off
 # Window list at the bottom.
 # See "STRING ESCAPES" in screen manual.
 hardstatus alwayslastline
-hardstatus string '%{= kw}[%= %{= kw}%?%-Lw%?%{= kW}%n*%f %t%?%?%{= kw}%?%+Lw%?%?%= ][ %{r}%l%{w} ]%{w}'
+hardstatus string '%{= kw}[%= %?%-Lw%?%{kW}%n*%f %t%{kw}%?%+Lw%?%= ][ %{r}%l%{w} ]'
 
 # From Stephen Shirley
 # Don't block command output if the terminal stops responding
