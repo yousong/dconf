@@ -3,8 +3,12 @@ startup_message off
 # dont add an entry in /var/run/utmp
 #
 #     last -f /var/run/utmp
+#     last -f /var/run/utmpx
 #
-deflogin off
+# - deflogin is disabled in Apple screen,
+#   http://www.opensource.apple.com/source/screen/screen-12/patches/config.h.in.diff
+#
+#deflogin off
 
 # Window list at the bottom.
 # See "STRING ESCAPES" in screen manual.
