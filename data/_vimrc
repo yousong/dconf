@@ -31,7 +31,7 @@ Plugin 'fatih/molokai'			"colorscheme
 call vundle#end()
 filetype plugin indent on		"required
 
-" pathogen, old buddy
+" pathogen, ol' buddy
 "call pathogen#infect()
 
 " MacPorts install on Mac OSX
@@ -50,6 +50,13 @@ if !isdirectory(g:backupdir)
 	call mkdir(g:backupdir, 'p')
 endif
 let &backupdir=g:backupdir
+
+" http://superuser.com/questions/549930/cant-resize-vim-splits-inside-tmux
+set mouse=a
+if &term =~ '^screen'
+	" we are within tmux/screen, they know the extended mouse mode
+    set ttymouse=xterm2
+endif
 
 set undodir=$HOME/.vim.tmp.d
 set noswapfile
