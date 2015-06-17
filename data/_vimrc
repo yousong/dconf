@@ -140,6 +140,11 @@ if has("gui_running")
 else
     set t_Co=256
 endif
+" http://stackoverflow.com/questions/8247243/highlighting-the-current-line-number-in-vim
+"  - Clear highlighting after any :colorscheme and set background= call
+"  - Enable cursorline
+highlight clear CursorLine
+set cursorline
 
 " Taglist http://vim.sourceforge.net/scripts/script.php?script_id=273
 "let Tlist_Ctags_Cmd=$HOME . '/opt/local/bin/ctags'
