@@ -45,17 +45,19 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(osx web-search)
+#
+# FIXME later we try antigen, https://github.com/zsh-users/antigen
 plugins+=(git coffee)
-plugins+=(colorize sprunge colored-man)
-plugins+=(django)
-plugins+=(copydir copyfile cp)
+plugins+=(sprunge colored-man)
+#plugins+=(django coffee)
 if which yum &>/dev/null; then
 	plugins+=(yum)
 elif which apt-get &>/dev/null; then
 	plugins+=(debian)
 elif which port &>/dev/null; then
-	plugins+=(macports)
+	# copyfile, copy file content
+	# copydir,  copy pwd name
+	plugins+=(osx macports copyfile copydir)
 fi
 #plugins+=(dirhistory)
 #
