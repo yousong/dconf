@@ -146,9 +146,6 @@ endif
 highlight clear CursorLine
 set cursorline
 
-" Taglist http://vim.sourceforge.net/scripts/script.php?script_id=273
-"let Tlist_Ctags_Cmd=$HOME . '/opt/local/bin/ctags'
-
 " To let netrw be silent when opening a new window
 let g:netrw_silent=1
 
@@ -267,6 +264,9 @@ vnoremap <silent> # :<C-U>
 
 "expand `\(' to `\(\)'
 cnoremap \( \(\)<Left><Left>
+
+" search until $HOME
+set tags=tags;$HOME
 "[tag]show word under cursor in a vertically
 "splitted window or in a new tab
 noremap <M-[> :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
