@@ -84,6 +84,9 @@ unsetopt SHARE_HISTORY
 unsetopt INC_APPEND_HISTORY
 setopt APPEND_HISTORY
 
+# Allow comments even in interactive shells.
+setopt INTERACTIVE_COMMENTS
+
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
