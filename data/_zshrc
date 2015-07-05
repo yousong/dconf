@@ -54,7 +54,7 @@ if which yum &>/dev/null; then
 	plugins+=(yum)
 elif which apt-get &>/dev/null; then
 	plugins+=(debian)
-elif which port &>/dev/null; then
+elif [ "$(uname -o)" = "Darwin" ]; then
 	# copyfile, copy file content
 	# copydir,  copy pwd name
 	plugins+=(osx macports copyfile copydir)
