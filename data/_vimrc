@@ -53,7 +53,8 @@ let &backupdir=g:backupdir
 
 " - http://superuser.com/questions/549930/cant-resize-vim-splits-inside-tmux
 " - http://stackoverflow.com/questions/7000960/in-vim-why-doesnt-my-mouse-work-past-the-220th-column
-" - ftp://ftp.vim.org/pub/vim/patches/7.3/7.3.632
+" - Re: [dev] st mouse support beyond column 223, (good background info, 223 = 255 - 32), http://lists.suckless.org/dev/1301/14351.html
+" - mouse_sgr support for Vim, ftp://ftp.vim.org/pub/vim/patches/7.3/7.3.632
 " - GNU screen and FAU screen does not support sgr mouse reporting yet.
 "   - Patch is available, https://gist.github.com/saitoha/3097729
 "   - Build method, http://stackoverflow.com/questions/24700444/gnu-screen-mouse-limitation
