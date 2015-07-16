@@ -51,12 +51,18 @@ if !isdirectory(g:backupdir)
 endif
 let &backupdir=g:backupdir
 
-" http://superuser.com/questions/549930/cant-resize-vim-splits-inside-tmux
+" - http://superuser.com/questions/549930/cant-resize-vim-splits-inside-tmux
+" - http://stackoverflow.com/questions/7000960/in-vim-why-doesnt-my-mouse-work-past-the-220th-column
+" - ftp://ftp.vim.org/pub/vim/patches/7.3/7.3.632
 set mouse=a
-if &term =~ '^screen'
+if has("mouse_sgr")
+	set ttymouse=sgr
+else
+	"if &term =~ '^screen'
 	" we are within tmux/screen, they know the extended mouse mode
-    set ttymouse=xterm2
-endif
+	"endif
+	set ttymouse=xterm2
+end
 
 set undodir=$HOME/.vim.tmp.d
 set noswapfile
