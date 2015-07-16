@@ -36,7 +36,7 @@ setup_dev_env() {
 	# User prefix dir
 	export CFLAGS="$CFLAGS -I$PREFIX_USR/include"
 	export CPPFLAGS="$CPPFLAGS -I$PREFIX_USR/include"
-	export LDFLAGS="$LDFLAGS -I$PREFIX_USR/lib"
+	export LDFLAGS="$LDFLAGS -L$PREFIX_USR/lib"
 }
 
 [ -d "/sbin" ] && path_prepend PATH "/sbin" peek
