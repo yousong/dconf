@@ -48,7 +48,7 @@ DISABLE_AUTO_TITLE="true"
 #
 # FIXME later we try antigen, https://github.com/zsh-users/antigen
 plugins+=(git coffee)
-plugins+=(sprunge colored-man)
+plugins+=(sprunge autojump colored-man)
 #plugins+=(django coffee)
 if which yum &>/dev/null; then
 	plugins+=(yum)
