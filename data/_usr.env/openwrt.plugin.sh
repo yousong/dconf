@@ -8,7 +8,7 @@ openwrt_build_current() {
 	mkdir -p "$build_dir"
 
 	cd "$build_dir";
-	CFLAGS="-I$prefix/include"					\
+	CFLAGS="-g3 -I$prefix/include"					\
 	LDFLAGS="-L$prefix/lib"						\
 		cmake -DCMAKE_PREFIX_PATH="$prefix"		\
 		-DCMAKE_INSTALL_PREFIX="$prefix"		\
