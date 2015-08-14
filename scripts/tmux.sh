@@ -10,6 +10,7 @@ config() {
 	}
 
 	cp "$DATA_DIR/_tmux.conf" "$HOME/.tmux.conf"
+	__errmsg "tmux: install plugins with <PREFIX+I>."
 }
 
 collect() {
