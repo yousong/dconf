@@ -67,10 +67,16 @@ init_virtualenv() {
 	done
 }
 
+# Remove a line from $HOME/.ssh/known_hosts
+#
+#  - Use "ssh-keygen -R example.com" if the hostname is known
+#  - Use "ssh-keygen -F 172.30.32.1" to see if the hostname is there
+#  - Use "ssh-keygen -l -f ~/.ssh/known_hosts" to list the file content
+#  - Use option "HashKnownHosts no" to disable hashing the content
 rm_ssh_known_hosts() {
 	local ln="$1"		# line number
 
-	[ -n "$ln" -a "$ln" -gt 1 ] 2>/dev/null || {
+	[ -n "$ln" -a "$ln" -ge 1 ] 2>/dev/null || {
 		__errmsg "invalid line number${ln:+: $ln}."
 		return 1
 	}
