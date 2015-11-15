@@ -13,6 +13,7 @@ bindkey ^[[1;2C next
 #   http://www.opensource.apple.com/source/screen/screen-12/patches/config.h.in.diff
 #
 #deflogin off
+defutf8 on
 
 # Window list at the bottom.
 # See "STRING ESCAPES" in screen manual.
