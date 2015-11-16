@@ -15,8 +15,5 @@
 [sendemail]
 	signoff = true
 
-[push]
-	default = simple
-
 [oh-my-zsh]
 	hide-dirty = 1
