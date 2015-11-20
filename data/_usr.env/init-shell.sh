@@ -65,7 +65,14 @@ setup_dev_env() {
 
 path_prepend PATH "$PREFIX_USR/sbin"
 path_prepend PATH "$PREFIX_USR/bin"
-path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
+case "$__os" in
+	Darwin)
+		path_prepend DYLD_LIBRARY_PATH "$PREFIX_USR/lib"
+		;;
+	Linux)
+		path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
+		;;
+esac
 
 _init_color() {
 	local colors="$PREFIX_USR_ENV/dircolors-solarized/dircolors.ansi-dark"
