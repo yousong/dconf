@@ -84,3 +84,19 @@ rm_ssh_known_hosts() {
 	sed -i -e "${ln}d" "$HOME/.ssh/known_hosts"
 }
 
+# perror can be provided mysql-server
+# here is a poor mans version
+if ! which perror &>/dev/null; then
+	perror() {
+		local errno="$1"
+
+		if [ "$#" -lt 1 ]; then
+			__errmsg "Usage: perror <errno>"
+			return 1
+		fi
+		if [ "$errno" -lt 0 ]; then
+			errno="$((-1 * $errno))"
+		fi
+		python -c 'import os; print os.strerror('$errno')'
+	}
+fi
