@@ -57,7 +57,10 @@ setup_dev_env() {
 	path_prepend PATH "$GOPATH/bin"
 }
 
-path_prepend MANPATH "$PREFIX_USR/share/man:$(manpath)"
+if [ -z "$MANPATH" ]; then
+	MANPATH="$(manpath)"
+fi
+path_prepend MANPATH "$PREFIX_USR/share/man"
 path_prepend PATH "$PREFIX_USR/sbin"
 path_prepend PATH "$PREFIX_USR/bin"
 case "$__os" in
