@@ -13,12 +13,6 @@ PREFIX_USR_ENV="$HOME/.usr.env"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
-if type vim 1>/dev/null 2>&1; then
-	export EDITOR=vim
-	alias vi=vim
-else
-	export EDITOR=vi
-fi
 export CLICOLOR=1
 export GREP_OPTIONS="--color=auto"
 
@@ -74,6 +68,14 @@ case "$__os" in
 		path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
 		;;
 esac
+
+# vim can be installed under $PREFIX_USR
+if type vim 1>/dev/null 2>&1; then
+	export EDITOR=vim
+	alias vi=vim
+else
+	export EDITOR=vi
+fi
 
 _init_color() {
 	local colors="$PREFIX_USR_ENV/dircolors-solarized/dircolors.ansi-dark"
