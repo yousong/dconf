@@ -77,6 +77,7 @@ else
 	export EDITOR=vi
 fi
 
+# colorful ls output
 _init_color() {
 	local colors="$PREFIX_USR_ENV/dircolors-solarized/dircolors.ansi-dark"
 	[ -r "$colors" ] || {
@@ -85,6 +86,18 @@ _init_color() {
 	eval $(dircolors "$colors")
 }
 _init_color
+
+# colorful man page
+man() {
+	env LESS_TERMCAP_mb=$'\E[01;31m' \
+		LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+		LESS_TERMCAP_me=$'\E[0m' \
+		LESS_TERMCAP_se=$'\E[0m' \
+		LESS_TERMCAP_so=$'\E[38;5;246;44m' \
+		LESS_TERMCAP_ue=$'\E[0m' \
+		LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+		man "$@"
+}
 
 if [ -r "$PREFIX_USR_ENV/.env.sh" ]; then
 	. "$PREFIX_USR_ENV/.env.sh"
