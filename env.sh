@@ -17,11 +17,11 @@ _do() {
 	[ -n "$INCLUDE_ONLY" ] && return 0
 	mkdir -p "$DATA_DIR" "$PATCH_DIR" "$SCRIPT_DIR"
 
-	__errmsg "Working with $script."
+	__errmsg "working on $script"
 	. "$script"
 	if type "$action" 1>/dev/null 2>&1; then
 		"$action"
 	else
-		__errmsg "Ignore non-defined action: $action."
+		__errmsg "ignore non-defined action: $action"
 	fi
 }
