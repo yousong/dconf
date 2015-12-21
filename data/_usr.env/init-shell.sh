@@ -90,6 +90,9 @@ _init_color() {
 }
 _init_color
 
+# Use GNU ls
+alias ls="ls --color=auto --group-directories-first"
+
 # colorful man page
 man() {
 	env LESS_TERMCAP_mb=$'\E[01;31m' \
