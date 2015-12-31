@@ -44,9 +44,9 @@ setup_dev_env() {
 	path_prepend PATH "/opt/local/libexec/gnubin"
 
 	# node
-	[ -d "/opt/local/lib/node_modules" ] && \
-		path_prepend NODE_PATH /opt/local/lib/node_modules || \
-		true
+	if [ -d "/opt/local/lib/node_modules" ]; then
+		path_prepend NODE_PATH /opt/local/lib/node_modules
+	fi
 }
 
 # golang

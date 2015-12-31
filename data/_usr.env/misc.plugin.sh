@@ -7,12 +7,17 @@ path_prepend() {
 
 	pathes="$new"
 	eval set -- ${orig//:/ }
+	# strip out ending slashes for each element in "$@"
+	eval set -- ${@%//}
+	eval set -- ${@%/}
 	while [ -n "$1" ]; do
-		p="$(echo "$1" | sed 's:/\+$::')"
+		p="$1"
 		if [ "$p" != "$new" ]; then
 			pathes="$pathes:$p"
-		else
-			[ "$act" = "peek" ] && return
+		elif [ "$act" = "peek" ]; then
+			# if it's alreay there, then just return without tampering its
+			# current location
+			return
 		fi
 		shift
 	done
