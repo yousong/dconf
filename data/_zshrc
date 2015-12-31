@@ -56,7 +56,7 @@ elif which apt-get &>/dev/null; then
 elif [ "$(uname -s)" = "Darwin" ]; then
 	# copyfile, copy file content
 	# copydir,  copy pwd name
-	plugins+=(osx macports copyfile copydir)
+	plugins+=(osx copyfile)
 fi
 #plugins+=(dirhistory)
 #
