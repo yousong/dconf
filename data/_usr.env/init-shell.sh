@@ -50,9 +50,10 @@ setup_dev_env() {
 }
 
 # golang
-[ -d "$HOME/go/bin" ] && {
-	export GOROOT="$HOME/go"
-	export GOPATH="$HOME/.gopath"
+gover=1.5.2
+[ -z "$GOROOT" -a -d "$PREFIX_USR/go/goroot-$gover" ] && {
+	export GOROOT="$PREFIX_USR/go/goroot-$gover"
+	export GOPATH="$PREFIX_USR/go/gopath-$gover"
 	path_prepend PATH "$GOROOT/bin"
 	path_prepend PATH "$GOPATH/bin"
 }
