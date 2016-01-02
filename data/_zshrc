@@ -47,7 +47,7 @@ DISABLE_AUTO_TITLE="true"
 # Add wisely, as too many plugins slow down shell startup.
 #
 # FIXME later we try antigen, https://github.com/zsh-users/antigen
-plugins+=(git coffee sprunge)
+plugins+=(gitfast coffee sprunge)
 #plugins+=(django coffee)
 if which yum &>/dev/null; then
 	plugins+=(yum)
