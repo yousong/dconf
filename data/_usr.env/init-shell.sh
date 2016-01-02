@@ -64,14 +64,6 @@ fi
 path_prepend MANPATH "$PREFIX_USR/share/man"
 path_prepend PATH "$PREFIX_USR/sbin"
 path_prepend PATH "$PREFIX_USR/bin"
-case "$__os" in
-	Darwin)
-		path_prepend DYLD_LIBRARY_PATH "$PREFIX_USR/lib"
-		;;
-	Linux)
-		path_prepend LD_LIBRARY_PATH "$PREFIX_USR/lib"
-		;;
-esac
 
 # vim can be installed under $PREFIX_USR
 if type vim 1>/dev/null 2>&1; then
