@@ -6,17 +6,15 @@ tpm_dir="$tmux_plugins_dir/tpm"
 config() {
 	local ver
 
-	# from "tmux 2.1" to "21"
-	ver="$(tmux -V)"
-	ver="${ver//./}"
-	ver="${ver#* }"
-
 	mkdir -p "$tmux_plugins_dir"
 	[ -x "$tmux_plugins_dir/tpm/tpm" ] || {
 		git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
 	}
 
 	cp "$DATA_DIR/_tmux.conf" "$HOME/.tmux.conf"
+
+	# from "tmux 2.1" to "21"
+	ver="$(tmux -V | tr -cd '0-9')"
 	if [ "$ver" -lt 21 ]; then
 		# these are only supported since tmux 2.1
 		sed -i''	\
