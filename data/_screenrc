@@ -1,3 +1,4 @@
+# vi: ft=screen
 startup_message off
 
 # bind <Shift-Left> <Shift-Right>
