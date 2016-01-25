@@ -245,15 +245,6 @@ augroup markdown_group
 	autocmd FileType mkd inoremap ` ``<Left>
 augroup END
 
-augroup c_group
-	autocmd!
-	autocmd FileType c set noexpandtab
-	autocmd FileType c set tabstop=8 shiftwidth=8 softtabstop=8
-augroup END
-
-augroup coffee_group
-augroup END
-
 augroup text_group
 	autocmd!
 	autocmd FileType text set copyindent			"Copy the structure of the existing lines indent when autoindenting a new line.
