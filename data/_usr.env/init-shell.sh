@@ -50,7 +50,7 @@ setup_dev_env() {
 }
 
 # golang
-gover=1.5.2
+gover=1.5.3
 [ -z "$GOROOT" -a -d "$PREFIX_USR/go/goroot-$gover" ] && {
 	export GOROOT="$PREFIX_USR/go/goroot-$gover"
 	export GOPATH="$PREFIX_USR/go/gopath-$gover"
