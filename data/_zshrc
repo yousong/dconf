@@ -74,10 +74,6 @@ if whence -p ag &>/dev/null && alias ag &>/dev/null; then
 	unalias ag &>/dev/null
 fi
 
-# You may need to manually set your language environment
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
 # Append history to HISTFILE when I exit.
 # Contrary to INC_APPEND_HISTORY
 unsetopt SHARE_HISTORY
