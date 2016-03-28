@@ -1,0 +1,22 @@
+[defaults]
+diff = --show-function
+
+[ui]
+username = Yousong Zhou <yszhou4tech@gmail.com>
+
+[extensions]
+color =
+pager =
+hgext.patchbomb =
+
+[pager]
+pager = LESS='FRX' less
+
+[email]
+method = smtp
+
+[smtp]
+host = smtp.gmail.com
+port = 587
+username = yszhou4tech@gmail.com
+tls = true
