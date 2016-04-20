@@ -1,0 +1,89 @@
+"VBundle
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+set nocompatible		"be iMproved, required
+filetype on				"required
+filetype off			"required
+" set the runtime path to include Vundle and initialize
+set rtp+=$HOME/.vim/bundle/Vundle.vim
+call vundle#begin()			"call with a path vundle#begin('~/some/path/here')
+Plugin 'gmarik/Vundle.vim'	"Github username/reponame
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fugitive' " Required by vim-airline for git repo.
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'SirVer/ultisnips'	"The engine
+Plugin 'honza/vim-snippets'	"The snippets
+Plugin 'mileszs/ack.vim'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-surround'
+Plugin 'majutsushi/tagbar'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'fatih/vim-go'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'groenewege/vim-less'
+Plugin 'Align'				"Name of vim-script.org package mirrors.
+Plugin 'fatih/molokai'			"colorscheme
+call vundle#end()
+filetype plugin indent on		"required
+
+" pathogen, ol' buddy
+"call pathogen#infect()
+
+""""""" mileszs/ack.vim
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+
+""""""" scrooloose/nerdtree
+"   q to quit
+nmap <C-N> :NERDTree<CR>
+
+
+""""""" terryma/vim-multiple-cursors
+"   <C-N> for NERDTree
+let g:multi_cursor_next_key='<C-M>'
+" Compatibility with neocomplete, https://github.com/terryma/vim-multiple-cursors#multiple_cursors_beforemultiple_cursors_after-default-nothing
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
+
+""""""" ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+""""""" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+
+""""""" majutsushi/tagbar
+nmap <F8> :TagbarToggle<CR>
+
+
+""""""" molokai
+let g:molokai_original = 1
