@@ -153,3 +153,21 @@ gitproxy() {
 				export GIT_PROXY_COMMAND="$comm"
 		esac
 }
+
+qa_python() {
+	if [ "$#" -lt 1 ]; then
+		__errmsg "Usage: $0 <project_path_or_python_filename>"
+		return 1;
+	fi
+
+	if [ -z "$FLAKE8" ]; then
+		if ! which flake8 >/dev/null; then
+			__errmsg "Please install flake8 with pip"
+			return 1
+		fi
+		FLAKE8="$(which flake8)"
+	fi
+
+	# Warning/Error codes, https://flake8.readthedocs.org/en/latest/warnings.html
+	$FLAKE8 --ignore=E501,E272,E221,E225,E303,W601,E302,E502,W291,E261,E262,W391,E127,E128,E126,E123,E125,E124,E711,E712,E121,E111,E265,E131,E226,E241 "$1"
+}
