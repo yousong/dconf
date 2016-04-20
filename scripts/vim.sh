@@ -4,7 +4,14 @@
 
 bundle_dir="$HOME/.vim/bundle"
 
+__vimrc_files="
+	$HOME/.vimrc
+	$HOME/.vimrc.plugins
+	$HOME/.vimrc.basic
+"
+
 config() {
+	local f dataf
 	local vundle_repo="$bundle_dir/Vundle.vim"
 	local plugin d
 
@@ -12,7 +19,13 @@ config() {
 		git clone https://github.com/gmarik/Vundle.vim.git "$vundle_repo"
 	fi
 
-	cp "$DATA_DIR/_vimrc" "$HOME/.vimrc"
+	for f in $__vimrc_files; do
+		dataf="${f##*/.}"
+		dataf="$DATA_DIR/_$dataf"
+		if [ -f "$dataf" ]; then
+			cp "$dataf" "$f"
+		fi
+	done
 
 	__errmsg "vim: Installing Vundle packages, this may take quite a while."
 	vim +BundleInstall +qa
@@ -29,7 +42,13 @@ config() {
 }
 
 collect() {
-	if [ -f "$HOME/.vimrc" ]; then
-		cp "$HOME/.vimrc" "$DATA_DIR/_vimrc"
-	fi
+	local f dataf
+
+	for f in $__vimrc_files; do
+		if [ -f "$f" ]; then
+			dataf="${f##*/.}"
+			dataf="$DATA_DIR/_$dataf"
+			cp "$f" "$dataf"
+		fi
+	done
 }
