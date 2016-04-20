@@ -72,6 +72,9 @@ if type vim 1>/dev/null 2>&1; then
 else
 	export EDITOR=vi
 fi
+vim_basic() {
+	vim -u "$HOME/.vimrc.basic" "$@"
+}
 
 # colorful ls output
 _init_color() {
