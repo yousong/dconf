@@ -28,6 +28,8 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'fatih/vim-go'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'groenewege/vim-less'
+Plugin 'alderz/smali-vim'
+"Plugin 'kelwin/vim-smali'
 Plugin 'Align'				"Name of vim-script.org package mirrors.
 Plugin 'fatih/molokai'			"colorscheme
 call vundle#end()
@@ -83,6 +85,14 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 """"""" majutsushi/tagbar
 nmap <F8> :TagbarToggle<CR>
+
+let g:tagbar_type_smali = {
+        \ 'ctagstype' : 'smali',
+        \ 'kinds' : [
+                \ 'f:field',
+                \ 'm:method',
+        \ ]
+\ }
 
 
 """"""" molokai
