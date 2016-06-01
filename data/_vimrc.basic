@@ -213,7 +213,7 @@ nmap <C-L> :tabnext<CR>
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
 set laststatus=2		" always status line
 
-function FindUpVimrc()
+function! FindUpVimrc()
 	" Search from where the directory current file in up to the $HOME directory
 	" or / (root) directory until a .vimrc is found, then source that file
 	let l:d = fnamemodify(expand('%:p'), ':h')
