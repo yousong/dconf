@@ -5,7 +5,6 @@
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 set nocompatible		"be iMproved, required
-filetype on				"required
 filetype off			"required
 " set the runtime path to include Vundle and initialize
 set rtp+=$HOME/.vim/bundle/Vundle.vim
