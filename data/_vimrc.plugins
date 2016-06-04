@@ -95,5 +95,8 @@ let g:tagbar_type_smali = {
 \ }
 
 
+""""""" plasticboy/vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
 """"""" molokai
 let g:molokai_original = 1
