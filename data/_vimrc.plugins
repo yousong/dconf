@@ -83,6 +83,14 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 
+""""""" plasticboy/vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
+
+""""""" molokai
+let g:molokai_original = 1
+
+
 """"""" majutsushi/tagbar
 nmap <F8> :TagbarToggle<CR>
 
@@ -94,9 +102,37 @@ let g:tagbar_type_smali = {
         \ ]
 \ }
 
-
-""""""" plasticboy/vim-markdown
-let g:vim_markdown_folding_disabled = 1
-
-""""""" molokai
-let g:molokai_original = 1
+" exuberant-ctags as of 5.8 does not support golang yet.  The following
+" snippet requires installation of gotags, a ctags-compatible tag generator.
+"
+" 	go get -u github.com/jstemmer/gotags
+"
+" - https://github.com/jstemmer/gotags
+" - https://github.com/majutsushi/tagbar/wiki#google-go
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
