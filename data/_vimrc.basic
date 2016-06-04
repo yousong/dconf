@@ -58,11 +58,6 @@ set fileencodings+=utf-8
 
 let mapleader=","
 
-" Valloric/YouCompleteMe
-"let g:ycm_server_use_vim_stdout = 1
-"let g:ycm_server_log_level = 'debug'
-"let g:ycm_confirm_extra_conf = 0
-
 " Style
 let g:vim_markdown_folding_disabled = 1
 silent! colorscheme molokai
