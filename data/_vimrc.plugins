@@ -31,7 +31,7 @@ Plugin 'groenewege/vim-less'
 Plugin 'alderz/smali-vim'
 "Plugin 'kelwin/vim-smali'
 Plugin 'Align'				"Name of vim-script.org package mirrors.
-Plugin 'fatih/molokai'			"colorscheme
+Plugin 'tomasr/molokai'		"colorscheme
 call vundle#end()
 filetype plugin indent on		"required
 
