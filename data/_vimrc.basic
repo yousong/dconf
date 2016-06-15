@@ -31,6 +31,7 @@ else
 	"endif
 	set ttymouse=xterm2
 end
+set wildmenu
 
 set undodir=$HOME/.vim.tmp.d
 set noswapfile
