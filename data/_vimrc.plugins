@@ -13,25 +13,24 @@ Plugin 'gmarik/Vundle.vim'	"Github username/reponame
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive' " Required by vim-airline for git repo.
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'SirVer/ultisnips'	"The engine
-Plugin 'honza/vim-snippets'	"The snippets
-Plugin 'mileszs/ack.vim'
+"Plugin 'SirVer/ultisnips'	"The engine
+"Plugin 'honza/vim-snippets'	"The snippets
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
-Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
-Plugin 'kchmck/vim-coffee-script'
+Plugin 'Align'				"Name of vim-script.org package mirrors.
+Plugin 'tomasr/molokai'		"colorscheme
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'kchmck/vim-coffee-script'	"languages
+Plugin 'mattn/emmet-vim'
 Plugin 'fatih/vim-go'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'groenewege/vim-less'
 Plugin 'alderz/smali-vim'
-"Plugin 'kelwin/vim-smali'
-Plugin 'Align'				"Name of vim-script.org package mirrors.
-Plugin 'tomasr/molokai'		"colorscheme
-Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 filetype plugin indent on		"required
 
@@ -39,7 +38,9 @@ filetype plugin indent on		"required
 "call pathogen#infect()
 
 """"""" mileszs/ack.vim
-let g:ackprg = 'ag --nogroup --nocolor --column'
+if executable('ag')
+	let g:ackprg = 'ag --vimgrep'
+endif
 
 
 """"""" scrooloose/nerdtree
