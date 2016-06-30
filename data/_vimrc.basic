@@ -41,7 +41,8 @@ set noswapfile
 "	https://github.com/mattn/emmet-vim/issues/148#issuecomment-38451345
 " set paste				"Put Vim in Paste mode.
 "
-set cindent			"Enables automatic C program indenting.  See also cinkeys, cinoptions
+set cindent				"Enables automatic C program indenting.  See also cinkeys, cinoptions
+set formatoptions+=cro	"wrap comments using textwidth and insert current comment leader on <Enter>, 'o', or 'O'
 
 set softtabstop=4		"Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS>.
 set shiftwidth=4		"Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
