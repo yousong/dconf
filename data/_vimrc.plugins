@@ -17,7 +17,7 @@ Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'honza/vim-snippets'	"The snippets
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
@@ -41,6 +41,23 @@ filetype plugin indent on		"required
 if executable('ag')
 	let g:ackprg = 'ag --vimgrep'
 endif
+
+
+""""""" ctrlpvim/ctrlp.vim
+" use project-specific .vimrc settings as a root marker.
+"
+" this will have the side effect that 'r' in g:ctrl_working_path_mode will
+" succeed because of the presence of $HOME/.vimrc.  To workaround this
+" situation, use CtrlPCurWD or CtrlPCurFile, or touch a dummy .vimrc at the
+" desired root
+let g:ctrlp_root_markers = ['.vimrc']
+let g:ctrlp_user_command = {
+	\ 'types': {
+		\ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],
+		\ 2: ['.hg', 'hg --cwd %s locate -I .'],
+		\ },
+	\ 'fallback': 'find %s -type f'
+	\ }
 
 
 """"""" scrooloose/nerdtree
