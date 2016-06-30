@@ -30,7 +30,8 @@ Plugin 'groenewege/vim-less'
 Plugin 'alderz/smali-vim'
 "Plugin 'kelwin/vim-smali'
 Plugin 'Align'				"Name of vim-script.org package mirrors.
-Plugin 'tomasr/molokai'		"colorscheme
+"Plugin 'tomasr/molokai'		"colorscheme
+Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 filetype plugin indent on		"required
 
@@ -84,10 +85,6 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 """"""" plasticboy/vim-markdown
 let g:vim_markdown_folding_disabled = 1
-
-
-""""""" molokai
-let g:molokai_original = 1
 
 
 """"""" majutsushi/tagbar

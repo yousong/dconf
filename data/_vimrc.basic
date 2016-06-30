@@ -59,15 +59,20 @@ set fileencodings+=utf-8
 
 let mapleader=","
 
-" Style
-silent! colorscheme molokai
 if has("gui_running")
 	" Change font, http://vim.wikia.com/wiki/Change_font
 	"   set guifont=* to select one
     set guifont=Menlo\ Regular:h14
 else
     set t_Co=256
+	let g:solarized_termcolors=256
 endif
+
+"let g:molokai_original = 1
+"silent! colorscheme molokai
+silent! colorscheme solarized
+
+
 " http://stackoverflow.com/questions/8247243/highlighting-the-current-line-number-in-vim
 "  - Clear highlighting after any :colorscheme and set background= call
 "  - Enable cursorline
