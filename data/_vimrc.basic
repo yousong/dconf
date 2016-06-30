@@ -65,10 +65,11 @@ if has("gui_running")
     set guifont=Menlo\ Regular:h14
 else
     set t_Co=256
+	set background=dark
+	let g:molokai_original = 1
 	let g:solarized_termcolors=256
 endif
 
-"let g:molokai_original = 1
 "silent! colorscheme molokai
 silent! colorscheme solarized
 
