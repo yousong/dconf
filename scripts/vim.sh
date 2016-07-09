@@ -30,8 +30,8 @@ config() {
 	__errmsg "vim: Installing Vundle packages, this may take quite a while."
 	vim +BundleInstall +qa
 
-	for plugin in $(find "$PATCH_DIR/_vim" -mindepth 2 -maxdepth 2 -type d 2>/dev/null); do
-		d="$bundle_dir/$(basename "$plugin")"
+	for plugin in $(find "$PATCH_DIR/_vim" -mindepth 1 -maxdepth 1 -type d 2>/dev/null); do
+		d="$bundle_dir/${plugin##*/}"
 		if [ -d "$d" ]; then
 			cd "$d"
 			git checkout -b dconf >/dev/null 2>&1 || true

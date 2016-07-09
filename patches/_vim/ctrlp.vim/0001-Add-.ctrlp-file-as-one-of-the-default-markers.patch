@@ -1,0 +1,99 @@
+From ba79db07855207faa0c38e54aa0a6ee697d019db Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <yszhou4tech@gmail.com>
+Date: Fri, 8 Jul 2016 17:41:39 +0800
+Subject: [PATCH] Add .ctrlp file as one of the default markers
+
+Combine default markers, g:ctrlp_root_markers, and markers in
+g:ctrlp_user_command together in the order when finding root
+
+Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
+---
+ autoload/ctrlp.vim | 48 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
+
+diff --git a/autoload/ctrlp.vim b/autoload/ctrlp.vim
+index 04f1aa8..465ed9c 100644
+--- a/autoload/ctrlp.vim
++++ b/autoload/ctrlp.vim
+@@ -208,6 +208,8 @@ let s:coretypes = [
+ 	\ ['mru files', 'mru'],
+ \ ]
+ 
++let s:defmarkers = ['.git', '.ctrlp', '.hg', '.svn', '.bzr', '_darcs']
++
+ " Get the options {{{2
+ fu! s:opts(...)
+ 	unl! s:usrign s:usrcmd s:urprtmaps
+@@ -458,6 +460,27 @@ fu! s:UserCmd(lscmd)
+ 	en
+ endf
+ 
++fu! s:getmarkers()
++	if type(s:rmarkers) == 3
++		let markers = s:rmarkers
++	el
++		let markers = []
++	en
++	if type(s:usrcmd) == 4 && has_key(s:usrcmd, 'types')
++		for pair in values(s:usrcmd['types'])
++			if index(markers, pair[0]) < 0
++				cal add(markers, pair[0])
++			en
++		endfo
++	en
++	for marker in s:defmarkers
++		if index(markers, marker) < 0
++			cal add(markers, marker)
++		en
++	endfo
++	return markers
++endf
++
+ fu! s:lsCmd()
+ 	let cmd = s:usrcmd
+ 	if type(cmd) == 1
+@@ -471,20 +494,17 @@ fu! s:lsCmd()
+ 	elsei type(cmd) == 4 && ( has_key(cmd, 'types') || has_key(cmd, 'fallback') )
+ 		let fndroot = []
+ 		if has_key(cmd, 'types') && cmd['types'] != {}
+-			let [markrs, cmdtypes] = [[], values(cmd['types'])]
+-			for pair in cmdtypes
+-				cal add(markrs, pair[0])
+-			endfo
++			let cmdtypes = values(cmd['types'])
++			let markrs = s:getmarkers()
+ 			let fndroot = s:findroot(s:dyncwd, markrs, 0, 1)
+ 		en
+-		if fndroot == []
+-			retu has_key(cmd, 'fallback') ? cmd['fallback'] : ''
++		if fndroot != []
++			let s:vcscmd = s:lash == '\'
++			for pair in cmdtypes
++				if pair[0] == fndroot[0] | retu pair[1] | en
++			endfo
+ 		en
+-		for pair in cmdtypes
+-			if pair[0] == fndroot[0] | brea | en
+-		endfo
+-		let s:vcscmd = s:lash == '\'
+-		retu pair[1]
++		retu has_key(cmd, 'fallback') ? cmd['fallback'] : ''
+ 	en
+ endf
+ " - Buffers {{{1
+@@ -1717,11 +1737,7 @@ fu! ctrlp#setpathmode(pmode, ...)
+ 		retu 1
+ 	elsei a:pmode == 'r'
+ 		let spath = a:0 ? a:1 : s:crfpath
+-		let markers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
+-		if type(s:rmarkers) == 3 && !empty(s:rmarkers)
+-			cal filter(markers, 'index(s:rmarkers, v:val) < 0')
+-			let markers = s:rmarkers + markers
+-		en
++		let markers = s:getmarkers()
+ 		if s:findroot(spath, markers, 0, 0) != [] | retu 1 | en
+ 	en
+ 	retu 0
+-- 
+2.6.4
+
