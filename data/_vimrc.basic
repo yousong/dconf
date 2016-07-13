@@ -176,10 +176,12 @@ cnoremap \( \(\)<Left><Left>
 
 " search until $HOME
 set tags=tags;$HOME
-"[tag]show word under cursor in a vertically
-"splitted window or in a new tab
+" - tag show in vertically-splitted window or newly-created tab
+" - tag show in preview window
 noremap <M-[> :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <M-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <leader>. <Esc>:exec "ptjump " . expand("<cword>")<Esc>
+
 
 " from mswin.vim for copy and paste
 vnoremap <C-C>	"+y
