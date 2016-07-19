@@ -37,6 +37,18 @@ filetype plugin indent on		"required
 " pathogen, ol' buddy
 "call pathogen#infect()
 
+""""""" bling/vim-airline
+" disable tagbar integration (can be slow)
+let g:airline#extensions#tagbar#enabled = 0
+" disable fugitive integration (takes up space)
+let g:airline#extensions#branch#enabled = 0
+" show filename (no (compressed) path) in the tab
+let g:airline#extensions#tabline#fnamemod = ':t'
+" no need to show "filetype<fileencoding[fileformat]"
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+
+
 """"""" mileszs/ack.vim
 if executable('ag')
 	let g:ackprg = 'ag --vimgrep'
