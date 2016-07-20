@@ -118,6 +118,11 @@ let g:vim_markdown_folding_disabled = 1
 
 
 """"""" majutsushi/tagbar
+" current tag will be highlighted on `updatetime` (default 4000) milliseconds
+" of no-keyboard-input
+"
+" Use :TagbarShowTag command to show the current tag
+"
 nmap <F8> :TagbarToggle<CR>
 
 let g:tagbar_type_smali = {
