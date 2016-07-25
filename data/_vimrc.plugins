@@ -43,7 +43,11 @@ let g:airline#extensions#tagbar#enabled = 0
 " disable fugitive integration (takes up space)
 let g:airline#extensions#branch#enabled = 0
 " show filename (no (compressed) path) in the tab
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+" save tabline space
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_type = 0
 " no need to show "filetype<fileencoding[fileformat]"
 let g:airline_section_x = ''
 let g:airline_section_y = ''
@@ -118,11 +122,6 @@ let g:vim_markdown_folding_disabled = 1
 
 
 """"""" majutsushi/tagbar
-" current tag will be highlighted on `updatetime` (default 4000) milliseconds
-" of no-keyboard-input
-"
-" Use :TagbarShowTag command to show the current tag
-"
 nmap <F8> :TagbarToggle<CR>
 
 let g:tagbar_type_smali = {
