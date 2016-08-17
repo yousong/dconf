@@ -16,6 +16,8 @@ bindkey ^[[1;2C next
 #deflogin off
 defutf8 on
 
+defscrollback 5120
+
 # Window list at the bottom.
 # See "STRING ESCAPES" in screen manual.
 hardstatus alwayslastline
