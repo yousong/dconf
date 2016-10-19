@@ -17,9 +17,9 @@ config() {
 	local f dataf
 
 	for f in $__pip_conf_files; do
-		if [ -f "$f" ]; then
-			dataf="${f##$HOME/.}"
-			dataf="$DATA_DIR/_$dataf"
+		dataf="${f##$HOME/.}"
+		dataf="$DATA_DIR/_$dataf"
+		if [ -f "$dataf" ]; then
 			mkdir -p "$(dirname "$f")"
 			cp "$dataf" "$f"
 		fi
