@@ -74,6 +74,8 @@ if whence -p ag &>/dev/null && alias ag &>/dev/null; then
 	unalias ag &>/dev/null
 fi
 
+setopt SHWORDSPLIT
+
 # Append history to HISTFILE when I exit.
 # Contrary to INC_APPEND_HISTORY
 unsetopt SHARE_HISTORY
