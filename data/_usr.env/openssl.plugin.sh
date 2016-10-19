@@ -1,49 +1,52 @@
+# usage: crtsplit <file-prefix>
 crtsplit() {
-	local crt="$1"
-	local prefix="${2:-f}"
+	local prefix="${1:-f}"
 
-	if [ ! -f "$crt" ]; then
-		__errmsg "usage: crtsplit <crt> <file-prefix>"
-		return 1
-	fi
 	awk -v prefix="$prefix" '
 BEGIN { i=0; f=prefix i }
-/BEGIN/ { close(f); i=i+1; f=prefix i }
+/-+BEGIN/ { close(f); i=i+1; f=prefix i }
 { print >f }
-' <"$crt"
+'
 }
 
+# usage: crtshow [openssl-opts]
 crtshow() {
-	local crt="$1"; shift
 	local opts="$*"
 	local cmd
 
-	if [ ! -f "$crt" ]; then
-		__errmsg "usage: crtshow <crt> [openssl-opts]"
-		return 1
-	fi
 	if [ -z "$opts" ]; then
 		opts="-subject -issuer -startdate -enddate"
 	fi
 	cmd="openssl x509 -noout $opts"
 	awk -v cmd="$cmd" '
-/BEGIN/ { close(cmd); print "" }
+/-+BEGIN/ { close(cmd); print "" }
 { print | cmd }
-' <"$crt"
+'
+}
+
+crtsave() {
+	local f="${1:-/dev/stdout}"
+
+	awk -v f="$f" '
+/-+BEGIN/ { w=1 }
+/-+END/ { print >f; w=0 }
+{ if (w) { print >f} }
+'
 }
 
 s_client() {
-	local addr="$1"
-	local cafile="$2"
-	local opts
+	local addr="$1"; shift
+	local opts="$*"
 
 	if [ -z "$addr" ]; then
-		__errmsg "s_client <addr> [CAfile]"
+		__errmsg "usage: s_client <addr> [openssl-opts]"
+		__errmsg "                                     "
+		__errmsg "examples:                            "
+		__errmsg "  s_client mos.meituan.com:443 -showcerts 2>/dev/null | crtsave | crtshow"
+		__errmsg "  s_client mos.meituan.com:443 -CAfile \`cafiles\`"
+		return 1
 	fi
-	opts="$opts -connect $addr"
-	if [ -f "$cafile" ]; then
-		opts="$opts -CAfile $cafile"
-	fi
+	opts="-connect $addr $opts"
 	openssl s_client $opts
 }
 
