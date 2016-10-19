@@ -23,11 +23,11 @@ crtshow() {
 		return 1
 	fi
 	if [ -z "$opts" ]; then
-		opts="-subject"
+		opts="-subject -issuer -startdate -enddate"
 	fi
 	cmd="openssl x509 -noout $opts"
 	awk -v cmd="$cmd" '
-/BEGIN/ {close(cmd)}
+/BEGIN/ { close(cmd); print "" }
 { print | cmd }
 ' <"$crt"
 }
