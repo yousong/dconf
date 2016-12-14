@@ -21,6 +21,7 @@ export GREP_OPTIONS="--color=auto"
 . $PREFIX_USR_ENV/openwrt.plugin.sh
 . $PREFIX_USR_ENV/mget.plugin.sh
 . $PREFIX_USR_ENV/openssl.plugin.sh
+. $PREFIX_USR_ENV/go.plugin.sh
 
 setup_dev_env() {
 	# MacPorts
@@ -50,15 +51,7 @@ setup_dev_env() {
 		path_prepend NODE_PATH /opt/local/lib/node_modules
 	fi
 }
-
-# golang
-gover=1.5.3
-[ -z "$GOROOT" -a -d "$PREFIX_USR/go/goroot-$gover" ] && {
-	export GOROOT="$PREFIX_USR/go/goroot-$gover"
-	export GOPATH="$PREFIX_USR/go/gopath-$gover"
-	path_prepend PATH "$GOROOT/bin"
-	path_prepend PATH "$GOPATH/bin"
-}
+go_select "" quiet
 
 if [ -z "$MANPATH" ]; then
 	MANPATH="$(manpath)"
