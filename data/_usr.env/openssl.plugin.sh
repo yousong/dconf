@@ -1,12 +1,19 @@
+_crtdo() {
+	local cmdbegin="$1"; shift
+	local cmdwrite="$1"; shift
+
+	awk "$@" "
+/-+BEGIN/ { $cmdbegin; w=1 }
+/-+END/ { end=1 }
+{ if (w) { $cmdwrite }; if (end) { w=0; end=0 } }
+"
+}
+
 # usage: crtsplit <file-prefix>
 crtsplit() {
 	local prefix="${1:-f}"
 
-	awk -v prefix="$prefix" '
-BEGIN { i=0; f=prefix i }
-/-+BEGIN/ { close(f); i=i+1; f=prefix i }
-{ print >f }
-'
+	_crtdo 'close(f); i=i+1; f=prefix i' 'print >f' -v i=0 -v "prefix=$prefix"
 }
 
 # usage: crtshow [openssl-opts]
@@ -18,35 +25,46 @@ crtshow() {
 		opts="-subject -issuer -startdate -enddate"
 	fi
 	cmd="openssl x509 -noout $opts"
-	awk -v cmd="$cmd" '
-/-+BEGIN/ { close(cmd); print "" }
-{ print | cmd }
-'
+	_crtdo 'close(cmd); print ""' "print | cmd" -v "cmd=$cmd"
 }
 
 crtsave() {
 	local f="${1:-/dev/stdout}"
 
-	awk -v f="$f" '
-/-+BEGIN/ { w=1 }
-/-+END/ { print >f; w=0 }
-{ if (w) { print >f} }
-'
+	_crtdo '' 'print >f' -v "f=$f"
 }
 
 s_client() {
-	local addr="$1"; shift
-	local opts="$*"
+	local addr="$1"
+	local opts
 
 	if [ -z "$addr" ]; then
-		__errmsg "usage: s_client <addr> [openssl-opts]"
-		__errmsg "                                     "
-		__errmsg "examples:                            "
-		__errmsg "  s_client mos.meituan.com:443 -showcerts 2>/dev/null | crtsave | crtshow"
-		__errmsg "  s_client mos.meituan.com:443 -CAfile \`cafiles\`"
+		cat >&2 <<"EOF"
+usage: s_client <addr> [openssl-opts]
+
+ - Ctrl-D to end the connection
+
+examples:
+
+  # basic info of certificate chain
+  s_client mos.meituan.com:443 2>/dev/null | crtshow
+
+  # verify and see the result (man 1 verify)
+  s_client mos.meituan.com:443 -CAfile `cafiles`
+
+  # save certificate chain into a single file (stdout)
+  s_client mos.meituan.com:443 | crtsave
+
+  # split out certificate in the chain into its own file (fN)
+  s_client mos.meituan.com:443 | crtsplit
+  s_client mos.meituan.com:443 | crtsplit crt
+EOF
 		return 1
+	else
+		shift
+		opts="$*"
 	fi
-	opts="-connect $addr $opts"
+	opts="-connect $addr -showcerts $opts"
 	openssl s_client $opts
 }
 
