@@ -78,7 +78,13 @@ keystores() {
 		djava="$(readlink -f "$fjava")"
 		djava="$(dirname "$djava")"
 		djava="$(readlink -f "$djava/../")"
-		jrecerts="$djava/jre/lib/security/cacerts"
+		if [ "${djava%jre}" != "$djava" ]; then
+			# some installations use jdk/jre/bin/java
+			jrecerts="$djava/lib/security/cacerts"
+		else
+			# others use jdk/bin/java
+			jrecerts="$djava/jre/lib/security/cacerts"
+		fi
 	fi
 	keystorefiles="
 /etc/ssl/certs/java/cacerts
