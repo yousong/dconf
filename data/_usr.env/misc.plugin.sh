@@ -24,6 +24,27 @@ path_prepend() {
 	eval export $var=\"$pathes\"
 }
 
+path_ignore_match() {
+	local var="$1"
+	local func="$2"
+	local orig=$(eval echo \$$var)
+	local pathes p
+
+	eval set -- ${orig//:/ }
+	# strip out ending slashes for each element in "$@"
+	eval set -- ${@%//}
+	eval set -- ${@%/}
+	while [ -n "$1" ]; do
+		p="$1"
+		if ! eval "$func $p"; then
+			pathes="$pathes:$p"
+		fi
+		shift
+	done
+	pathes="${pathes#:}"
+	eval export $var=\"$pathes\"
+}
+
 # netcat scan
 function ncs() {
 	local host="$1"
