@@ -59,6 +59,15 @@ sshfs_umount() {
 	_sshfs_action _sshfs_umount "$@"
 }
 
+sshfs_profiles() {
+	local name
+	local var
+
+	for name in $_sshfs_profiles; do
+		eval "echo \$_sshfs_profile_$name"
+	done
+}
+
 # Profile Format
 #
 #   ProfileName Username Hostname Port RemoteDir LocalDir Options
