@@ -17,6 +17,50 @@ openwrt_build_current() {
 	cd ..
 }
 
+openwrt_repo_dir=
+
+# Run this from inside OpenWrt/LEDE sub-project repo <currepo>.
+#
+# It will prepare commits in range origin/master..HEAD as patches and moves
+# them into predefined patches/ subdir in <currepo>/../lede
+#
+# NOTE: old patches already present in target patches/ dir will be all deleted
+openwrt_genpatch() {
+	local def='
+name=ubox;pkgdir=package/system/ubox
+name=procd;pkgdir=package/system/procd
+'
+	local currepo
+	local curname
+	local name dir
+	local patchdir fn
+	local line
+
+	currepo="$(git rev-parse --show-toplevel)"
+	if [ -z "$currepo" ]; then
+		return 1
+	fi
+	if [ -z "$openwrt_repo_dir" ]; then
+		openwrt_repo_dir="$(readlink -f "$currepo/../lede")"
+	fi
+	if [ ! -d "$openwrt_repo_dir" ]; then
+		__errmsg "openwrt_repo_dir $openwrt_repo_dir does not exist"
+		return 1
+	fi
+	curname="$(basename "$currepo")"
+	for line in $def; do
+		eval $line
+		if [ "$name" = "$curname" ]; then
+			patchdir="$openwrt_repo_dir/$pkgdir/patches"
+			for fn in $(ls "$patchdir"); do
+				rm -vf "$patchdir/$fn"
+			done
+			mkdir -p "$patchdir"
+			git format-patch --signoff --output-directory="$patchdir" origin/master..HEAD
+		fi
+	done
+}
+
 # Make --to xx --cc arguments for git-send-email from output of
 # get_maintainer.pl script.
 #
