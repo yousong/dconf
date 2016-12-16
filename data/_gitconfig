@@ -18,3 +18,10 @@
 
 [oh-my-zsh]
 	hide-dirty = 1
+
+[alias]
+	# exec shell command from repo's toplevel directory
+	#
+	#	git rev-parse --show-toplevel
+	#
+	exec = "!exec "
