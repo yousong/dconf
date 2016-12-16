@@ -47,22 +47,25 @@ usage: s_client <addr> [openssl-opts]
 examples:
 
   # basic info of certificate chain
-  s_client mos.meituan.com:443 2>/dev/null | crtshow
+  s_client mos.meituan.com 2>/dev/null | crtshow
 
   # verify and see the result (man 1 verify)
-  s_client mos.meituan.com:443 -CAfile `cafiles`
+  s_client mos.meituan.com -CAfile `cafiles`
 
   # save certificate chain into a single file (stdout)
-  s_client mos.meituan.com:443 | crtsave
+  s_client mos.meituan.com | crtsave
 
   # split out certificate in the chain into its own file (fN)
-  s_client mos.meituan.com:443 | crtsplit
-  s_client mos.meituan.com:443 | crtsplit crt
+  s_client mos.meituan.com | crtsplit
+  s_client mos.meituan.com | crtsplit crt
 EOF
 		return 1
 	else
 		shift
 		opts="$*"
+	fi
+	if [ "${addr%:*}" = "$addr" ]; then
+		addr="$addr:443"
 	fi
 	opts="-connect $addr -showcerts $opts"
 	openssl s_client $opts
