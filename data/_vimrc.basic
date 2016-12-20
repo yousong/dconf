@@ -208,9 +208,9 @@ nmap <C-L> :tabnext<CR>
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
 set laststatus=2		" always status line
 
-function! FindUpVimrc()
-	" Search from where the directory current file in up to the $HOME directory
-	" or / (root) directory until a .vimrc is found, then source that file
+function! DoFindSourceLocalVimrc()
+	"" Search from the directory where current file is, up to the $HOME directory
+	"" or / (root) directory until a .vimrc is found, then source that file
 	let l:d = fnamemodify(expand('%:p'), ':h')
 	if l:d[0] != '/'
 		" There are times the expand result is just a dot...
@@ -236,5 +236,4 @@ endfunction
 " not quite sure if it's secure
 set secure
 " Directory specific .vimrc
-call FindUpVimrc()
-
+call DoFindSourceLocalVimrc()
