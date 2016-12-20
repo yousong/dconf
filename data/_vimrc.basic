@@ -33,6 +33,14 @@ else
 end
 set wildmenu
 
+" this directory can be big after years of editing.
+"
+" Keep the most recent 50
+"
+"	for f in `ls -t $HOME/.vim.tmp.d | tail -n +50`; do
+"	  rm -vf "$HOME/.vim.tmp.d/$f";
+"	done
+"
 set undodir=$HOME/.vim.tmp.d
 set noswapfile
 
