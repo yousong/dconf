@@ -233,6 +233,18 @@ function! DoFindSourceLocalVimrc()
 		endif
 	endwhile
 endfunction
+
+function! DoProfile()
+	let l:log = expand("$HOME") . "/.vim.tmp.d/profile.log"
+	" use execute because :profile command expects a "raw" filename and will
+	" not dereference the provided variable
+	execute 'profile start ' . l:log
+	profile func *
+	profile file *
+	echomsg " - Pause profiling with :profile pause"
+	echomsg " - View result with :edit " . l:log
+endfunction
+
 " not quite sure if it's secure
 set secure
 " Directory specific .vimrc
