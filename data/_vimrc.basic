@@ -186,8 +186,9 @@ cnoremap \( \(\)<Left><Left>
 set tags=tags;$HOME
 " - tag show in vertically-splitted window or newly-created tab
 " - tag show in preview window
-noremap <M-[> :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
-noremap <M-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <leader>s :split<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <leader>v :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <leader>t :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 nnoremap <leader>. <Esc>:exec "ptjump " . expand("<cword>")<Esc>
 
 
