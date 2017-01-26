@@ -10,8 +10,8 @@ __errmsg() {
 PREFIX_USR="$HOME/.usr"
 PREFIX_USR_ENV="$HOME/.usr.env"
 
-export LC_ALL=en_GB.UTF-8
-export LANG=en_GB.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 export CLICOLOR=1
 export GREP_OPTIONS="--color=auto"
