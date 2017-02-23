@@ -27,8 +27,9 @@ openwrt_repo_dir=
 # NOTE: old patches already present in target patches/ dir will be all deleted
 openwrt_genpatch() {
 	local def='
-name=ubox;pkgdir=package/system/ubox
+name=libubox;pkgdir=package/libs/libubox
 name=procd;pkgdir=package/system/procd
+name=ubox;pkgdir=package/system/ubox
 '
 	local currepo
 	local curname
