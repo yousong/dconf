@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2016 (c) Yousong Zhou
+# Copyright 2015-2017 (c) Yousong Zhou
 #
 # Test
 #
@@ -7,23 +7,14 @@
 #
 # - test: download 1024B file in 1024 chunks
 #
-mget_url_file_size() {
-	local url="$1"
-	local size
-
-	size="$(wget --spider "$url" 2>&1 | grep 'Length:' | cut -d ' ' -f 2)"
-
-	if [ -n "$size" -a "$size" -ge 0 ]; then
-		echo "$size"
-	fi
-}
-
 _mget_chunk() {
-	local url="$1"
-	local total="$2"
-	local outn="$3"
-	local chunk="$4"
-	local offset="$5"
+	local cmd="$1"; shift
+	local url="$1"; shift
+	local total="$1"; shift
+	local outn="$1"; shift
+	local chunk="$1"; shift
+	local offset="$1"; shift
+	local bin
 	local existing startpos remaining
 
 	# size of last chunk needs to be done right
@@ -46,17 +37,64 @@ _mget_chunk() {
 	fi
 
 	__errmsg "mget: $outn: size $remaining from $startpos to $(($startpos + $remaining))"
-	wget --tries=5 --no-verbose --start-pos="$startpos" -O- "$url" | \
-		head -c "$remaining" >>"$outn" 2>/dev/null &
+	bin="$(_mget_bin_type $cmd)"
+	case "$bin" in
+		wget)
+			$cmd --tries=5 --no-verbose --start-pos="$startpos" -O- "$url" \
+				| head -c "$remaining" \
+				>>"$outn" 2>/dev/null &
+			;;
+		curl)
+			$cmd --retry 5 --silent --range "$startpos-$(($startpos+$remaining-1))" "$url" \
+				>>"$outn" 2>/dev/null &
+			;;
+		*)
+			return 1
+			;;
+	esac
 	_MGET_PIDS="$_MGET_PIDS $!"
 }
 
+_mget_bin_type() {
+	local cmd="$1"; shift
+
+	set -- $cmd
+	echo "${1##*/}"
+}
+
+_mget_url_file_size() {
+	local cmd="$1"; shift
+	local url="$1"; shift
+	local bin
+	local size
+
+	bin="$(_mget_bin_type "$cmd")"
+	case "$bin" in
+		wget)
+			size="$($cmd --spider "$url" 2>&1 | awk '/Length:/ { print $2 }')"
+			;;
+		curl)
+			size="$($cmd --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); print $2 }')"
+			;;
+		*)
+			return 1
+			;;
+	esac
+
+	if [ -n "$size" -a "$size" -ge 0 ]; then
+		echo "$size"
+	else
+		return 1
+	fi
+}
+
 _mget_total_chunk_fixup() {
-	local url="$1"
-	local count="$2"
+	local cmd="$1"; shift
+	local url="$1"; shift
+	local count="$1"; shift
 	local total chunk fixup
 
-	total="$(mget_url_file_size "$url")" || {
+	total="$(_mget_url_file_size "$cmd" "$url")" || {
 		__errmsg "mget: cannot get download size of $url"
 		return 1
 	}
@@ -68,10 +106,16 @@ _mget_total_chunk_fixup() {
 
 _mget_usage() {
 	cat >&2 <<EOF
-usage: mget <url> <count>
+usage: mget [--cmd <cmd>] [-h|--help] --url <url> --count <count>
 
-Open multiple wget to download <url>.  Each downloaded chunk will be named with
-suffix .N with N starting from 1, ending with <count>
+Open multiple <cmd> to download <url>.  Each downloaded chunk will be named
+with suffix .N with N starting from 1, ending with <count>
+
+Examples
+
+	mget --count 32 \\
+		--cmd 'curl --socks5-hostname localhost:1080' \\
+		--url http://example.com/f.200M
 
 TODO:
 
@@ -83,24 +127,56 @@ EOF
 }
 
 mget() {
-	local url="$1"
-	local count="$2"
+	local mget_url
+	local mget_count
+	local mget_cmd
 	local bunch total chunk
-	local out width
+	local outfn width
 	local i pos _chunk suffix
 
-	if [ "$#" -ne 2 ]; then
+	while true; do
+		if [ -z "$1" ]; then
+			break
+		fi
+		case "$1" in
+			--url)
+				mget_url="$2"
+				shift 2
+				;;
+			--count)
+				mget_count="$2"
+				shift 2
+				;;
+			--cmd)
+				mget_cmd="$2"
+				shift 2
+				;;
+			-h|--help)
+				_mget_usage
+				return 0
+				;;
+			*)
+				__errmsg "unknown option: $1"
+				_mget_usage
+				return 1
+				;;
+		esac
+	done
+	if [ -z "$mget_url" -o -z "$mget_count" ]; then
 		_mget_usage
 		return 1
 	fi
+	if [ -z "$mget_cmd" ]; then
+		mget_cmd=wget
+	fi
 
 	# prefix for output filename
-	out="$(basename "$url" | cut -f1 -d '?')"
-	width="${#count}"
+	outfn="$(basename "$mget_url" | cut -f1 -d '?')"
+	width="${#mget_count}"
 
-	# 'read' cannot be used in pipe because bash will consider execute it in
-	# subshell thus the result is not available to caller
-	bunch="$(_mget_total_chunk_fixup "$url" "$count")"
+	# 'read' cannot be used in pipe because it will be executed in subshell
+	# thus the result is not available to caller
+	bunch="$(_mget_total_chunk_fixup "$mget_cmd" "$mget_url" "$mget_count")"
 	total="${bunch%% *}"
 	chunk="${bunch% *}"
 	chunk="${chunk#* }"
@@ -120,7 +196,7 @@ mget() {
 		else
 			_chunk="$chunk"
 		fi
-		_mget_chunk "$url" "$total" "$out.$suffix" "$_chunk" "$pos"
+		_mget_chunk "$mget_cmd" "$mget_url" "$total" "$outfn.$suffix" "$_chunk" "$pos"
 		pos="$(($pos + $_chunk))"
 		i="$(($i + 1))"
 	done
