@@ -78,7 +78,7 @@ let g:ctrlp_user_command = {
 
 """"""" scrooloose/nerdtree
 "   q to quit
-nmap <C-N> :NERDTree<CR>
+nmap <C-N> :NERDTree %:p:h<CR>
 
 
 """"""" terryma/vim-multiple-cursors
