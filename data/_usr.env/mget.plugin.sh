@@ -52,6 +52,8 @@ _mget_chunk() {
 			return 1
 			;;
 	esac
+	# this records only pid of last process in the pipe, i.e. `head' command in
+	# the case of wget
 	_MGET_PIDS="$_MGET_PIDS $!"
 }
 
@@ -106,7 +108,7 @@ _mget_total_chunk_fixup() {
 
 _mget_usage() {
 	cat >&2 <<EOF
-usage: mget [--cmd <cmd>] [-h|--help] --url <url> --count <count>
+usage: mget [-h|--help] [--cmd <cmd>] [--output <output-prefix>] --url <url> --count <count>
 
 Open multiple <cmd> to download <url>.  Each downloaded chunk will be named
 with suffix .N with N starting from 1, ending with <count>
@@ -131,9 +133,13 @@ mget() {
 	local mget_count
 	local mget_cmd
 	local bunch total chunk
-	local outfn width
+	local width
 	local i pos _chunk suffix
 
+	mget_count=
+	mget_cmd=
+	mget_output=
+	mget_url=
 	while true; do
 		if [ -z "$1" ]; then
 			break
@@ -149,6 +155,10 @@ mget() {
 				;;
 			--cmd)
 				mget_cmd="$2"
+				shift 2
+				;;
+			--output)
+				mget_output="$2"
 				shift 2
 				;;
 			-h|--help)
@@ -170,8 +180,10 @@ mget() {
 		mget_cmd=wget
 	fi
 
-	# prefix for output filename
-	outfn="$(basename "$mget_url" | cut -f1 -d '?')"
+	# prefix of output filename
+	if [ -z "$mget_output" ]; then
+		mget_output="$(basename "$mget_url" | cut -f1 -d '?')"
+	fi
 	width="${#mget_count}"
 
 	# 'read' cannot be used in pipe because it will be executed in subshell
@@ -196,7 +208,7 @@ mget() {
 		else
 			_chunk="$chunk"
 		fi
-		_mget_chunk "$mget_cmd" "$mget_url" "$total" "$outfn.$suffix" "$_chunk" "$pos"
+		_mget_chunk "$mget_cmd" "$mget_url" "$total" "$mget_output.$suffix" "$_chunk" "$pos"
 		pos="$(($pos + $_chunk))"
 		i="$(($i + 1))"
 	done
