@@ -201,4 +201,5 @@ mget() {
 		i="$(($i + 1))"
 	done
 	wait
+	trap - INT
 }
