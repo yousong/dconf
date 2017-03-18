@@ -7,6 +7,7 @@
 #
 # - test: download 1024B file in 1024 chunks
 #
+
 _mget_chunk() {
 	local cmd="$1"; shift
 	local url="$1"; shift
@@ -84,17 +85,6 @@ _mget_url_file_size() {
 	fi
 }
 
-_mget_chunk_fixup() {
-	local total="$1"; shift
-	local count="$1"; shift
-	local chunk fixup
-
-	chunk="$(($total / $count))"
-	fixup="$(($total - $chunk * $count))"
-
-	echo $chunk $fixup
-}
-
 _mget_usage() {
 	cat >&2 <<EOF
 usage: mget [options] --url <url> --count <count>
@@ -117,18 +107,58 @@ Examples
 TODO:
 
 - allow specifying index to download
-- check chunk size on quit
 
 EOF
 }
 
+_mget_chunk_done() {
+	local outn="$1"; shift
+	local chunk="$1"; shift
+	local existing
+
+	if [ ! -f "$outn" ]; then
+		return 2
+	else
+		existing="$(stat -c "%s" "$outn")"
+		if [ "$existing" -eq "$chunk" ]; then
+			return 0
+		elif [ "$existing" -lt "$chunk" ]; then
+			return 1
+		else
+			return 3
+		fi
+	fi
+}
+
+_mget_all_chunk_done() {
+	local pos width i suffix
+	local _chunk _fixup
+	local rc
+
+	_fixup="$mget_fixup"
+	pos="$mget_pos_start"
+	width="${#mget_count}"
+	i=1
+	while [ "$pos" -lt "$mget_pos_end" ]; do
+		suffix="$(printf "%0${width}d" "$i")"
+		if [ "$_fixup" -gt 0 ]; then
+			_chunk="$(($mget_chunk + 1))"
+			_fixup="$(($_fixup - 1))"
+		else
+			_chunk="$mget_chunk"
+		fi
+
+		_mget_chunk_done "$mget_output.$suffix" "$_chunk"
+		rc="$?"; [ "$rc" = 0 ] || return "$rc"
+
+		pos="$(($pos + $_chunk))"
+		i="$(($i + 1))"
+	done
+}
+
 mget() {
-	local mget_url
-	local mget_count
-	local mget_cmd
-	local bunch total chunk
-	local width
-	local i pos _chunk suffix
+	local _chunk _fixup
+	local pos width i suffix
 
 	mget_count=
 	mget_cmd=
@@ -136,6 +166,9 @@ mget() {
 	mget_url=
 	mget_pos_start=0
 	mget_pos_end=
+	mget_total=
+	mget_chunk=
+	mget_fixup=
 	while true; do
 		if [ -z "$1" ]; then
 			break
@@ -188,7 +221,6 @@ mget() {
 	if [ -z "$mget_output" ]; then
 		mget_output="$(basename "$mget_url" | cut -f1 -d '?')"
 	fi
-	width="${#mget_count}"
 
 	if [ -z "$mget_pos_end" ]; then
 		mget_pos_end="$(_mget_url_file_size "$mget_cmd" "$mget_url")" || {
@@ -202,24 +234,25 @@ mget() {
 	fi
 	# 'read' cannot be used in pipe because it will be executed in subshell
 	# thus the result is not available to caller
-	total="$(($mget_pos_end - $mget_pos_start))"
-	bunch="$(_mget_chunk_fixup "$total" "$mget_count")"
-	chunk="${bunch% *}"
-	fixup="${bunch#* }"
+	mget_total="$(($mget_pos_end - $mget_pos_start))"
+	mget_chunk="$(($mget_total / $mget_count))"
+	mget_fixup="$(($mget_total - $mget_chunk * $mget_count))"
 
 	# sh must be used because zsh has shwordsplit off
 	_MGET_PIDS=''
 	trap 'trap - INT; sh -c "kill $_MGET_PIDS"' INT
 
+	_fixup="$mget_fixup"
 	pos="$mget_pos_start"
+	width="${#mget_count}"
 	i=1
 	while [ "$pos" -lt "$mget_pos_end" ]; do
 		suffix="$(printf "%0${width}d" "$i")"
-		if [ "$fixup" -gt 0 ]; then
-			_chunk="$(($chunk + 1))"
-			fixup="$(($fixup - 1))"
+		if [ "$_fixup" -gt 0 ]; then
+			_chunk="$(($mget_chunk + 1))"
+			_fixup="$(($_fixup - 1))"
 		else
-			_chunk="$chunk"
+			_chunk="$mget_chunk"
 		fi
 		_mget_chunk "$mget_cmd" "$mget_url" "$mget_output.$suffix" "$_chunk" "$pos"
 		pos="$(($pos + $_chunk))"
@@ -227,4 +260,6 @@ mget() {
 	done
 	wait
 	trap - INT
+
+	_mget_all_chunk_done
 }
