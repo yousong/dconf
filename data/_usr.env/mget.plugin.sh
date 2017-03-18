@@ -76,7 +76,7 @@ _mget_url_file_size() {
 			size="$($cmd --spider "$url" 2>&1 | awk '/Length:/ { print $2 }')"
 			;;
 		curl)
-			size="$($cmd --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); print $2 }')"
+			size="$($cmd --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); LEN=$2 } END { print LEN }')"
 			;;
 		*)
 			return 1
@@ -116,7 +116,7 @@ with suffix .N with N starting from 1, ending with <count>
 Examples
 
 	mget --count 32 \\
-		--cmd 'curl --socks5-hostname localhost:1080' \\
+		--cmd 'curl --location --socks5-hostname localhost:1080' \\
 		--url http://example.com/f.200M
 
 TODO:
