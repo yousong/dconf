@@ -104,10 +104,6 @@ Examples
         --cmd 'curl --location --socks5-hostname localhost:1080' \\
         --url http://example.com/f.200M
 
-TODO:
-
-- allow specifying index to download
-
 EOF
 }
 
