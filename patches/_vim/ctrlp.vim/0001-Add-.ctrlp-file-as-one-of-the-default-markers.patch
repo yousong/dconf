@@ -1,4 +1,4 @@
-From ba79db07855207faa0c38e54aa0a6ee697d019db Mon Sep 17 00:00:00 2001
+From 026f016d60055aeeaaa0a930f606f817c93fcb88 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers
@@ -8,23 +8,23 @@ g:ctrlp_user_command together in the order when finding root
 
 Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
 ---
- autoload/ctrlp.vim | 48 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ autoload/ctrlp.vim | 49 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
 diff --git a/autoload/ctrlp.vim b/autoload/ctrlp.vim
-index 04f1aa8..465ed9c 100644
+index 7b2d660..619b799 100644
 --- a/autoload/ctrlp.vim
 +++ b/autoload/ctrlp.vim
-@@ -208,6 +208,8 @@ let s:coretypes = [
- 	\ ['mru files', 'mru'],
- \ ]
+@@ -222,6 +222,8 @@ let s:coretype_names = {
+ 
+ let s:coretypes = map(copy(g:ctrlp_types), '[s:coretype_names[v:val], v:val]')
  
 +let s:defmarkers = ['.git', '.ctrlp', '.hg', '.svn', '.bzr', '_darcs']
 +
  " Get the options {{{2
  fu! s:opts(...)
  	unl! s:usrign s:usrcmd s:urprtmaps
-@@ -458,6 +460,27 @@ fu! s:UserCmd(lscmd)
+@@ -482,6 +484,27 @@ fu! s:UserCmd(lscmd)
  	en
  endf
  
@@ -52,7 +52,7 @@ index 04f1aa8..465ed9c 100644
  fu! s:lsCmd()
  	let cmd = s:usrcmd
  	if type(cmd) == 1
-@@ -471,20 +494,17 @@ fu! s:lsCmd()
+@@ -495,20 +518,17 @@ fu! s:lsCmd()
  	elsei type(cmd) == 4 && ( has_key(cmd, 'types') || has_key(cmd, 'fallback') )
  		let fndroot = []
  		if has_key(cmd, 'types') && cmd['types'] != {}
@@ -81,12 +81,13 @@ index 04f1aa8..465ed9c 100644
  	en
  endf
  " - Buffers {{{1
-@@ -1717,11 +1737,7 @@ fu! ctrlp#setpathmode(pmode, ...)
+@@ -1761,12 +1781,7 @@ fu! ctrlp#setpathmode(pmode, ...)
  		retu 1
  	elsei a:pmode == 'r'
  		let spath = a:0 ? a:1 : s:crfpath
 -		let markers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 -		if type(s:rmarkers) == 3 && !empty(s:rmarkers)
+-			if s:findroot(spath, s:rmarkers, 0, 0) != [] | retu 1 | en
 -			cal filter(markers, 'index(s:rmarkers, v:val) < 0')
 -			let markers = s:rmarkers + markers
 -		en
