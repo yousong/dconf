@@ -61,6 +61,7 @@ name=libubox;pkgdir=package/libs/libubox
 name=procd;pkgdir=package/system/procd
 name=ubox;pkgdir=package/system/ubox
 name=uci;pkgdir=package/system/uci
+name=opkg-lede;pkgdir=package/system/opkg
 '
 	local currepo
 	local curname
