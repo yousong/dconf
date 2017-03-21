@@ -8,14 +8,20 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-export PS1='\u@\h \w\$ '
+if [ -t 0 ]; then
+	# These settings are for interactive use only when the stdin is a terminal,
+	# otherwise bash will warn that "line editing not enabled" for the bind
+	# directives below
+	#
+	export PS1='\u@\h \w\$ '
 
-alias ll="ls -l"
-alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
+	alias ll="ls -l"
+	alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
-# help bind and "8.3 Readline Init File" of Bash manual
-# >Words are delimited by non-quoted shell metacharacters.
-bind '"\eh":shell-backward-word'
-bind '"\el":shell-forward-word'
+	# help bind and "8.3 Readline Init File" of Bash manual
+	# >Words are delimited by non-quoted shell metacharacters.
+	bind '"\eh":shell-backward-word'
+	bind '"\el":shell-forward-word'
+fi
 
 source ~/.usr.env/init-shell.sh
