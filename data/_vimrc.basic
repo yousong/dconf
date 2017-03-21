@@ -66,6 +66,20 @@ set fileformat=unix
 set fileencodings+=utf-8
 "au BufNewFile * :set fileencoding=utf-8
 
+
+" http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
+"
+" - C-N, C-P, keywords in complete option
+" - C-X
+"  - C-F, filename
+"  - C-O, omni
+"  - C-], tags
+"  - C-N, keywords in current file
+"
+set complete=.,b,w,t,i	" exclude unloaded buffers from the default
+set completeopt=menu,preview,longest
+						" insert only the longest matched part
+
 let mapleader=","
 
 if has("gui_running")
