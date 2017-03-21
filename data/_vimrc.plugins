@@ -15,7 +15,7 @@ Plugin 'tpope/vim-fugitive' " Required by vim-airline for git repo.
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'SirVer/ultisnips'	"The engine
 "Plugin 'honza/vim-snippets'	"The snippets
-Plugin 'Shougo/neocomplete.vim'
+"Plugin 'Shougo/neocomplete.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
@@ -84,17 +84,6 @@ nmap <C-N> :NERDTree %:p:h<CR>
 """"""" terryma/vim-multiple-cursors
 "   <C-N> for NERDTree
 let g:multi_cursor_next_key='<C-M>'
-" Compatibility with neocomplete, https://github.com/terryma/vim-multiple-cursors#multiple_cursors_beforemultiple_cursors_after-default-nothing
-function! Multiple_cursors_before()
-  if exists(':NeoCompleteLock')==2
-    exe 'NeoCompleteLock'
-  endif
-endfunction
-function! Multiple_cursors_after()
-  if exists(':NeoCompleteUnlock')==2
-    exe 'NeoCompleteUnlock'
-  endif
-endfunction
 
 
 """"""" ultisnips
@@ -103,18 +92,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-
-
-""""""" neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 
 """"""" plasticboy/vim-markdown
