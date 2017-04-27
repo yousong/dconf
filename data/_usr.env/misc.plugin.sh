@@ -46,7 +46,7 @@ path_ignore_match() {
 }
 
 # netcat scan
-function ncs() {
+ncs() {
 	local host="$1"
 	local port="$2"
 	local waitopt
@@ -58,7 +58,7 @@ function ncs() {
 	nc $waitopt -vz "$host" "$port"
 }
 
-function lc() {
+lc() {
 	# Note that this is for OpenWrt.
 	# directories like ./bin will not be searched by default.
 	pattern="$1"
