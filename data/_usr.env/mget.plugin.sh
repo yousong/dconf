@@ -96,6 +96,7 @@ with suffix .N with N starting from 1, ending with <count>
  --output <fn>      filename prefix (default to url basename)
  --pos-start <int>  zero-based start position (default to 0)
  --pos-end <int>    non-inclusive end position (default to Content-Length)
+ --combine          combine <fn>.N to <fn> and cleanup
  -h|--help          show this help text
 
 Examples
@@ -155,6 +156,8 @@ _mget_all_chunk_done() {
 mget() {
 	local _chunk _fixup
 	local pos width i suffix
+	local chunks
+	local combine=0
 
 	mget_count=
 	mget_cmd=
@@ -193,6 +196,10 @@ mget() {
 			--pos-end)
 				mget_pos_end="$2"
 				shift 2
+				;;
+			--combine)
+				combine=1
+				shift 1
 				;;
 			-h|--help)
 				_mget_usage
@@ -251,11 +258,18 @@ mget() {
 			_chunk="$mget_chunk"
 		fi
 		_mget_chunk "$mget_cmd" "$mget_url" "$mget_output.$suffix" "$_chunk" "$pos"
+		chunks="$chunks $mget_output.$suffix"
 		pos="$(($pos + $_chunk))"
 		i="$(($i + 1))"
 	done
 	wait
 	trap - INT
 
-	_mget_all_chunk_done
+	_mget_all_chunk_done && {
+		if [ "$combine" -gt 0 ]; then
+			# assumption: no space within each file
+			cat $chunks >"$mget_output"
+			rm -f $chunks
+		fi
+	}
 }
