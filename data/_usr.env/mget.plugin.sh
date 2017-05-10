@@ -219,6 +219,13 @@ mget() {
 	if [ -z "$mget_cmd" ]; then
 		mget_cmd=wget
 	fi
+	if [ "$mget_cmd" = "wget" ]; then
+		wget --help | grep -q -m1 -- --start-pos || {
+			__errmsg "mget: the wget doesn't support --start-pos option."
+			__errmsg "  please upgrade wget or try --cmd curl"
+			return 1
+		}
+	fi
 
 	# prefix of output filename
 	if [ -z "$mget_output" ]; then
