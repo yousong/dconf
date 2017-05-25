@@ -16,7 +16,6 @@ export LANG=en_US.UTF-8
 . $PREFIX_USR_ENV/misc.plugin.sh
 . $PREFIX_USR_ENV/sshfs.plugin.sh
 . $PREFIX_USR_ENV/openwrt.plugin.sh
-. $PREFIX_USR_ENV/mget.plugin.sh
 . $PREFIX_USR_ENV/openssl.plugin.sh
 . $PREFIX_USR_ENV/go.plugin.sh
 
@@ -33,6 +32,7 @@ setup_dev_env() {
 	export LDFLAGS="$LDFLAGS -L$PREFIX_USR/lib"
 }
 
+[ -d "$PREFIX_USR_ENV/bin" ] && path_prepend PATH "$PREFIX_USR_ENV/bin" peek
 [ -d "/sbin" ] && path_prepend PATH "/sbin" peek
 [ -d "/usr/sbin" ] && path_prepend PATH "/usr/sbin" peek
 [ "$__os" = "Darwin" ] && {

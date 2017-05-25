@@ -1,3 +1,4 @@
+#!/usr/bin/env bash -e
 #
 # Copyright 2015-2017 (c) Yousong Zhou
 #
@@ -8,13 +9,15 @@
 # - test: download 1024B file in 1024 chunks
 #
 
+__errmsg() {
+	echo "$1" >&2
+}
+
 _mget_chunk() {
-	local cmd="$1"; shift
 	local url="$1"; shift
 	local outn="$1"; shift
 	local chunk="$1"; shift
 	local offset="$1"; shift
-	local bin
 	local existing startpos remaining
 
 	if [ ! -f "$outn" ]; then
@@ -32,15 +35,14 @@ _mget_chunk() {
 	fi
 
 	__errmsg "mget: $outn: size $remaining from $startpos to $(($startpos + $remaining))"
-	bin="$(_mget_bin_type $cmd)"
-	case "$bin" in
+	case "$mget_bin_type" in
 		wget)
-			$cmd --tries=5 --no-verbose --start-pos="$startpos" -O- "$url" \
+			"${mget_cmd[@]}" --tries=5 --no-verbose --start-pos="$startpos" -O- "$url" \
 				| head -c "$remaining" \
 				>>"$outn" 2>/dev/null &
 			;;
 		curl)
-			$cmd --retry 5 --silent --range "$startpos-$(($startpos+$remaining-1))" "$url" \
+			"${mget_cmd[@]}" --retry 5 --silent --range "$startpos-$(($startpos+$remaining-1))" "$url" \
 				>>"$outn" 2>/dev/null &
 			;;
 		*)
@@ -52,26 +54,16 @@ _mget_chunk() {
 	_MGET_PIDS="$_MGET_PIDS $!"
 }
 
-_mget_bin_type() {
-	local cmd="$1"; shift
-
-	set -- $cmd
-	echo "${1##*/}"
-}
-
 _mget_url_file_size() {
-	local cmd="$1"; shift
 	local url="$1"; shift
-	local bin
 	local size
 
-	bin="$(_mget_bin_type "$cmd")"
-	case "$bin" in
+	case "$mget_bin_type" in
 		wget)
-			size="$($cmd --spider "$url" 2>&1 | awk '/Length:/ { print $2 }')"
+			size="$("${mget_cmd[@]}" --spider "$url" 2>&1 | awk '/Length:/ { print $2 }')"
 			;;
 		curl)
-			size="$($cmd --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); LEN=$2 } END { print LEN }')"
+			size="$("${mget_cmd[@]}" --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); LEN=$2 } END { print LEN }')"
 			;;
 		*)
 			return 1
@@ -87,23 +79,24 @@ _mget_url_file_size() {
 
 _mget_usage() {
 	cat >&2 <<EOF
-usage: mget [options] --url <url> --count <count>
+usage: mget [options] --url <url> --count <count> [[wget|curl] arg1 arg2]
 
-Open multiple <cmd> to download <url>.  Each downloaded chunk will be named
-with suffix .N with N starting from 1, ending with <count>
+Open multiple wget/curl processes to fetch <url>.  Each downloaded chunk
+will be named with suffix .N with N starting from 1, ending with <count>
 
- --cmd <cmd>        command to do the fetch (default to wget)
  --output <fn>      filename prefix (default to url basename)
  --pos-start <int>  zero-based start position (default to 0)
  --pos-end <int>    non-inclusive end position (default to Content-Length)
  --combine          combine <fn>.N to <fn> and cleanup
  -h|--help          show this help text
 
+Those arguments not part of mget will be passed to each wget/curl process
+
 Examples
 
-    mget --count 32 \\
-        --cmd 'curl --location --socks5-hostname localhost:1080' \\
-        --url http://example.com/f.200M
+    mget curl --location --socks5-hostname localhost:1080 -H 'Cookie: oh-my' \\
+		--url http://example.com/f.200M \\
+		--count 32
 
 EOF
 }
@@ -160,7 +153,7 @@ mget() {
 	local combine=0
 
 	mget_count=
-	mget_cmd=
+	mget_cmd=()
 	mget_output=
 	mget_url=
 	mget_pos_start=0
@@ -168,10 +161,7 @@ mget() {
 	mget_total=
 	mget_chunk=
 	mget_fixup=
-	while true; do
-		if [ -z "$1" ]; then
-			break
-		fi
+	while [ "$#" -gt 0 ]; do
 		case "$1" in
 			--url)
 				mget_url="$2"
@@ -179,10 +169,6 @@ mget() {
 				;;
 			--count)
 				mget_count="$2"
-				shift 2
-				;;
-			--cmd)
-				mget_cmd="$2"
 				shift 2
 				;;
 			--output)
@@ -206,9 +192,8 @@ mget() {
 				return 0
 				;;
 			*)
-				__errmsg "unknown option: $1"
-				_mget_usage
-				return 1
+				mget_cmd+=("$1")
+				shift 1
 				;;
 		esac
 	done
@@ -217,12 +202,13 @@ mget() {
 		return 1
 	fi
 	if [ -z "$mget_cmd" ]; then
-		mget_cmd=wget
+		mget_cmd=(wget)
 	fi
-	if [ "$mget_cmd" = "wget" ]; then
+	mget_bin_type="${mget_cmd[0]}"
+	if [ "$mget_bin_type" = "wget" ]; then
 		wget --help | grep -q -m1 -- --start-pos || {
 			__errmsg "mget: the wget doesn't support --start-pos option."
-			__errmsg "  please upgrade wget or try --cmd curl"
+			__errmsg "  please upgrade wget or use curl"
 			return 1
 		}
 	fi
@@ -233,7 +219,7 @@ mget() {
 	fi
 
 	if [ -z "$mget_pos_end" ]; then
-		mget_pos_end="$(_mget_url_file_size "$mget_cmd" "$mget_url")" || {
+		mget_pos_end="$(_mget_url_file_size "$mget_url")" || {
 			__errmsg "mget: cannot get download size of $mget_url"
 			return 1
 		}
@@ -264,7 +250,7 @@ mget() {
 		else
 			_chunk="$mget_chunk"
 		fi
-		_mget_chunk "$mget_cmd" "$mget_url" "$mget_output.$suffix" "$_chunk" "$pos"
+		_mget_chunk "$mget_url" "$mget_output.$suffix" "$_chunk" "$pos"
 		chunks="$chunks $mget_output.$suffix"
 		pos="$(($pos + $_chunk))"
 		i="$(($i + 1))"
@@ -280,3 +266,5 @@ mget() {
 		fi
 	}
 }
+
+mget "$@"

@@ -10,13 +10,13 @@ config() {
 		git clone https://github.com/seebi/dircolors-solarized.git "$dircolors_repo"
 	fi
 
-	cp "$DATA_DIR/_usr.env/" "$usrenv_dir"
+	cp -a "$DATA_DIR/_usr.env/" "$usrenv_dir"
 }
 
 collect() {
 	rm -rf "$DATA_DIR/_usr.env"
 	if [ -d "$HOME/.usr.env" ]; then
-		cp "$HOME/.usr.env" "$DATA_DIR/_usr.env"
+		cp -a "$HOME/.usr.env" "$DATA_DIR/_usr.env"
 	fi
 	rm -rf "$DATA_DIR/_usr.env/dircolors-solarized"
 	# .env.sh within _usr.env/ are not copied
