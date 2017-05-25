@@ -13,9 +13,6 @@ PREFIX_USR_ENV="$HOME/.usr.env"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export CLICOLOR=1
-export GREP_OPTIONS="--color=auto"
-
 . $PREFIX_USR_ENV/misc.plugin.sh
 . $PREFIX_USR_ENV/sshfs.plugin.sh
 . $PREFIX_USR_ENV/openwrt.plugin.sh
@@ -46,7 +43,7 @@ setup_dev_env() {
 	path_prepend PATH "/opt/local/sbin"
 	path_prepend PATH "/opt/local/libexec/gnubin"
 
-	# node
+	# NodeJS
 	if [ -d "/opt/local/lib/node_modules" ]; then
 		path_prepend NODE_PATH /opt/local/lib/node_modules
 	fi
@@ -60,16 +57,8 @@ path_prepend MANPATH "$PREFIX_USR/share/man"
 path_prepend PATH "$PREFIX_USR/sbin"
 path_prepend PATH "$PREFIX_USR/bin"
 
-# vim can be installed under $PREFIX_USR
-if type vim 1>/dev/null 2>&1; then
-	export EDITOR=vim
-	alias vi=vim
-else
-	export EDITOR=vi
-fi
-vim_basic() {
-	vim -u "$HOME/.vimrc.basic" "$@"
-}
+export CLICOLOR=1
+export GREP_OPTIONS="--color=auto"
 
 # colorful ls output
 _init_color() {
@@ -80,6 +69,17 @@ _init_color() {
 	eval $(dircolors "$colors")
 }
 _init_color
+
+# vim can be installed under $PREFIX_USR
+if type vim 1>/dev/null 2>&1; then
+	export EDITOR=vim
+	alias vi=vim
+else
+	export EDITOR=vi
+fi
+vim_basic() {
+	vim -u "$HOME/.vimrc.basic" "$@"
+}
 
 # Use GNU ls
 alias ls="ls --color=auto --group-directories-first"
