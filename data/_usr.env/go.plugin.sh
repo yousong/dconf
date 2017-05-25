@@ -13,12 +13,11 @@ go_select() {
 	local ver="$1"
 	local q="$2"
 	local goroot
-	local ver
 
 	if [ -z "$ver" ]; then
 		goroot="$(echo "$PREFIX_USR/go/goroot-"*)"
 		goroot="${goroot##* }"
-		ver="${goroot#*-}"
+		ver="${goroot##*-}"
 	else
 		goroot="$PREFIX_USR/go/goroot-$ver"
 	fi
