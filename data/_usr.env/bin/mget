@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 #
 # Copyright 2015-2017 (c) Yousong Zhou
 #
@@ -8,6 +8,9 @@
 #
 # - test: download 1024B file in 1024 chunks
 #
+
+# "!/usr/bin/env bash -e" will on Linux complaining it could not find "bash -e"
+set -e
 
 __errmsg() {
 	echo "$1" >&2
