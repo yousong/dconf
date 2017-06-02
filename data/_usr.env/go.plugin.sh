@@ -14,6 +14,9 @@ go_select() {
 	local q="$2"
 	local goroot
 
+	if [ ! -d "$PREFIX_USR/go" ]; then
+		return 1
+	fi
 	if [ -z "$ver" ]; then
 		goroot="$(echo "$PREFIX_USR/go/goroot-"*)"
 		goroot="${goroot##* }"
