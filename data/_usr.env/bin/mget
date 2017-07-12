@@ -90,7 +90,7 @@ will be named with suffix .N with N starting from 1, ending with <count>
  --output <fn>      filename prefix (default to url basename)
  --pos-start <int>  zero-based start position (default to 0)
  --pos-end <int>    non-inclusive end position (default to Content-Length)
- --combine          combine <fn>.N to <fn> and cleanup
+ --no-combine       keep <fn>.N as they are
  -h|--help          show this help text
 
 Those arguments not part of mget will be passed to each wget/curl process
@@ -153,7 +153,7 @@ mget() {
 	local _chunk _fixup
 	local pos width i suffix
 	local chunks
-	local combine=0
+	local combine=1
 
 	mget_count=
 	mget_cmd=()
@@ -186,8 +186,8 @@ mget() {
 				mget_pos_end="$2"
 				shift 2
 				;;
-			--combine)
-				combine=1
+			--no-combine)
+				combine=0
 				shift 1
 				;;
 			-h|--help)
