@@ -48,3 +48,20 @@ go_select() {
 	path_prepend PATH "$GOROOT/bin"
 	path_prepend PATH "$GOPATH/bin"
 }
+
+go_get() {
+	local group="$1"
+
+	case "$group" in
+		grpc)
+			go get -u google.golang.org/grpc
+			go get -u github.com/golang/protobuf/protoc-gen-go
+			;;
+		etcd)
+			go get -u github.com/coreos/etcd/cmd/etcd
+			go get -u github.com/coreos/etcd/cmd/etcdctl
+			;;
+		*)
+			go get "$@"
+	esac
+}
