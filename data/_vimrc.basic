@@ -223,32 +223,6 @@ nmap <C-L> :tabnext<CR>
 " http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
 set laststatus=2		" always status line
 
-function! DoFindSourceLocalVimrc()
-	"" Search from the directory where current file is, up to the $HOME directory
-	"" or / (root) directory until a .vimrc is found, then source that file
-	let l:d = fnamemodify(expand('%:p'), ':h')
-	if l:d[0] != '/'
-		" There are times the expand result is just a dot...
-		return 0
-	endif
-	let l:h = expand('$HOME')
-	while 1
-		if l:d == l:h
-			return 0
-		endif
-		let l:f = l:d . '/.vimrc'
-		if filereadable(l:f)
-			execute 'source ' . l:f
-			return 1
-		endif
-		if l:d == '/'
-			return 0
-		else
-			let l:d = fnamemodify(l:d, ':h')
-		endif
-	endwhile
-endfunction
-
 function! DoProfile()
 	let l:log = expand("$HOME") . "/.vim.tmp.d/profile.log"
 	" use execute because :profile command expects a "raw" filename and will
@@ -260,7 +234,34 @@ function! DoProfile()
 	echomsg " - View result with :edit " . l:log
 endfunction
 
-" not quite sure if it's secure
-set secure
-" Directory specific .vimrc
-call DoFindSourceLocalVimrc()
+if ! exists("*DoFindSourceLocalVimrc")
+	function! DoFindSourceLocalVimrc()
+		"" Search from the directory where current file is, up to the $HOME directory
+		"" or / (root) directory until a .vimrc is found, then source that file
+		let l:d = fnamemodify(expand('%:p'), ':h')
+		if l:d[0] != '/'
+			" There are times the expand result is just a dot...
+			return 0
+		endif
+		let l:h = expand('$HOME')
+		while 1
+			if l:d == l:h
+				return 0
+			endif
+			let l:f = l:d . '/.vimrc'
+			if filereadable(l:f)
+				execute 'source ' . l:f
+				return 1
+			endif
+			if l:d == '/'
+				return 0
+			else
+				let l:d = fnamemodify(l:d, ':h')
+			endif
+		endwhile
+	endfunction
+	" not quite sure if it's secure
+	set secure
+	" Directory specific .vimrc
+	call DoFindSourceLocalVimrc()
+endif
