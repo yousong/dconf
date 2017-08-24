@@ -20,6 +20,7 @@ on following platforms
 Config a new system.
 
 	./dconf.sh config
+	o_homedir=$PWD/nh ./dconf.sh config
 
 Collect current configuration
 

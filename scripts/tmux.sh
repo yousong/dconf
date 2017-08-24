@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-tmux_plugins_dir="$HOME/.tmux/plugins"
+tmux_plugins_dir="$o_homedir/.tmux/plugins"
 tpm_dir="$tmux_plugins_dir/tpm"
 
 config() {
@@ -11,7 +11,7 @@ config() {
 		git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
 	}
 
-	cp "$DATA_DIR/_tmux.conf" "$HOME/.tmux.conf"
+	cp "$DATA_DIR/_tmux.conf" "$o_homedir/.tmux.conf"
 
 	# from "tmux 2.1" to "21"
 	ver="$(tmux -V | tr -cd '0-9')"
@@ -21,13 +21,13 @@ config() {
 			-e '/set-option .* mouse /d' \
 			-e '/bind-key .* WheelUpPane /d' \
 			-e '/bind-key .* WheelDownPane /d' \
-			"$HOME/.tmux.conf"
+			"$o_homedir/.tmux.conf"
 	fi
 	__errmsg "tmux: install plugins with <PREFIX+I>."
 }
 
 collect() {
-	if [ -f "$HOME/.tmux.conf" ]; then
-		cp "$HOME/.tmux.conf" "$DATA_DIR/_tmux.conf"
+	if [ -f "$o_homedir/.tmux.conf" ]; then
+		cp "$o_homedir/.tmux.conf" "$DATA_DIR/_tmux.conf"
 	fi
 }

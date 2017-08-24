@@ -5,11 +5,11 @@
 config() {
 	local v
 
-	cp "$DATA_DIR/_gitconfig" "$HOME/.gitconfig"
+	cp "$DATA_DIR/_gitconfig" "$o_homedir/.gitconfig"
 }
 
 collect() {
-	if [ -f "$HOME/.gitconfig" ]; then
-		cp "$HOME/.gitconfig" "$DATA_DIR/_gitconfig"
+	if [ -f "$o_homedir/.gitconfig" ]; then
+		cp "$o_homedir/.gitconfig" "$DATA_DIR/_gitconfig"
 	fi
 }

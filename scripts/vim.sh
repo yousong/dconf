@@ -2,12 +2,12 @@
 
 . "$TOPDIR/env.sh"
 
-bundle_dir="$HOME/.vim/bundle"
+bundle_dir="$o_homedir/.vim/bundle"
 
 __vimrc_files="
-	$HOME/.vimrc
-	$HOME/.vimrc.plugins
-	$HOME/.vimrc.basic
+	$o_homedir/.vimrc
+	$o_homedir/.vimrc.plugins
+	$o_homedir/.vimrc.basic
 "
 
 config() {

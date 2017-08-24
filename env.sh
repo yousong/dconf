@@ -1,5 +1,6 @@
 TOPDIR="${TOPDIR:-$PWD}"
 
+o_homedir="${o_homedir:-$HOME}"
 DATA_DIR="$TOPDIR/data"
 PATCH_DIR="$TOPDIR/patches"
 SCRIPT_DIR="$TOPDIR/scripts"
@@ -16,6 +17,7 @@ _do() {
 
 	[ -n "$INCLUDE_ONLY" ] && return 0
 	mkdir -p "$DATA_DIR" "$PATCH_DIR" "$SCRIPT_DIR"
+	mkdir -p "$o_homedir"
 
 	__errmsg "working on $script"
 	. "$script"

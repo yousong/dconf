@@ -2,7 +2,7 @@
 
 . "$TOPDIR/env.sh"
 
-usrenv_dir="$HOME/.usr.env"
+usrenv_dir="$o_homedir/.usr.env"
 dircolors_repo="$usrenv_dir/dircolors-solarized"
 
 config() {
@@ -15,8 +15,8 @@ config() {
 
 collect() {
 	rm -rf "$DATA_DIR/_usr.env"
-	if [ -d "$HOME/.usr.env" ]; then
-		cp -a "$HOME/.usr.env" "$DATA_DIR/_usr.env"
+	if [ -d "$o_homedir/.usr.env" ]; then
+		cp -a "$o_homedir/.usr.env" "$DATA_DIR/_usr.env"
 	fi
 	rm -rf "$DATA_DIR/_usr.env/dircolors-solarized"
 	# .env.sh within _usr.env/ are not copied

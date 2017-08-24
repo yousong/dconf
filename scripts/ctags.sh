@@ -3,11 +3,11 @@
 . "$TOPDIR/env.sh"
 
 config() {
-	cp "$DATA_DIR/_ctags" "$HOME/.ctags"
+	cp "$DATA_DIR/_ctags" "$o_homedir/.ctags"
 }
 
 collect() {
-	if [ -f "$HOME/.ctags" ]; then
-		cp "$HOME/.ctags" "$DATA_DIR/_ctags"
+	if [ -f "$o_homedir/.ctags" ]; then
+		cp "$o_homedir/.ctags" "$DATA_DIR/_ctags"
 	fi
 }

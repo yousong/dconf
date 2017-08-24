@@ -5,11 +5,11 @@
 config() {
 	local v
 
-	cp "$DATA_DIR/_hgrc" "$HOME/.hgrc"
+	cp "$DATA_DIR/_hgrc" "$o_homedir/.hgrc"
 }
 
 collect() {
-	if [ -f "$HOME/.hgrc" ]; then
-		cp "$HOME/.hgrc" "$DATA_DIR/_hgrc"
+	if [ -f "$o_homedir/.hgrc" ]; then
+		cp "$o_homedir/.hgrc" "$DATA_DIR/_hgrc"
 	fi
 }

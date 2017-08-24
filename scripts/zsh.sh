@@ -2,7 +2,7 @@
 
 . "$TOPDIR/env.sh"
 
-ohmyzsh_dir="$HOME/.oh-my-zsh"
+ohmyzsh_dir="$o_homedir/.oh-my-zsh"
 
 config() {
 	[ -d "$ohmyzsh_dir" ] || {
@@ -14,12 +14,12 @@ config() {
 	git reset --hard master
 	git am "$PATCH_DIR/_oh-my-zsh"/*
 
-	cp "$DATA_DIR/_zshrc" "$HOME/.zshrc"
+	cp "$DATA_DIR/_zshrc" "$o_homedir/.zshrc"
 	__errmsg "zsh: use 'chsh -s /bin/zsh' to change shell."
 }
 
 collect() {
-	if [ -f "$HOME/.zshrc" ]; then
-		cp "$HOME/.zshrc" "$DATA_DIR/_zshrc"
+	if [ -f "$o_homedir/.zshrc" ]; then
+		cp "$o_homedir/.zshrc" "$DATA_DIR/_zshrc"
 	fi
 }

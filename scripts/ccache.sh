@@ -3,11 +3,11 @@
 . "$TOPDIR/env.sh"
 
 config() {
-	cp "$DATA_DIR/_ccache" "$HOME/.ccache"
+	cp "$DATA_DIR/_ccache" "$o_homedir/.ccache"
 }
 
 collect() {
-	if [ -f "$HOME/.ccache/ccache.conf" ]; then
-		cp "$HOME/.ccache/ccache.conf" "$DATA_DIR/_ccache/ccache.conf"
+	if [ -f "$o_homedir/.ccache/ccache.conf" ]; then
+		cp "$o_homedir/.ccache/ccache.conf" "$DATA_DIR/_ccache/ccache.conf"
 	fi
 }
