@@ -13,11 +13,12 @@ PREFIX_USR_ENV="$HOME/.usr.env"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-. $PREFIX_USR_ENV/misc.plugin.sh
-. $PREFIX_USR_ENV/sshfs.plugin.sh
-. $PREFIX_USR_ENV/openwrt.plugin.sh
-. $PREFIX_USR_ENV/openssl.plugin.sh
 . $PREFIX_USR_ENV/go.plugin.sh
+. $PREFIX_USR_ENV/misc.plugin.sh
+. $PREFIX_USR_ENV/openssl.plugin.sh
+. $PREFIX_USR_ENV/openwrt.plugin.sh
+. $PREFIX_USR_ENV/sshfs.plugin.sh
+. $PREFIX_USR_ENV/tmux.plugin.sh
 
 setup_dev_env() {
 	# MacPorts
