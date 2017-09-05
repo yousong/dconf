@@ -45,8 +45,8 @@ go_select() {
 	export GOROOT="$PREFIX_USR/go/goroot-$ver"
 	export GOPATH="$PREFIX_USR/go/gopath-$ver"
 	path_ignore_match PATH _go_path_match
-	path_prepend PATH "$GOROOT/bin"
-	path_prepend PATH "$GOPATH/bin"
+	path_action PATH "$GOROOT/bin"
+	path_action PATH "$GOPATH/bin"
 }
 
 go_get() {

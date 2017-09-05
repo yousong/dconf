@@ -1,11 +1,13 @@
-path_prepend() {
+path_action() {
 	local var="$1"
 	local new="$2"
-	local act="$3"
+	local action="${3:-prepend}"
 	local orig=$(eval echo \$$var)
 	local pathes p
 
-	pathes="$new"
+	if [ "$action" = prepend ]; then
+		pathes="$new"
+	fi
 	eval set -- ${orig//:/ }
 	# strip out ending slashes for each element in "$@"
 	eval set -- ${@%//}
@@ -14,13 +16,17 @@ path_prepend() {
 		p="$1"
 		if [ "$p" != "$new" ]; then
 			pathes="$pathes:$p"
-		elif [ "$act" = "peek" ]; then
+		elif [ "$action" = "peek" ]; then
 			# if it's alreay there, then just return without tampering its
 			# current location
 			return
 		fi
 		shift
 	done
+	if [ "$action" = append ]; then
+		pathes="$pathes:$new"
+		pathes="${pathes#:}"
+	fi
 	eval export $var=\"$pathes\"
 }
 
