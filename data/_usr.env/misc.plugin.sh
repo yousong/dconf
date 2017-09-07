@@ -133,54 +133,6 @@ if ! which perror &>/dev/null; then
 	}
 fi
 
-gitproxy() {
-		local action="$1"
-		local comm="$GITPROXY_COMM"
-		local user="$GITPROXY_USER"
-		local host="$GITPROXY_HOST"
-		local port="$GITPROXY_PORT"
-		local dport="$GITPROXY_DPORT"
-		local pid
-
-		# lsof can do, but it's not built-in in several distros.  E.g. show
-		# only PID of the process occupying IPv4 TCP port 7001
-		#
-		#	 lsof -i 4TCP:7001 -t
-		pid=$(netstat -4lntp 2>/dev/null | awk '$4 ~ /.*:7001$/ { v=$NF; sub("/.*","",v); print v }')
-		case "$action" in
-			close)
-				unset GIT_PROXY_COMMAND;
-				if [ -z "$pid" ]; then
-					__errmsg "no gitproxy was running"
-					return
-				fi
-				kill "$pid" && __errmsg "gitproxy (PID: $pid) has been closed"
-				return
-				;;
-			status)
-				if [ -z "$pid" ]; then
-					__errmsg "gitproxy is not running"
-					return
-				fi
-				__errmsg "gitproxy is running"
-				return
-				;;
-			*)
-				if [ -n "$pid" ]; then
-					export GIT_PROXY_COMMAND="$comm"
-					return
-				fi
-
-				ssh -nNTf -D "$dport" -p "$port" "$user@$host"
-				pid=$(netstat -4lntp 2>/dev/null | awk '$4 ~ /.*:7001$/ { v=$NF; sub("/.*","",v); print v }')
-				if [ -z "$pid" ]; then
-					__errmsg "open gitproxy failed"
-					return
-				fi
-				export GIT_PROXY_COMMAND="$comm"
-		esac
-}
-
 qa_python() {
 	if [ "$#" -lt 1 ]; then
 		__errmsg "Usage: $0 <project_path_or_python_filename>"
