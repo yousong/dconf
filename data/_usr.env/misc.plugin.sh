@@ -1,32 +1,48 @@
+# test
+#
+# unset n
+# path_action n append v0; echo $n
+# path_action n prepend v1; echo $n
+# path_action n peek_prepend v2; echo $n
+# path_action n peek_append v3; echo $n
+#
 path_action() {
 	local var="$1"
-	local new="$2"
-	local action="${3:-prepend}"
+	local action="${2}"
+	local new="$3"
 	local orig=$(eval echo \$$var)
+	local peek found
 	local pathes p
 
-	if [ "$action" = prepend ]; then
-		pathes="$new"
-	fi
+	case "$action" in
+		peek_*)
+			action="${action#*_}"
+			peek=1
+			;;
+	esac
 	eval set -- ${orig//:/ }
 	# strip out ending slashes for each element in "$@"
 	eval set -- ${@%//}
 	eval set -- ${@%/}
 	while [ -n "$1" ]; do
 		p="$1"
-		if [ "$p" != "$new" ]; then
+		if [ "$p" != "$new" -o -n "$peek" ]; then
 			pathes="$pathes:$p"
-		elif [ "$action" = "peek" ]; then
-			# if it's alreay there, then just return without tampering its
-			# current location
-			return
+		fi
+		if [ "$p" = "$new" ]; then
+			found=1
 		fi
 		shift
 	done
-	if [ "$action" = append ]; then
-		pathes="$pathes:$new"
-		pathes="${pathes#:}"
+	pathes="${pathes#:}"
+	if [ -z "$peek" -o -z "$found" ]; then
+		case "$action" in
+			prepend) pathes="$new:$pathes" ;;
+			append) pathes="$pathes:$new" ;;
+		esac
 	fi
+	pathes="${pathes#:}"
+	pathes="${pathes%:}"
 	eval export $var=\"$pathes\"
 }
 

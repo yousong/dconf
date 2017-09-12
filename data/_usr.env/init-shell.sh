@@ -33,20 +33,20 @@ setup_dev_env() {
 	export LDFLAGS="$LDFLAGS -L$PREFIX_USR/lib"
 }
 
-[ -d "$PREFIX_USR_ENV/bin" ] && path_action PATH "$PREFIX_USR_ENV/bin" peek
-[ -d "/sbin" ] && path_action PATH "/sbin" peek
-[ -d "/usr/sbin" ] && path_action PATH "/usr/sbin" peek
+[ -d "$PREFIX_USR_ENV/bin" ] && path_action PATH peek_prepend "$PREFIX_USR_ENV/bin"
+[ -d "/sbin" ] && path_action PATH peek_append "/sbin"
+[ -d "/usr/sbin" ] && path_action PATH peek_append "/usr/sbin"
 [ "$__os" = "Darwin" ] && {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
 
 	# MacPorts
-	path_action PATH "/opt/local/bin"
-	path_action PATH "/opt/local/sbin"
-	path_action PATH "/opt/local/libexec/gnubin"
+	path_action PATH prepend "/opt/local/bin"
+	path_action PATH prepend "/opt/local/sbin"
+	path_action PATH prepend "/opt/local/libexec/gnubin"
 
 	# NodeJS
 	if [ -d "/opt/local/lib/node_modules" ]; then
-		path_action NODE_PATH /opt/local/lib/node_modules
+		path_action NODE_PATH prepend /opt/local/lib/node_modules
 	fi
 }
 go_select "" quiet
@@ -54,9 +54,9 @@ go_select "" quiet
 if [ -z "$MANPATH" ]; then
 	MANPATH="$(manpath)"
 fi
-path_action MANPATH "$PREFIX_USR/share/man"
-path_action PATH "$PREFIX_USR/sbin"
-path_action PATH "$PREFIX_USR/bin"
+path_action MANPATH prepend "$PREFIX_USR/share/man"
+path_action PATH prepend "$PREFIX_USR/sbin"
+path_action PATH prepend "$PREFIX_USR/bin"
 
 export CLICOLOR=1
 export GREP_OPTIONS="--color=auto"
