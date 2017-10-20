@@ -52,9 +52,7 @@ _mget_chunk() {
 			return 1
 			;;
 	esac
-	# this records only pid of last process in the pipe, i.e. `head' command in
-	# the case of wget
-	_MGET_PIDS="$_MGET_PIDS $!"
+	_MGET_PGIDS="$(jobs -p | tr '\n' ' ')"
 }
 
 _mget_url_file_size() {
@@ -238,8 +236,8 @@ mget() {
 	mget_fixup="$(($mget_total - $mget_chunk * $mget_count))"
 
 	# sh must be used because zsh has shwordsplit off
-	_MGET_PIDS=''
-	trap 'trap - INT; sh -c "kill $_MGET_PIDS"' INT
+	_MGET_PGIDS=''
+	trap 'trap - INT; sh -c "kill $_MGET_PGIDS"' INT
 
 	_fixup="$mget_fixup"
 	pos="$mget_pos_start"
