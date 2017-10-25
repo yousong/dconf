@@ -71,7 +71,7 @@ _mget_url_file_size() {
 			;;
 	esac
 
-	if [ -n "$size" -a "$size" -ge 0 ]; then
+	if [ -n "$size" ] && [ "$size" -ge 0 ]; then
 		echo "$size"
 	else
 		return 1
