@@ -7,8 +7,24 @@ SCRIPT_DIR="$TOPDIR/scripts"
 
 alias cp="cp --no-preserve=all -R -T"
 
+o_aqua="$(/bin/echo -e '\e[1;40;36m')"
+o_gelb="$(/bin/echo -e '\e[1;40;33m')"
+o_rote="$(/bin/echo -e '\e[1;40;31m')"
+o_norm="$(/bin/echo -e '\e[0m')"
 __errmsg() {
 	echo "dconf: $1" >&2
+}
+
+__info() {
+	__errmsg "${o_aqua}info:${o_norm} $1"
+}
+
+__notice() {
+	__errmsg "${o_gelb}notice:${o_norm} $1"
+}
+
+__error() {
+	__errmsg "${o_rote}error:${o_norm} $1"
 }
 
 _do() {
@@ -19,11 +35,11 @@ _do() {
 	mkdir -p "$DATA_DIR" "$PATCH_DIR" "$SCRIPT_DIR"
 	mkdir -p "$o_homedir"
 
-	__errmsg "working on $script"
+	__info "working on $script"
 	. "$script"
 	if type "$action" 1>/dev/null 2>&1; then
 		"$action"
 	else
-		__errmsg "ignore non-defined action: $action"
+		__error "ignore non-defined action: $action"
 	fi
 }

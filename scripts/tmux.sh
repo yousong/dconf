@@ -23,7 +23,7 @@ config() {
 			-e '/bind-key .* WheelDownPane /d' \
 			"$o_homedir/.tmux.conf"
 	fi
-	__errmsg "tmux: install plugins with <PREFIX+I>."
+	__notice "tmux: install plugins with <PREFIX+I>."
 }
 
 collect() {

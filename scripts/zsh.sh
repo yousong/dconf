@@ -15,7 +15,7 @@ config() {
 	git am "$PATCH_DIR/_oh-my-zsh"/*
 
 	cp "$DATA_DIR/_zshrc" "$o_homedir/.zshrc"
-	__errmsg "zsh: use 'chsh -s /bin/zsh' to change shell."
+	__notice "zsh: use 'chsh -s /bin/zsh' to change shell."
 }
 
 collect() {

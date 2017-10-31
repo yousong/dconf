@@ -27,7 +27,7 @@ config() {
 		fi
 	done
 
-	__errmsg "vim: Installing Vundle packages, this may take quite a while."
+	__notice "vim: Installing Vundle packages, this may take a while."
 	vim +BundleInstall +qa
 
 	for plugin in $(find "$PATCH_DIR/_vim" -mindepth 1 -maxdepth 1 -type d 2>/dev/null); do
