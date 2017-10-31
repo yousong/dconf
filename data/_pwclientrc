@@ -1,0 +1,8 @@
+[options]
+default=lede
+
+[lede]
+url= http://patchwork.ozlabs.org/xmlrpc/
+
+username: yousong
+#password: passwor
