@@ -10,7 +10,7 @@ path_action() {
 	local var="$1"
 	local action="${2}"
 	local new="$3"
-	local orig=$(eval echo \$$var)
+	local orig="$(eval echo "\$$var")"
 	local peek found
 	local pathes p
 
