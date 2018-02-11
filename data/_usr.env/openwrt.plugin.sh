@@ -1,6 +1,6 @@
 openwrt_build_current() {
 	local prefix="$HOME/.usr"
-	local lua_path="$prefix/lib/lua/5.1"
+	local lua_path="$prefix/lib/lua5.1"
 	local build_dir="_t"
 
 	mkdir -p "$prefix"
@@ -8,7 +8,7 @@ openwrt_build_current() {
 	mkdir -p "$build_dir"
 
 	cd "$build_dir";
-	CFLAGS="-g3 -I$prefix/include -isystem=$prefix"	\
+	CFLAGS="-g3 -I$prefix/include -I$prefix/include/lua5.1 -isystem=$prefix"	\
 	LDFLAGS="-L$prefix/lib -Wl,-rpath,$prefix/lib"	\
 		cmake -DCMAKE_PREFIX_PATH="$prefix"			\
 		-DCMAKE_INSTALL_PREFIX="$prefix"			\
