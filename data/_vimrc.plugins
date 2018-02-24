@@ -143,3 +143,16 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+""""""" fatih/vim-go
+" Read vim-go-tutorial for more: https://github.com/fatih/vim-go-tutorial
+"
+" - Use ctrl-t to jump back
+" - Use :GoDefStack to view and select the jump stack
+augroup go_group
+	autocmd!
+	autocmd FileType go noremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR>
+	autocmd FileType go noremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR>
+	autocmd FileType go noremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR>
+	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
+augroup END
