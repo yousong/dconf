@@ -57,9 +57,11 @@ go_select() {
 	#	> There is no compatibility for compiled packages between different
 	#	> versions of go
 	#
-	# That's why $GOPATH needs to have a full $ver spec, not only part of it
+	# That's why we need to rebuild $GOPATH when changing go version.  The bad
+	# thing is that "go install '...'" can fail prematurely by bad packages.
+	# Remove $GOPATH/pkg is a safe measure to do
 	export GOROOT="$PREFIX_USR/go/goroot-$ver"
-	export GOPATH="$PREFIX_USR/go/gopath-$ver"
+	export GOPATH="$PREFIX_USR/go/gopath"
 	path_ignore_match PATH _go_path_match
 	path_action PATH prepend "$GOROOT/bin"
 	path_action PATH prepend "$GOPATH/bin"
