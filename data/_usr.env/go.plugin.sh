@@ -9,17 +9,33 @@ _go_path_match() {
 	fi
 }
 
+# list absolute pathes to goroot
+go_list() {
+	echo "$PREFIX_USR/go/goroot-"* \
+			| tr ' ' '\n' \
+			| sort --version-sort --reverse
+}
+
+# select and make permanent the selection
+#
+# The priority of version source to be consulted:
+#
+#  1. $1 arg
+#  2. content of $PREFIX_USR/go/.gover
+#  3. the most recent version of go_list
+#
 go_select() {
 	local ver="$1"
 	local q="$2"
+	local gover="$PREFIX_USR/go/.gover"
 	local goroot
 
 	if [ ! -d "$PREFIX_USR/go" ]; then
 		return 1
 	fi
+	[ -n "$ver" ] || ver="$(cat "$gover" 2>/dev/null)"
 	if [ -z "$ver" ]; then
-		goroot="$(echo "$PREFIX_USR/go/goroot-"*)"
-		goroot="${goroot##* }"
+		goroot="$(go_list | head -n1)"
 		ver="${goroot##*-}"
 	else
 		goroot="$PREFIX_USR/go/goroot-$ver"
@@ -47,6 +63,7 @@ go_select() {
 	path_ignore_match PATH _go_path_match
 	path_action PATH prepend "$GOROOT/bin"
 	path_action PATH prepend "$GOPATH/bin"
+	echo "$ver" >"$gover"
 }
 
 go_get() {
