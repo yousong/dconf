@@ -61,7 +61,9 @@ go_select() {
 	# thing is that "go install '...'" can fail prematurely by bad packages.
 	# Remove $GOPATH/pkg is a safe measure to do
 	export GOROOT="$PREFIX_USR/go/goroot-$ver"
-	export GOPATH="$PREFIX_USR/go/gopath"
+	export GOPATH="$HOME/go"
+
+	# clear out other "$PREFIX_USR/go" subdirs in PATH
 	path_ignore_match PATH _go_path_match
 	path_action PATH prepend "$GOROOT/bin"
 	path_action PATH prepend "$GOPATH/bin"
