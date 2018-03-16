@@ -50,29 +50,24 @@ DISABLE_AUTO_TITLE="true"
 # FIXME later we try antigen, https://github.com/zsh-users/antigen
 plugins+=(gitfast coffee sprunge)
 #plugins+=(django coffee)
-if which yum &>/dev/null; then
+if [ -n "$commands[yum]" ]; then
 	plugins+=(yum)
-elif which apt-get &>/dev/null; then
+elif [ -n "$commands[apt-get]" ]; then
 	plugins+=(debian)
-elif [ "$(uname -s)" = "Darwin" ]; then
+	# Search for ag in path and unalias it in case it is aliased.
+	if [ -n "$commands[ag]" ] && alias ag &>/dev/null; then
+		unalias ag &>/dev/null
+	fi
+elif [ -n "$commands[pbcopy]" ]; then
 	# copyfile, copy file content
 	# copydir,  copy pwd name
 	plugins+=(osx copyfile)
 fi
 #plugins+=(dirhistory)
-#
 
 # User configuration
-
-# Use the GNU ls with --color.
-source ~/.usr.env/init-shell.sh
-
 source $ZSH/oh-my-zsh.sh
-
-# Search for ag in path and unalias it in case it is aliased.
-if whence -p ag &>/dev/null && alias ag &>/dev/null; then
-	unalias ag &>/dev/null
-fi
+source ~/.usr.env/init-shell.sh
 
 setopt SHWORDSPLIT
 
