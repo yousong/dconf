@@ -33,6 +33,8 @@ else
 end
 set wildmenu
 
+set maxmempattern=2048	" maximum 2048KB for pattern matching
+
 " this directory can be big after years of editing.
 "
 " Keep the most recent 50
