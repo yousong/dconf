@@ -40,6 +40,8 @@ filetype plugin indent on		"required
 """"""" bling/vim-airline
 " disable tagbar integration (can be slow)
 let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
 " disable fugitive integration (takes up space)
 let g:airline#extensions#branch#enabled = 0
 " show filename (no (compressed) path) in the tab

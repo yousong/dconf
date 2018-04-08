@@ -46,6 +46,15 @@ set maxmempattern=2048	" maximum 2048KB for pattern matching
 set undodir=$HOME/.vim.tmp.d
 set noswapfile
 
+" turn off for performance
+function! TurnOffParenMatch()
+	set noshowmatch
+	if exists(':NoMatchParen')
+		:NoMatchParen
+	endif
+endfunction
+autocmd VimEnter * call TurnOffParenMatch()
+
 " Disable the autoformatting when pasting content from clipboard.
 "	set paste disable all of key mappings. So you can't use any vim plugins which provide key mappings.
 "	https://github.com/mattn/emmet-vim/issues/148#issuecomment-38451345
@@ -112,12 +121,6 @@ endif
 silent! colorscheme solarized
 
 
-" http://stackoverflow.com/questions/8247243/highlighting-the-current-line-number-in-vim
-"  - Clear highlighting after any :colorscheme and set background= call
-"  - Enable cursorline
-highlight clear CursorLine
-set cursorline
-
 " To let netrw be silent when opening a new window
 let g:netrw_silent=1
 
@@ -125,7 +128,6 @@ let g:netrw_silent=1
 augroup filetypedetect
 	au! VimEnter,BufRead,BufNewFile *.nc setfiletype nc
 	au! VimEnter,BufRead,BufNewFile *.as setfiletype actionscript
-	au! VimEnter,BufRead,BufNewFile *.go setfiletype go
 	au! VimEnter,BufRead,BufNewFile *.coffeeb setfiletype coffee
 augroup END
 
