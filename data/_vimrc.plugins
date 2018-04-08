@@ -155,4 +155,5 @@ augroup go_group
 	autocmd FileType go noremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR>
 	autocmd FileType go noremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR>
 	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
+	autocmd FileType go nested :TagbarOpen
 augroup END
