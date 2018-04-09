@@ -27,6 +27,11 @@ Collect current configuration
 	./dconf.sh collect
 	# git diff to find the change
 
+Refresh patches
+
+	# git format-patch --output-directory <patchdir> master..dconf
+	./dconf.sh refresh_patches
+
 ## Files and directories
 
 Git
