@@ -38,11 +38,11 @@ _do() {
 	mkdir -p "$DATA_DIR" "$PATCH_DIR" "$SCRIPT_DIR"
 	mkdir -p "$o_homedir"
 
-	__info "working on $script"
 	. "$script"
 	if type "$action" 1>/dev/null 2>&1; then
+		__info "working on $script"
 		"$action"
 	else
-		__error "ignore non-defined action: $action"
+		__notice "ignore non-defined action: $action"
 	fi
 }
