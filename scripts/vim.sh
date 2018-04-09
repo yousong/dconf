@@ -10,10 +10,14 @@ __vimrc_files="
 	$o_homedir/.vimrc.basic
 "
 
+__vim_foreach_patchdir() {
+	find "$PATCH_DIR/_vim" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+}
+
 config() {
 	local f dataf
 	local vundle_repo="$bundle_dir/Vundle.vim"
-	local plugin d
+	local patchdir d
 
 	if [ ! -d "$vundle_repo/.git" ]; then
 		git clone https://github.com/gmarik/Vundle.vim.git "$vundle_repo"
@@ -30,13 +34,13 @@ config() {
 	__notice "vim: Installing Vundle packages, this may take a while."
 	vim +BundleInstall +qa
 
-	for plugin in $(find "$PATCH_DIR/_vim" -mindepth 1 -maxdepth 1 -type d 2>/dev/null); do
-		d="$bundle_dir/${plugin##*/}"
+	for patchdir in `__vim_foreach_patchdir`; do
+		d="$bundle_dir/${patchdir##*/}"
 		if [ -d "$d" ]; then
 			cd "$d"
 			git checkout -b dconf >/dev/null 2>&1 || true
 			git reset --hard master
-			git am "$plugin"/*
+			git am "$patchdir"/*
 		fi
 	done
 }
@@ -49,6 +53,19 @@ collect() {
 			dataf="${f##*/.}"
 			dataf="$DATA_DIR/_$dataf"
 			cp "$f" "$dataf"
+		fi
+	done
+}
+
+refresh_patches() {
+	local d
+
+	for patchdir in `__vim_foreach_patchdir`; do
+		d="$bundle_dir/${patchdir##*/}"
+		if [ -d "$d" ]; then
+			cd "$d"
+			rm -vf "$patchdir"/*
+			git format-patch --output-directory "$patchdir" master..dconf
 		fi
 	done
 }
