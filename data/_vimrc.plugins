@@ -101,6 +101,10 @@ let g:vim_markdown_folding_disabled = 1
 
 
 """"""" majutsushi/tagbar
+let g:tagbar_sort = 0				" show symbols on order of presence
+let g:tagbar_silent = 1				" no auto info about symbol after updatetime
+let g:tagbar_compact = 1			" no help info at the above
+let g:tagbar_singleclick = 1		" jump on singleclick
 nmap <F8> :TagbarToggle<CR>
 
 let g:tagbar_type_smali = {
