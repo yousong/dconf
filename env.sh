@@ -9,13 +9,15 @@ alias cp="cp --no-preserve=all -R -T"
 
 # we need echo from coreutils;  BSD echo in OSX and built-in echo of /bin/sh do
 # not understand -e option
-o_echo="$(which -a echo | grep -v built-in | head -n1)"
-o_aqua="$("$o_echo" -e '\e[1;40;36m')"
-o_gelb="$("$o_echo" -e '\e[1;40;33m')"
-o_rote="$("$o_echo" -e '\e[1;40;31m')"
-o_norm="$("$o_echo" -e '\e[0m')"
+echo() {
+	command echo "$@"
+}
+o_aqua="$(echo -e '\e[1;40;36m')"
+o_gelb="$(echo -e '\e[1;40;33m')"
+o_rote="$(echo -e '\e[1;40;31m')"
+o_norm="$(echo -e '\e[0m')"
 __errmsg() {
-	"$o_echo" "dconf: $1" >&2
+	echo "dconf: $1" >&2
 }
 
 __info() {
