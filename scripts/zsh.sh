@@ -10,8 +10,7 @@ config() {
 	}
 
 	cd "$ohmyzsh_dir"
-	git checkout -b dconf >/dev/null 2>&1 || true
-	git reset --hard master
+	git checkout -B dconf origin/master
 	git am "$PATCH_DIR/_oh-my-zsh"/*
 
 	cp "$DATA_DIR/_zshrc" "$o_homedir/.zshrc"

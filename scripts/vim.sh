@@ -37,9 +37,9 @@ config() {
 	for patchdir in `__vim_foreach_patchdir`; do
 		d="$bundle_dir/${patchdir##*/}"
 		if [ -d "$d" ]; then
+			__info "vim: Patching $d"
 			cd "$d"
-			git checkout -b dconf >/dev/null 2>&1 || true
-			git reset --hard master
+			git checkout -B dconf origin/master
 			git am "$patchdir"/*
 		fi
 	done
