@@ -80,27 +80,6 @@ ncs() {
 	nc $waitopt -vz "$host" "$port"
 }
 
-lc() {
-	# Note that this is for OpenWrt.
-	# directories like ./bin will not be searched by default.
-	pattern="$1"
-	search_root="${2:-$(pwd)}"
-	find -P "$search_root" \( \
-			-path "$(pwd)/build_dir" \
-		-o -path "$(pwd)/bin" \
-		-o -path "$(pwd)/dl" \
-		-o -path "$(pwd)/tmp" \
-		-o -path "$(pwd)/staging_dir" \
-		-o -path "$(pwd)/feeds" \
-		-o -path "$(pwd)/docs" \
-		-o \( -type d -and -path "$(pwd)/.*/.*" \) \
-		\) -prune \
-		-o \( \
-			-type f \
-		\) -print0 \
-	| xargs -0 grep --color=auto -n -e "$pattern"
-}
-
 init_virtualenv() {
 	local cwd="$(pwd)"
 
