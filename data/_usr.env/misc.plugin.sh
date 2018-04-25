@@ -80,7 +80,7 @@ ncs() {
 	nc $waitopt -vz "$host" "$port"
 }
 
-init_virtualenv() {
+virtualenv_activate() {
 	local cwd="$(pwd)"
 
 	while true; do
