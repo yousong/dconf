@@ -70,7 +70,6 @@ set noexpandtab			" Openwrt and Linux kernel do not like space-expanded indentat
 
 set tabpagemax=31
 set number
-set autochdir
 set autoread
 
 set fileformat=unix
