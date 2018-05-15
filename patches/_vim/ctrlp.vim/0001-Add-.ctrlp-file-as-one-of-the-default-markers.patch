@@ -1,4 +1,4 @@
-From f863f75e4158199a5ee185ee8b2bfdf2d00661ce Mon Sep 17 00:00:00 2001
+From 1086e5d163df4fd834145e19544c8b07bbbf4f12 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers
@@ -12,7 +12,7 @@ Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
  1 file changed, 32 insertions(+), 17 deletions(-)
 
 diff --git a/autoload/ctrlp.vim b/autoload/ctrlp.vim
-index de60d77..87396b4 100644
+index 2a8ae88..c2093bf 100644
 --- a/autoload/ctrlp.vim
 +++ b/autoload/ctrlp.vim
 @@ -222,6 +222,8 @@ let s:coretype_names = {
@@ -81,7 +81,7 @@ index de60d77..87396b4 100644
  	en
  endf
  " - Buffers {{{1
-@@ -1766,12 +1786,7 @@ fu! ctrlp#setpathmode(pmode, ...)
+@@ -1768,12 +1788,7 @@ fu! ctrlp#setpathmode(pmode, ...)
  		retu 1
  	elsei a:pmode == 'r'
  		let spath = a:0 ? a:1 : s:crfpath
@@ -96,5 +96,5 @@ index de60d77..87396b4 100644
  	en
  	retu 0
 -- 
-2.13.0
+2.16.3
 
