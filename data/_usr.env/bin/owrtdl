@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+#
+# Copyright (C) 2018 Yousong Zhou <yszhou4tech@gmail.com>
+#
+# TODO
+#
+#  - Make it a webservice
+#  - Gen filelist locally by using modification time
+#  - Rsync the filelist file
+#
+set -o errexit
+
+o_self="$0"
+o_selfbase="$(basename "$o_self")"
+
+o_host="${o_host:-downloads.lede-project.org}"
+o_addr="${o_addr:-$o_host}"
+o_basehttpurl="${o_basehttpurl:-http://$o_host}"
+o_rsyncurl="${o_rsyncurl:-rsync://$o_host/downloads}"
+o_filelist="${o_filelist:-$HOME/owrtdl_filelist}"
+
+__errmsg() {
+	echo "$o_selfbase: $*" >&2
+}
+
+# Get file lists (circa. 104MB as of 2018-05-16)
+prep_filelist() {
+	rsync -r "$o_rsyncurl" >"$o_filelist"
+}
+
+lines_to_url() {
+	awk '{ print $NF }' | sed "s#^#$o_basehttpurl/#"
+}
+
+filter() {
+	local ffn1="$(mktemp -t owrtdl.tmp1.XXXXXXXXXXX)"
+	local ffn2="$(mktemp -t owrtdl.tmp2.XXXXXXXXXXX)"
+
+	trap "rm -f $ffn1 $ffn2" TERM INT
+	ln -sf "$o_filelist" "$ffn1"
+
+	while [ "$#" -gt 0 ]; do
+		case "$1" in
+			-v) grep -E -v "$2" "$ffn1" >"$ffn2"; shift 2; ;;
+			*) grep -E "$1" "$ffn1" >"$ffn2"; shift 1; ;;
+		esac
+		rm -f "$ffn1"
+		mv "$ffn2" "$ffn1"
+	done
+
+	cat "$ffn1" | lines_to_url
+	sleep 1000
+	rm -f "$ffn1" "$ffn2"
+}
+
+usage() {
+	cat >&2 <<EOF
+Usage: $o_selfbase [regex] [-v regex]
+
+    regex           grep -E regex
+    -v regex        grep -v -E regex
+
+Chain filters on "$o_filelist" and output download URLs
+
+Example
+
+    $o_selfbase -v '\.ipk$' /armvirt/ initramfs
+    $o_selfbase -v '\.ipk$' /malta/ initramfs snapshots
+    $o_selfbase -v '\.ipk$' /malta/ initramfs snapshots
+    $o_selfbase -v '\.ipk$' /x86/generic/ squashfs
+EOF
+}
+
+if [ ! -s "$o_filelist" ]; then
+	__errmsg "file list missing: $o_filelist"
+	__errmsg "downloading...  this can take a while"
+	prep_filelist
+	__errmsg "download complete"
+elif [ "$#" -lt 1 ]; then
+	usage
+	exit 0
+else
+	filter "$@"
+fi
