@@ -23,9 +23,17 @@ __errmsg() {
 	echo "$o_selfbase: $*" >&2
 }
 
+prep() {
+	__errmsg "file list missing: $o_filelist"
+	__errmsg "downloading...  this can take a while"
+	prep_
+	__errmsg "download complete"
+}
+
 # Get file lists (circa. 104MB as of 2018-05-16)
-prep_filelist() {
-	rsync -r "$o_rsyncurl" >"$o_filelist"
+prep_() {
+	rsync -r "$o_rsyncurl" >"$o_filelist.1"
+	mv "$o_filelist.1" "$o_filelist"
 }
 
 lines_to_url() {
@@ -55,9 +63,11 @@ filter() {
 usage() {
 	cat >&2 <<EOF
 Usage: $o_selfbase [regex] [-v regex]
+       $o_selfbase prep
 
-    regex           grep -E regex
-    -v regex        grep -v -E regex
+    prep                prepare filelist
+    <regex>             grep -E <regex>
+    -v <regex>          grep -v -E <regex>
 
 Chain filters on "$o_filelist" and output download URLs
 
@@ -70,14 +80,14 @@ Example
 EOF
 }
 
-if [ ! -s "$o_filelist" ]; then
-	__errmsg "file list missing: $o_filelist"
-	__errmsg "downloading...  this can take a while"
-	prep_filelist
-	__errmsg "download complete"
-elif [ "$#" -lt 1 ]; then
+if [ "$#" -lt 1 ]; then
 	usage
 	exit 0
+elif [ "$1" = prep ]; then
+	prep
 else
+	if [ ! -s "$o_filelist" ]; then
+		prep
+	fi
 	filter "$@"
 fi
