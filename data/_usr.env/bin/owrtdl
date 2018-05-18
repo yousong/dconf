@@ -49,7 +49,6 @@ filter() {
 	done
 
 	cat "$ffn1" | lines_to_url
-	sleep 1000
 	rm -f "$ffn1" "$ffn2"
 }
 
