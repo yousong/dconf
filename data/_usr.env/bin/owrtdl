@@ -19,6 +19,8 @@ o_basehttpurl="${o_basehttpurl:-http://$o_host}"
 o_rsyncurl="${o_rsyncurl:-rsync://$o_host/downloads}"
 o_filelist="${o_filelist:-$HOME/owrtdl_filelist}"
 
+o_fmt=url
+
 __errmsg() {
 	echo "$o_selfbase: $*" >&2
 }
@@ -40,34 +42,44 @@ lines_to_url() {
 	awk '{ print $NF }' | sed "s#^#$o_basehttpurl/#"
 }
 
+lines_to_line() {
+	cat
+}
+
 filter() {
 	local ffn1="$(mktemp -t owrtdl.tmp1.XXXXXXXXXXX)"
 	local ffn2="$(mktemp -t owrtdl.tmp2.XXXXXXXXXXX)"
+	local r
 
 	trap "rm -f $ffn1 $ffn2" TERM INT
 	ln -sf "$o_filelist" "$ffn1"
 
 	while [ "$#" -gt 0 ]; do
+		r=0
 		case "$1" in
-			-v) grep -E -v "$2" "$ffn1" >"$ffn2"; shift 2; ;;
-			*) grep -E "$1" "$ffn1" >"$ffn2"; shift 1; ;;
+			-v) r=1; grep -E -v "$2" "$ffn1" >"$ffn2"; shift 2; ;;
+			-f) o_fmt="$2"; shift 2; ;;
+			*) r=2; grep -E "$1" "$ffn1" >"$ffn2"; shift 1; ;;
 		esac
-		rm -f "$ffn1"
-		mv "$ffn2" "$ffn1"
+		if [ "$r" -gt 0 ]; then
+			rm -f "$ffn1"
+			mv "$ffn2" "$ffn1"
+		fi
 	done
 
-	cat "$ffn1" | lines_to_url
+	cat "$ffn1" | "lines_to_$o_fmt"
 	rm -f "$ffn1" "$ffn2"
 }
 
 usage() {
 	cat >&2 <<EOF
-Usage: $o_selfbase [regex] [-v regex]
+Usage: $o_selfbase [regex] [-v regex] [-f fmt]
        $o_selfbase prep
 
     prep                prepare filelist
     <regex>             grep -E <regex>
     -v <regex>          grep -v -E <regex>
+    -f <fmt>            <fmt> can be url, line
 
 Chain filters on "$o_filelist" and output download URLs
 
