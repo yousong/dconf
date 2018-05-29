@@ -19,3 +19,12 @@ tmux_do() {
 		esac
 	done
 }
+
+tmux_alert() {
+	while true; do
+		tmux display-message "#{window_index}:#{pane_index} alert: $@"
+		echo -n '> I am here'
+		sleep 0.8
+		echo -ne '\r'
+	done
+}
