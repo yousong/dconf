@@ -147,6 +147,30 @@ class Transport(xmlrpclib.SafeTransport):
                                                     request_body, debug)
 
 
+class DefaultConfigParser(ConfigParser.ConfigParser):
+    def __init__(self, *args, **kwargs):
+        self.__old_init__ = ConfigParser.ConfigParser.__init__
+        self.__old_has_option = ConfigParser.ConfigParser.has_option
+        self.__old_get = ConfigParser.ConfigParser.get
+        default_section = kwargs.pop('default_section', 'defaults')
+        self.__old_init__(self, *args, **kwargs)
+        self.default_section = default_section
+
+    def has_option(self, section, option):
+        return self.__old_has_option(self, section, option) \
+			or self.__old_has_option(self, self.default_section, option)
+
+    def get(self, section, option, *args):
+        try:
+            return self.__old_get(self, section, option, *args)
+        except ConfigParser.NoSectionError:
+            raise
+        except ConfigParser.NoOptionError:
+            if self.__old_has_option(self, self.default_section, option):
+                return self.__old_get(self, self.default_section, option)
+            else:
+                raise
+
 def project_id_by_name(rpc, linkname):
     """Given a project short name, look up the Project ID."""
     if len(linkname) == 0:
@@ -629,7 +653,7 @@ installed locales.
     do_three_way = args.get('3way')
 
     # grab settings from config files
-    config = ConfigParser.ConfigParser()
+    config = DefaultConfigParser(default_section='options')
     config.read([CONFIG_FILE])
 
     if not config.has_section('options') and os.path.exists(CONFIG_FILE):
