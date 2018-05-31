@@ -38,6 +38,7 @@ try:
 except ImportError:
     # Python 3 has renamed things.
     import configparser as ConfigParser
+import getpass
 import shutil
 import re
 import io
@@ -693,11 +694,13 @@ installed locales.
 
     transport = Transport(url)
     if action in auth_actions:
-        if config.has_option(project_str, 'username') and \
-                config.has_option(project_str, 'password'):
-            transport.set_credentials(
-                config.get(project_str, 'username'),
-                config.get(project_str, 'password'))
+        if config.has_option(project_str, 'username'):
+            username = config.get(project_str, 'username')
+            if config.has_option(project_str, 'password'):
+                password = config.get(project_str, 'password')
+            else:
+                password = getpass.getpass('auth required, password: ')
+            transport.set_credentials(username, password)
         else:
             sys.stderr.write("The %s action requires authentication, but no "
                              "username or password\nis configured\n" % action)
