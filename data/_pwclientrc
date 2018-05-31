@@ -1,8 +1,10 @@
+# The config file matches a patched version of pwclient.
+
 [options]
-default=lede
+url: http://patchwork.ozlabs.org/xmlrpc/
+username: yousong
+default: openwrt
 
 [lede]
-url= http://patchwork.ozlabs.org/xmlrpc/
 
-username: yousong
-#password: passwor
+[openwrt]
