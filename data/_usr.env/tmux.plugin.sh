@@ -22,9 +22,10 @@ tmux_do() {
 
 tmux_alert() {
 	while true; do
+		tmux select-pane -m # mark it
 		tmux display-message "#{window_index}:#{pane_index} alert: $@"
-		echo -n '> I am here'
-		sleep 0.8
-		echo -ne '\r'
+		sleep 5
+		tmux select-pane -M # unmark to make the next mark work
 	done
+	# unmark it by <prefix>,m
 }
