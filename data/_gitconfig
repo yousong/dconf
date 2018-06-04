@@ -16,6 +16,9 @@
 [sendemail]
 	signoff = true
 
+[format]
+	signature = false
+
 [oh-my-zsh]
 	hide-dirty = 1
 
