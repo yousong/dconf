@@ -78,6 +78,7 @@ cafiles() {
 /etc/ssl/certs/ca-bundle.crt
 /etc/ssl/certs/ca-bundle.trust.crt
 /opt/local/etc/openssl/cert.pem
+/usr/local/etc/openssl/cert.pem
 "
 	local f
 

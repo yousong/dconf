@@ -1,6 +1,6 @@
 " MacPorts install on Mac OSX
-if isdirectory("/opt/local/share/vim/vimfiles/")
-	set runtimepath+=/opt/local/share/vim/vimfiles/
+if isdirectory("/opt/local/share/vim/vimfiles")
+	set runtimepath+=/opt/local/share/vim/vimfiles
 endif
 source $VIMRUNTIME/vimrc_example.vim
 

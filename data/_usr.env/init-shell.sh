@@ -21,12 +21,25 @@ export LANG=en_US.UTF-8
 . $PREFIX_USR_ENV/sshfs.plugin.sh
 . $PREFIX_USR_ENV/tmux.plugin.sh
 
+if [ "$__os" = "Darwin" ]; then
+	if [ -x "/usr/local/bin/brew" ]; then
+		o_osx_who=brew
+		o_osx_where="/usr/local"
+	elif [ -x "/opt/local/bin/port" ]; then
+		o_osx_who=port
+		o_osx_where="/opt/local"
+	else
+		__errmsg "no package manager detected"
+		false
+	fi
+fi
+
 setup_dev_env() {
 	# MacPorts
 	[ "$__os" = "Darwin" ] && {
-		export CFLAGS="$CFLAGS -I/opt/local/include"
-		export CPPFLAGS="$CPPFLAGS -I/opt/local/include"
-		export LDFLAGS="$LDFLAGS -L/opt/local/lib"
+		export CFLAGS="$CFLAGS -I$o_osx_where/include"
+		export CPPFLAGS="$CPPFLAGS -I$o_osx_where/include"
+		export LDFLAGS="$LDFLAGS -L$o_osx_where/lib"
 	}
 	# User prefix dir
 	export CFLAGS="$CFLAGS -I$PREFIX_USR/include"
@@ -41,13 +54,16 @@ setup_dev_env() {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
 
 	# MacPorts
-	path_action PATH prepend "/opt/local/bin"
-	path_action PATH prepend "/opt/local/sbin"
-	path_action PATH prepend "/opt/local/libexec/gnubin"
+	path_action PATH prepend "$o_osx_where/bin"
+	path_action PATH prepend "$o_osx_where/sbin"
+	case "$o_osx_who" in
+		port) path_action PATH prepend "$o_osx_where/libexec/gnubin" ;;
+		brew) path_action PATH prepend "$o_osx_where/opt/coreutils/libexec/gnubin" ;;
+	esac
 
 	# NodeJS
-	if [ -d "/opt/local/lib/node_modules" ]; then
-		path_action NODE_PATH prepend /opt/local/lib/node_modules
+	if [ -d "$o_osx_where/lib/node_modules" ]; then
+		path_action NODE_PATH prepend $o_osx_where/lib/node_modules
 	fi
 }
 go_select "" quiet
