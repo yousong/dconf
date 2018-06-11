@@ -5,10 +5,19 @@ DATA_DIR="$TOPDIR/data"
 PATCH_DIR="$TOPDIR/patches"
 SCRIPT_DIR="$TOPDIR/scripts"
 
-alias cp="cp --no-preserve=all -R -T"
+cp --version | grep -q -m1 "GNU coreutils" \
+	|| which -s gcp \
+	|| {
+	# we need echo, cp from coreutils
+	#
+	# BSD echo in OSX and built-in echo of /bin/sh do not understand -e option
+	echo "GNU coreutils is required" >&2
+	exit 1
+}
 
-# we need echo from coreutils;  BSD echo in OSX and built-in echo of /bin/sh do
-# not understand -e option
+alias cp="gcp --no-preserve=all -R -T"
+
+# use the first one in path
 o_echo="$(which -a echo | grep -v built-in | head -n1)"
 o_aqua="$("$o_echo" -e '\e[1;40;36m')"
 o_gelb="$("$o_echo" -e '\e[1;40;33m')"
