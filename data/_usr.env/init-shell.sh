@@ -50,6 +50,9 @@ setup_dev_env() {
 [ -d "$o_usr_env/bin" ] && path_action PATH peek_prepend "$o_usr_env/bin"
 [ -d "/sbin" ] && path_action PATH peek_append "/sbin"
 [ -d "/usr/sbin" ] && path_action PATH peek_append "/usr/sbin"
+if [ -z "$MANPATH" ]; then
+	MANPATH="$(manpath)"
+fi
 [ "$__os" = "Darwin" ] && {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
 
@@ -57,8 +60,13 @@ setup_dev_env() {
 	path_action PATH prepend "$o_osx_where/bin"
 	path_action PATH prepend "$o_osx_where/sbin"
 	case "$o_osx_who" in
-		port) path_action PATH prepend "$o_osx_where/libexec/gnubin" ;;
-		brew) path_action PATH prepend "$o_osx_where/opt/coreutils/libexec/gnubin" ;;
+		port)
+			path_action PATH prepend "$o_osx_where/libexec/gnubin"
+			;;
+		brew)
+			path_action PATH prepend "$o_osx_where/opt/coreutils/libexec/gnubin"
+			path_action MANPATH prepend "$o_osx_where/opt/coreutils/libexec/gnuman"
+			;;
 	esac
 
 	# NodeJS
@@ -69,9 +77,6 @@ setup_dev_env() {
 go_select "" quiet
 rust_select "" quiet
 
-if [ -z "$MANPATH" ]; then
-	MANPATH="$(manpath)"
-fi
 path_action MANPATH prepend "$o_usr/share/man"
 path_action PATH prepend "$o_usr/sbin"
 path_action PATH prepend "$o_usr/bin"
