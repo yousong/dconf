@@ -1,7 +1,7 @@
 _rust_path_match() {
 	local dir="$1"
 
-	if [ "${dir#$PREFIX_USR/rust/}" != "$dir" ]; then
+	if [ "${dir#$o_usr/rust/}" != "$dir" ]; then
 		return 0
 	else
 		return 1
@@ -13,15 +13,15 @@ rust_select() {
 	local q="$2"
 	local rustroot
 
-	if [ ! -d "$PREFIX_USR/rust" ]; then
+	if [ ! -d "$o_usr/rust" ]; then
 		return 1
 	fi
 	if [ -z "$ver" ]; then
-		rustroot="$(echo "$PREFIX_USR/rust/"*)"
+		rustroot="$(echo "$o_usr/rust/"*)"
 		rustroot="${rustroot##* }"
 		ver="${rustroot##*-}"
 	else
-		rustroot="$PREFIX_USR/rust/rustroot-$ver"
+		rustroot="$o_usr/rust/rustroot-$ver"
 	fi
 	if [ ! -d "$rustroot" ]; then
 		if [ -z "$q" ]; then

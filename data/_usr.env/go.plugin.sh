@@ -2,7 +2,7 @@
 _go_path_match() {
 	local dir="$1"
 
-	if [ "${dir#$PREFIX_USR/go/}" != "$dir" ]; then
+	if [ "${dir#$o_usr/go/}" != "$dir" ]; then
 		return 0
 	else
 		return 1
@@ -11,7 +11,7 @@ _go_path_match() {
 
 # list absolute pathes to goroot
 go_list() {
-	echo "$PREFIX_USR/go/goroot-"* \
+	echo "$o_usr/go/goroot-"* \
 			| tr ' ' '\n' \
 			| sort --version-sort --reverse
 }
@@ -21,16 +21,16 @@ go_list() {
 # The priority of version source to be consulted:
 #
 #  1. $1 arg
-#  2. content of $PREFIX_USR/go/.gover
+#  2. content of $o_usr/go/.gover
 #  3. the most recent version of go_list
 #
 go_select() {
 	local ver="$1"
 	local q="$2"
-	local gover="$PREFIX_USR/go/.gover"
+	local gover="$o_usr/go/.gover"
 	local goroot
 
-	if [ ! -d "$PREFIX_USR/go" ]; then
+	if [ ! -d "$o_usr/go" ]; then
 		return 1
 	fi
 	[ -n "$ver" ] || ver="$(cat "$gover" 2>/dev/null)"
@@ -38,7 +38,7 @@ go_select() {
 		goroot="$(go_list | head -n1)"
 		ver="${goroot##*-}"
 	else
-		goroot="$PREFIX_USR/go/goroot-$ver"
+		goroot="$o_usr/go/goroot-$ver"
 	fi
 	if [ ! -d "$goroot" ]; then
 		if [ -z "$q" ]; then
@@ -60,10 +60,10 @@ go_select() {
 	# That's why we need to rebuild $GOPATH when changing go version.  The bad
 	# thing is that "go install '...'" can fail prematurely by bad packages.
 	# Remove $GOPATH/pkg is a safe measure to do
-	export GOROOT="$PREFIX_USR/go/goroot-$ver"
+	export GOROOT="$o_usr/go/goroot-$ver"
 	export GOPATH="$HOME/go"
 
-	# clear out other "$PREFIX_USR/go" subdirs in PATH
+	# clear out other "$o_usr/go" subdirs in PATH
 	path_ignore_match PATH _go_path_match
 	path_action PATH prepend "$GOROOT/bin"
 	path_action PATH prepend "$GOPATH/bin"

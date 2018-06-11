@@ -7,19 +7,19 @@ fi
 __errmsg() {
 	echo "$1" >&2
 }
-PREFIX_USR="$HOME/.usr"
-PREFIX_USR_ENV="$HOME/.usr.env"
+o_usr="$HOME/.usr"
+o_usr_env="$HOME/.usr.env"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-. $PREFIX_USR_ENV/go.plugin.sh
-. $PREFIX_USR_ENV/misc.plugin.sh
-. $PREFIX_USR_ENV/openssl.plugin.sh
-. $PREFIX_USR_ENV/openwrt.plugin.sh
-. $PREFIX_USR_ENV/rust.plugin.sh
-. $PREFIX_USR_ENV/sshfs.plugin.sh
-. $PREFIX_USR_ENV/tmux.plugin.sh
+. $o_usr_env/go.plugin.sh
+. $o_usr_env/misc.plugin.sh
+. $o_usr_env/openssl.plugin.sh
+. $o_usr_env/openwrt.plugin.sh
+. $o_usr_env/rust.plugin.sh
+. $o_usr_env/sshfs.plugin.sh
+. $o_usr_env/tmux.plugin.sh
 
 if [ "$__os" = "Darwin" ]; then
 	if [ -x "/usr/local/bin/brew" ]; then
@@ -42,12 +42,12 @@ setup_dev_env() {
 		export LDFLAGS="$LDFLAGS -L$o_osx_where/lib"
 	}
 	# User prefix dir
-	export CFLAGS="$CFLAGS -I$PREFIX_USR/include"
-	export CPPFLAGS="$CPPFLAGS -I$PREFIX_USR/include"
-	export LDFLAGS="$LDFLAGS -L$PREFIX_USR/lib"
+	export CFLAGS="$CFLAGS -I$o_usr/include"
+	export CPPFLAGS="$CPPFLAGS -I$o_usr/include"
+	export LDFLAGS="$LDFLAGS -L$o_usr/lib"
 }
 
-[ -d "$PREFIX_USR_ENV/bin" ] && path_action PATH peek_prepend "$PREFIX_USR_ENV/bin"
+[ -d "$o_usr_env/bin" ] && path_action PATH peek_prepend "$o_usr_env/bin"
 [ -d "/sbin" ] && path_action PATH peek_append "/sbin"
 [ -d "/usr/sbin" ] && path_action PATH peek_append "/usr/sbin"
 [ "$__os" = "Darwin" ] && {
@@ -72,16 +72,16 @@ rust_select "" quiet
 if [ -z "$MANPATH" ]; then
 	MANPATH="$(manpath)"
 fi
-path_action MANPATH prepend "$PREFIX_USR/share/man"
-path_action PATH prepend "$PREFIX_USR/sbin"
-path_action PATH prepend "$PREFIX_USR/bin"
+path_action MANPATH prepend "$o_usr/share/man"
+path_action PATH prepend "$o_usr/sbin"
+path_action PATH prepend "$o_usr/bin"
 
 export CLICOLOR=1
 export GREP_OPTIONS="--color=auto"
 
 # colorful ls output
 _init_color() {
-	local colors="$PREFIX_USR_ENV/dircolors-solarized/dircolors.ansi-dark"
+	local colors="$o_usr_env/dircolors-solarized/dircolors.ansi-dark"
 	[ -r "$colors" ] || {
 		__errmsg "$colors not found."
 	}
@@ -89,7 +89,7 @@ _init_color() {
 }
 _init_color
 
-# vim can be installed under $PREFIX_USR
+# vim can be installed under $o_usr
 if type vim 1>/dev/null 2>&1; then
 	export EDITOR=vim
 	alias vi=vim
@@ -115,6 +115,6 @@ man() {
 		man "$@"
 }
 
-if [ -r "$PREFIX_USR_ENV/.env.sh" ]; then
-	. "$PREFIX_USR_ENV/.env.sh"
+if [ -r "$o_usr_env/.env.sh" ]; then
+	. "$o_usr_env/.env.sh"
 fi
