@@ -85,7 +85,19 @@ nmap <C-N> :NERDTree %:p:h<CR>
 
 """"""" terryma/vim-multiple-cursors
 "   <C-N> for NERDTree
-let g:multi_cursor_next_key='<C-M>'
+"
+" It's okay if the tty converts C-M input to newline as long as it works
+" inside Vim.  See "stty -icrnl" for details
+let g:multi_cursor_use_default_mapping = 0
+let g:multi_cursor_start_word_key      = '<C-m>'
+let g:multi_cursor_start_key           = 'g<C-m>'
+let g:multi_cursor_next_key            = '<C-m>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+let g:multi_cursor_select_all_word_key = '<A-m>'
+let g:multi_cursor_select_all_key      = 'g<A-m>'
+
 
 
 """"""" ultisnips
