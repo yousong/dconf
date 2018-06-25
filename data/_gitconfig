@@ -12,6 +12,7 @@
 	smtpencryption = tls
 	smtpuser = yszhou4tech@gmail.com
 	chainreplyto = false
+	xmailer = false
 
 [sendemail]
 	signoff = true
