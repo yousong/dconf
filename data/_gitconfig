@@ -17,7 +17,7 @@
 	signoff = true
 
 [format]
-	signature = false
+	signature =
 
 [oh-my-zsh]
 	hide-dirty = 1
