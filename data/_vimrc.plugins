@@ -25,12 +25,13 @@ Plugin 'majutsushi/tagbar'
 Plugin 'Align'				"Name of vim-script.org package mirrors.
 Plugin 'tomasr/molokai'		"colorscheme
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'kchmck/vim-coffee-script'	"languages
-Plugin 'mattn/emmet-vim'
-Plugin 'fatih/vim-go'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'groenewege/vim-less'
-Plugin 'alderz/smali-vim'
+Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
+Plugin 'mattn/emmet-vim'			" L: HTML
+Plugin 'fatih/vim-go'				" L: Go
+Plugin 'plasticboy/vim-markdown'	" L: Markdown
+Plugin 'groenewege/vim-less'		" L: LESS
+Plugin 'python-mode/python-mode'	" L: Python
+Plugin 'alderz/smali-vim'			" L: Smali
 call vundle#end()
 filetype plugin indent on		"required
 
@@ -141,3 +142,18 @@ augroup go_group
 	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
 	autocmd FileType go nested :TagbarOpen
 augroup END
+
+
+""""""" python-mode/python-mode
+" we have tagbar
+let g:pymode_folding = 0
+
+" regenerate on write can drag vim to unusable state
+let g:pymode_rope = 1
+let g:pymode_rope_regenerate_on_write = 0
+let g:pymode_rope_goto_definition_bind = '<C-]>'
+
+" lint with pyflakes just like qa_python() shell func does
+let g:pymode_lint = 1
+let g:pymode_lint_checkers = ['pyflakes']
+let g:pymode_lint_ignore = ['E501', 'E272', 'E221', 'E225', 'E303', 'W601', 'E302', 'E502', 'W291', 'E261', 'E262', 'W391', 'E127', 'E128', 'E126', 'E123', 'E125', 'E124', 'E711', 'E712', 'E121', 'E111', 'E265', 'E131', 'E226', 'E241', 'E701', 'D105']

@@ -1,4 +1,4 @@
-From 1086e5d163df4fd834145e19544c8b07bbbf4f12 Mon Sep 17 00:00:00 2001
+From 775b11960aa96939fb696f63ee2085ff22111357 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers
@@ -95,6 +95,3 @@ index 2a8ae88..c2093bf 100644
  		if s:findroot(spath, markers, 0, 0) != [] | retu 1 | en
  	en
  	retu 0
--- 
-2.16.3
-

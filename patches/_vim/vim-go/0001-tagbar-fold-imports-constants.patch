@@ -1,7 +1,7 @@
-From 125b9cba6963fcd03f20cf12c9f9ff1d201125fe Mon Sep 17 00:00:00 2001
+From 272ae4c3f58226f1a7e49063429ce512005541d9 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Mon, 9 Apr 2018 09:55:11 +0800
-Subject: [PATCH 1/2] tagbar: fold imports,constants
+Subject: [PATCH] tagbar: fold imports,constants
 
 Too many imports can slow the "redraw" command invoked by tagbar with a
 visible delay.
@@ -26,6 +26,3 @@ index 2d22fd7..f8914fb 100644
            \ 'v:variables',
            \ 't:types',
            \ 'n:interfaces',
--- 
-2.16.3
-

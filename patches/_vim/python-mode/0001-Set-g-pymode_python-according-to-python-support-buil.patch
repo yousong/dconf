@@ -1,0 +1,41 @@
+From 6289989982c57093c0690dbfa4aaefde76cf73fd Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <yszhou4tech@gmail.com>
+Date: Wed, 27 Jun 2018 19:09:33 +0800
+Subject: [PATCH] Set g:pymode_python according to python support builtin in
+ Vim
+
+Instead of whether there exists a corresponding Python executable
+---
+ plugin/pymode.vim | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/plugin/pymode.vim b/plugin/pymode.vim
+index 218d4d8..7cdb248 100644
+--- a/plugin/pymode.vim
++++ b/plugin/pymode.vim
+@@ -19,10 +19,12 @@ filetype plugin on
+ " OPTIONS: {{{
+ 
+ " Vim Python interpreter. Set to 'disable' for remove python features.
+-if executable('python3')
++if has("python3")
+     call pymode#default('g:pymode_python', 'python3')
+-else
++elseif has("python")
+     call pymode#default('g:pymode_python', 'python')
++else
++    call pymode#default('g:pymode_python', 'disable')
+ endif
+ 
+ " Disable pymode warnings
+@@ -284,10 +286,6 @@ if !len(g:pymode_python)
+         let g:pymode_python = 'python'
+     elseif exists('g:_uspy') && g:_uspy == ':py3'
+         let g:pymode_python = 'python3'
+-    elseif has("python")
+-        let g:pymode_python = 'python'
+-    elseif has("python3")
+-        let g:pymode_python = 'python3'
+     else
+         let g:pymode_python = 'disable'
+     endif
