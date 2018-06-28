@@ -133,51 +133,55 @@ augroup END
 " TeX editing
 augroup tex_group
 	autocmd!
-	au BufNewFile,BufRead *.tex set textwidth=67
-	au BufNewFile,BufRead *.tex set formatoptions+=mM
+	au BufNewFile,BufRead *.tex set
+				\ textwidth=67
+				\ formatoptions+=mM
+				\ tabstop=2
+				\ softtabstop=2
+				\ shiftwidth=2
+				\ expandtab
 	au BufNewFile,BufRead *.tex let g:tex_ignore_makefile=1
 	au BufNewFile,BufRead *.tex let g:tex_flavor="xetex"
 	au BufNewFile,BufRead *.tex compiler tex
-	" Open the produced PDF file
-	au BufNewFile,BufRead *.tex map <C-P> :silent exec("!" . expand("%:r") . ".pdf")<CR>
-	au BufNewFile,BufRead *.tex set tabstop=2
-	au BufNewFile,BufRead *.tex set softtabstop=2
-	au BufNewFile,BufRead *.tex set shiftwidth=2
-	au BufNewFile,BufRead *.tex set expandtab
+	au BufNewFile,BufRead *.tex map <C-P> :silent exec("!" . expand("%:r") . ".pdf")<CR> " Open the produced PDF file
 augroup END
 
 augroup python_group
 	autocmd!
-	autocmd FileType python set expandtab
-	autocmd FileType python set autoindent
-	autocmd FileType python set tabstop=4
-	autocmd FileType python set shiftwidth=4
-	autocmd FileType python set softtabstop=4
-	autocmd FileType python set modeline
-	autocmd FileType python set smartindent
-	autocmd FileType python set cursorcolumn
-	"autocmd FileType python set cinwords=if,elif,else,for,while,try,except,finally,def,class
-	"autocmd FileType python imap :<CR> :<CR><TAB>
+	autocmd FileType python set
+				\ expandtab
+				\ autoindent
+				\ tabstop=4
+				\ shiftwidth=4
+				\ softtabstop=4
+				\ modeline
+				\ smartindent
+				\ cursorcolumn
 augroup END
 
 augroup make_group
 	autocmd!
-	autocmd FileType make set noexpandtab
-	autocmd FileType make set shiftwidth=8
-	autocmd FileType make set tabstop=8
-	autocmd FileType make set softtabstop=8
+	autocmd FileType make set
+				\ noexpandtab
+				\ shiftwidth=8
+				\ tabstop=8
+				\ softtabstop=8
 augroup END
 
 augroup markdown_group
 	autocmd!
-	autocmd FileType mkd set noexpandtab
-	autocmd FileType mkd set tabstop=4 shiftwidth=4 softtabstop=4
-	autocmd FileType mkd inoremap ` ``<Left>
+	autocmd FileType markdown set
+				\ noexpandtab
+				\ tabstop=4
+				\ shiftwidth=4
+				\ softtabstop=4
+	autocmd FileType markdown inoremap ` ``<Left>
 augroup END
 
 augroup text_group
 	autocmd!
-	autocmd FileType text set copyindent			"Copy the structure of the existing lines indent when autoindenting a new line.
+	autocmd FileType text set
+				\ copyindent			"Copy the structure of the existing lines indent when autoindenting a new line.
 augroup END
 
 
