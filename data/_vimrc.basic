@@ -55,18 +55,41 @@ function! TurnOffParenMatch()
 endfunction
 autocmd VimEnter * call TurnOffParenMatch()
 
-" Disable the autoformatting when pasting content from clipboard.
-"	set paste disable all of key mappings. So you can't use any vim plugins which provide key mappings.
-"	https://github.com/mattn/emmet-vim/issues/148#issuecomment-38451345
-" set paste				"Put Vim in Paste mode.
+" autoindent, Copy indent from current line when starting a new line.  Affect
+" 'gq' command
 "
-set cindent				"Enables automatic C program indenting.  See also cinkeys, cinoptions
-set formatoptions+=cro	"wrap comments using textwidth and insert current comment leader on <Enter>, 'o', or 'O'
+" copyindent, Copy the characters for indent when autoindenting, without
+" regard for expandtab, a \t remains a \t
+"
+" cindent, Enables automatic C-line program indenting.  See also cinkeys,
+" cinoptions
+"
+" smartindent, also for other languages;  has no effect when cindent is on or
+" indentexpr is set
+"
+" formatoptions, no effect when paste is set
+"
+"   c	auto-wrap comments using textwidth
+"   r	auto-insert current comment leader after hitting 'o' or 'O' in N-mode
+"   o	auto-insert current comment leader after hitting <Enter> in I-mode
+"
+" paste, when enabled, a lot of things get reset/disabled.  Disable it and
+" retry if things do not work as expected
+set formatoptions+=cro
 
-set softtabstop=4		"Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS>.
-set shiftwidth=4		"Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
-set tabstop=4			"Number of spaces that a <Tab> in the file counts for.
-set noexpandtab			" Openwrt and Linux kernel do not like space-expanded indentation...
+" tabstop, number of spaces a \t character counts for
+"
+" softtabstop, number of spaces a tab counts for while performing editing
+" operations.  Uses \t and \x20 to fill to fulfil the feel.  disabled when
+" set to 0 (default)
+"
+" shiftwidth, used for cindent, <<, >>, etc.  use tabstop when 0
+"
+" expandtab, in insert mode, use tabstop spaces to replace \t
+set tabstop=4
+set softtabstop=0
+set shiftwidth=0
+set noexpandtab
 
 set tabpagemax=31
 set number
@@ -134,12 +157,10 @@ augroup END
 augroup tex_group
 	autocmd!
 	au BufNewFile,BufRead *.tex set
+				\ tabstop=2
+				\ expandtab
 				\ textwidth=67
 				\ formatoptions+=mM
-				\ tabstop=2
-				\ softtabstop=2
-				\ shiftwidth=2
-				\ expandtab
 	au BufNewFile,BufRead *.tex let g:tex_ignore_makefile=1
 	au BufNewFile,BufRead *.tex let g:tex_flavor="xetex"
 	au BufNewFile,BufRead *.tex compiler tex
@@ -149,37 +170,19 @@ augroup END
 augroup python_group
 	autocmd!
 	autocmd FileType python set
-				\ expandtab
-				\ autoindent
 				\ tabstop=4
-				\ shiftwidth=4
-				\ softtabstop=4
-				\ smartindent
+				\ expandtab
 augroup END
 
 augroup make_group
 	autocmd!
-	autocmd FileType make set
-				\ noexpandtab
-				\ shiftwidth=8
-				\ tabstop=8
-				\ softtabstop=8
+	autocmd FileType make set tabstop=8
 augroup END
 
 augroup markdown_group
 	autocmd!
-	autocmd FileType markdown set
-				\ noexpandtab
-				\ tabstop=4
-				\ shiftwidth=4
-				\ softtabstop=4
+	autocmd FileType markdown set tabstop=4
 	autocmd FileType markdown inoremap ` ``<Left>
-augroup END
-
-augroup text_group
-	autocmd!
-	autocmd FileType text set
-				\ copyindent			"Copy the structure of the existing lines indent when autoindenting a new line.
 augroup END
 
 
