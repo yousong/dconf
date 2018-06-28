@@ -39,7 +39,7 @@ config() {
 		if [ -d "$d" ]; then
 			__info "vim: Patching $d"
 			cd "$d"
-			git checkout -B dconf origin/master
+			git checkout -B dconf refs/remotes/origin/HEAD
 			git am "$patchdir"/*
 		fi
 	done
@@ -65,7 +65,7 @@ refresh_patches() {
 		if [ -d "$d" ]; then
 			cd "$d"
 			rm -vf "$patchdir"/*
-			git format-patch --output-directory "$patchdir" master..dconf
+			git format-patch --output-directory "$patchdir" refs/remotes/origin/HEAD..dconf
 		fi
 	done
 }
