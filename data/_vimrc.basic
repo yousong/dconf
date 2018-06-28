@@ -154,9 +154,7 @@ augroup python_group
 				\ tabstop=4
 				\ shiftwidth=4
 				\ softtabstop=4
-				\ modeline
 				\ smartindent
-				\ cursorcolumn
 augroup END
 
 augroup make_group

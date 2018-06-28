@@ -147,6 +147,7 @@ augroup END
 """"""" python-mode/python-mode
 " we have tagbar
 let g:pymode_folding = 0
+let g:pymode_options_colorcolumn = 0
 
 " regenerate on write can drag vim to unusable state
 let g:pymode_rope = 1
