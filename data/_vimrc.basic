@@ -9,12 +9,32 @@ syntax enable
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
 
-let g:backupdir = $HOME."/.vim.tmp.d"
+
+" This directory can be big after years of editing.  Keep the most recent 50
+"
+"	for f in `ls -t $HOME/.vim.tmp.d | tail -n +50`; do
+"	  rm -vf "$HOME/.vim.tmp.d/$f";
+"	done
+let g:backupdir = $HOME . "/.vim.tmp.d"
 if !isdirectory(g:backupdir)
 	call mkdir(g:backupdir, 'p')
 endif
 let &backupdir=g:backupdir
+let &undodir=g:backupdir
+set noswapfile
+set maxmempattern=2048	" maximum 2048KB for pattern matching
 
+
+if has("gui_running")
+	" Change font, http://vim.wikia.com/wiki/Change_font
+	"   set guifont=* to select one
+    set guifont=Menlo\ Regular:h14
+else
+    set t_Co=256
+	set background=dark
+	let g:molokai_original = 1
+	let g:solarized_termcolors=256
+endif
 " - http://superuser.com/questions/549930/cant-resize-vim-splits-inside-tmux
 " - http://stackoverflow.com/questions/7000960/in-vim-why-doesnt-my-mouse-work-past-the-220th-column
 " - Re: [dev] st mouse support beyond column 223, (good background info, 223 = 255 - 32), http://lists.suckless.org/dev/1301/14351.html
@@ -31,20 +51,7 @@ else
 	"endif
 	set ttymouse=xterm2
 end
-set wildmenu
 
-set maxmempattern=2048	" maximum 2048KB for pattern matching
-
-" this directory can be big after years of editing.
-"
-" Keep the most recent 50
-"
-"	for f in `ls -t $HOME/.vim.tmp.d | tail -n +50`; do
-"	  rm -vf "$HOME/.vim.tmp.d/$f";
-"	done
-"
-set undodir=$HOME/.vim.tmp.d
-set noswapfile
 
 " turn off for performance
 function! TurnOffParenMatch()
@@ -54,6 +61,7 @@ function! TurnOffParenMatch()
 	endif
 endfunction
 autocmd VimEnter * call TurnOffParenMatch()
+
 
 " autoindent, Copy indent from current line when starting a new line.  Affect
 " 'gq' command
@@ -97,7 +105,6 @@ set autoread
 
 set fileformat=unix
 set fileencodings+=utf-8
-"au BufNewFile * :set fileencoding=utf-8
 
 
 " http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
@@ -109,22 +116,11 @@ set fileencodings+=utf-8
 "  - C-], tags
 "  - C-N, keywords in current file
 "
+set wildmenu
 set complete=.,b,w,t,i	" exclude unloaded buffers from the default
 set completeopt=menu,preview,longest
 						" insert only the longest matched part
 
-let mapleader=","
-
-if has("gui_running")
-	" Change font, http://vim.wikia.com/wiki/Change_font
-	"   set guifont=* to select one
-    set guifont=Menlo\ Regular:h14
-else
-    set t_Co=256
-	set background=dark
-	let g:molokai_original = 1
-	let g:solarized_termcolors=256
-endif
 
 " NOTES on PuTTY: for molokai or solarized to work under PuTTY, the following
 " customizations are needed, otherwise many elements such as comments, line
@@ -145,6 +141,7 @@ silent! colorscheme solarized
 
 " To let netrw be silent when opening a new window
 let g:netrw_silent=1
+let mapleader=","
 
 " setfiletype
 augroup filetypedetect
@@ -199,8 +196,6 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-""" Key mappings
-
 "expand `\(' to `\(\)'
 cnoremap \( \(\)<Left><Left>
 
@@ -212,7 +207,6 @@ noremap <leader>s :split<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <leader>v :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <leader>t :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 nnoremap <leader>. <Esc>:exec "ptjump " . expand("<cword>")<Esc>
-
 
 " from mswin.vim for copy and paste
 vnoremap <C-C>	"+y
