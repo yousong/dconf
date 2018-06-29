@@ -47,6 +47,18 @@ http://mirrors.aliyun.com/linux-kernel/$subdir/$fn
 	done
 }
 
+dl_gnu() {
+	local proj="$1"; shift
+	local ver="$1"; shift
+	local fpath
+
+	case "$proj" in
+		gcc) fpath="gcc/gcc-$ver/gcc-$ver.tar.xz";;
+		*)   fpath="$proj/$proj-$ver.tar.xz" ;;
+	esac
+	wget -c "http://mirrors.ustc.edu.cn/gnu/$fpath"
+}
+
 openwrt_repo_dir=
 
 # Run this from inside OpenWrt/LEDE sub-project repo <currepo>.
