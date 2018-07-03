@@ -219,6 +219,11 @@ mget() {
 		mget_output="$(basename "$mget_url" | cut -f1 -d '?')"
 	fi
 
+	if [ -s "$mget_output" ]; then
+		__errmsg "mget: already exists: $mget_output"
+		return 1
+	fi
+
 	if [ -z "$mget_pos_end" ]; then
 		mget_pos_end="$(_mget_url_file_size "$mget_url")" || {
 			__errmsg "mget: cannot get download size of $mget_url"
