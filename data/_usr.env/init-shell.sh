@@ -14,6 +14,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 . $o_usr_env/go.plugin.sh
+. $o_usr_env/toolchain.plugin.sh
 . $o_usr_env/misc.plugin.sh
 . $o_usr_env/openssl.plugin.sh
 . $o_usr_env/openwrt.plugin.sh
