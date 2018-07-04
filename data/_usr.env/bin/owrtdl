@@ -4,9 +4,28 @@
 #
 # TODO
 #
-#  - Make it a webservice
+#  - Make it a web service
 #  - Gen filelist locally by using modification time
 #  - Rsync the filelist file
+#
+#  file Packages and Packages.manifest
+#
+#   - manifest file has additional fields
+#     - Source: path to the dir containing package Makefile, e.g. feeds/packages/utils/coreutils
+#     - Maintainer: Name <email>
+#
+#  file sha256sums: only for targets
+#
+#  Pagination: compute continuation, resource preservation
+#
+#  Gen targest and architectures
+#
+#	rsync \
+#		-r \
+#		--filter='+ */' \
+#		--filter='+ sha256sums' \
+#		--filter='+ Packages.manifest' \
+#		--filter='- *' 'rsync://downloads.openwrt.org/downloads' \
 #
 set -o errexit
 
