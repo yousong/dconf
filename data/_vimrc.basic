@@ -94,7 +94,7 @@ set formatoptions+=cro
 " shiftwidth, used for cindent, <<, >>, etc.  use tabstop when 0
 "
 " expandtab, in insert mode, use tabstop spaces to replace \t
-set tabstop=4
+set tabstop=8
 set softtabstop=0
 set shiftwidth=0
 set noexpandtab
@@ -169,11 +169,6 @@ augroup python_group
 	autocmd FileType python set
 				\ tabstop=4
 				\ expandtab
-augroup END
-
-augroup make_group
-	autocmd!
-	autocmd FileType make set tabstop=8
 augroup END
 
 augroup markdown_group
