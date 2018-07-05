@@ -80,6 +80,8 @@ autocmd VimEnter * call TurnOffParenMatch()
 "   c	auto-wrap comments using textwidth
 "   r	auto-insert current comment leader after hitting 'o' or 'O' in N-mode
 "   o	auto-insert current comment leader after hitting <Enter> in I-mode
+"   m	also break at a multi-byte character above 255 for asian text
+"   M	no insertion of spaces when joining lines
 "
 " paste, when enabled, a lot of things get reset/disabled.  Disable it and
 " retry if things do not work as expected
@@ -153,15 +155,15 @@ augroup END
 " TeX editing
 augroup tex_group
 	autocmd!
-	au BufNewFile,BufRead *.tex set
+	au FileType plaintex set
 				\ tabstop=2
 				\ expandtab
 				\ textwidth=67
 				\ formatoptions+=mM
-	au BufNewFile,BufRead *.tex let g:tex_ignore_makefile=1
-	au BufNewFile,BufRead *.tex let g:tex_flavor="xetex"
-	au BufNewFile,BufRead *.tex compiler tex
-	au BufNewFile,BufRead *.tex map <C-P> :silent exec("!" . expand("%:r") . ".pdf")<CR> " Open the produced PDF file
+	au FileType plaintex let g:tex_ignore_makefile=1
+	au FileType plaintex let g:tex_flavor="xetex"
+	au FileType plaintex compiler tex
+	au FileType plaintex map <C-P> :silent exec("!" . expand("%:r") . ".pdf")<CR> " Open the produced PDF file
 augroup END
 
 augroup python_group
