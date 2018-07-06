@@ -104,10 +104,10 @@ Chain filters on "$o_filelist" and output download URLs
 
 Example
 
-    $o_selfbase -v '\.ipk$' /armvirt/ initramfs
-    $o_selfbase -v '\.ipk$' /malta/ initramfs snapshots
-    $o_selfbase -v '\.ipk$' /malta/ initramfs snapshots
-    $o_selfbase -v '\.ipk$' /x86/generic/ squashfs
+    $o_selfbase armvirt 'zImage-initramfs'
+    $o_selfbase armvirt  'Image-initramfs'
+    $o_selfbase /malta/be/ 'initramfs.elf'
+    $o_selfbase x86/64 combined-ext4
 EOF
 }
 
