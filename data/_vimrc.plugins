@@ -88,6 +88,7 @@ let g:ctrlp_custom_ignore = {
 """"""" scrooloose/nerdtree
 "   q to quit
 nmap <C-N> :NERDTree %:p:h<CR>
+let NERDTreeIgnore = ['\.pyc$']
 
 
 """"""" terryma/vim-multiple-cursors
