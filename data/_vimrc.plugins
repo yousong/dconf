@@ -63,19 +63,25 @@ endif
 
 
 """"""" ctrlpvim/ctrlp.vim
-" use project-specific .vimrc settings as a root marker.
-"
-" this will have the side effect that 'r' in g:ctrl_working_path_mode will
-" succeed because of the presence of $HOME/.vimrc.  To workaround this
-" situation, use CtrlPCurWD or CtrlPCurFile, or touch a dummy .vimrc at the
-" desired root
+" use project-specific .vimrc settings as a root marker.  In the patched
+" version, .vimrc has lower precedence over other markers like .git, .hg, etc.
+" which means that when both .vimrc, .git are existent, .git will take effect
+" and its corresponding custom command will succeed
 let g:ctrlp_root_markers = ['.vimrc']
+
+" when 'ignore' is set, output from command will subject to custom_ignore
+" rules check
 let g:ctrlp_user_command = {
 	\ 'types': {
 		\ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],
 		\ 2: ['.hg', 'hg --cwd %s locate -I .'],
 		\ },
-	\ 'fallback': 'find %s -type f'
+	\ 'fallback': 'find %s -type f',
+	\ 'ignore': 1
+	\ }
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+	\ 'file': '\v\.pyc$',
 	\ }
 
 

@@ -1,4 +1,4 @@
-From 775b11960aa96939fb696f63ee2085ff22111357 Mon Sep 17 00:00:00 2001
+From 0b2a68d2418e3a88d0a5698acc1a6c52ed781c97 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers
@@ -6,13 +6,16 @@ Subject: [PATCH] Add .ctrlp file as one of the default markers
 Combine default markers, g:ctrlp_root_markers, and markers in
 g:ctrlp_user_command together in the order when finding root
 
+s:fndroot() is changed that .virmc as a marker will have lowest
+preference as compared to other markers
+
 Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
 ---
- autoload/ctrlp.vim | 49 ++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 32 insertions(+), 17 deletions(-)
+ autoload/ctrlp.vim | 51 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
 
 diff --git a/autoload/ctrlp.vim b/autoload/ctrlp.vim
-index 2a8ae88..c2093bf 100644
+index 6128e28..c1af500 100644
 --- a/autoload/ctrlp.vim
 +++ b/autoload/ctrlp.vim
 @@ -222,6 +222,8 @@ let s:coretype_names = {
@@ -24,7 +27,7 @@ index 2a8ae88..c2093bf 100644
  " Get the options {{{2
  fu! s:opts(...)
  	unl! s:usrign s:usrcmd s:urprtmaps
-@@ -482,6 +484,27 @@ fu! s:UserCmd(lscmd)
+@@ -490,6 +492,27 @@ fu! s:UserCmd(lscmd)
  	en
  endf
  
@@ -52,7 +55,7 @@ index 2a8ae88..c2093bf 100644
  fu! s:lsCmd()
  	let cmd = s:usrcmd
  	if type(cmd) == 1
-@@ -495,20 +518,17 @@ fu! s:lsCmd()
+@@ -503,20 +526,17 @@ fu! s:lsCmd()
  	elsei type(cmd) == 4 && ( has_key(cmd, 'types') || has_key(cmd, 'fallback') )
  		let fndroot = []
  		if has_key(cmd, 'types') && cmd['types'] != {}
@@ -81,7 +84,16 @@ index 2a8ae88..c2093bf 100644
  	en
  endf
  " - Buffers {{{1
-@@ -1768,12 +1788,7 @@ fu! ctrlp#setpathmode(pmode, ...)
+@@ -1751,7 +1771,7 @@ fu! s:findroot(curr, mark, depth, type)
+ 		for markr in a:mark
+ 			if s:glbpath(s:fnesc(a:curr, 'g', ','), markr, 1) != ''
+ 				let fnd = 1
+-				brea
++				if markr == '.vimrc' | continue | else | break | en
+ 			en
+ 		endfo
+ 	en
+@@ -1776,12 +1796,7 @@ fu! ctrlp#setpathmode(pmode, ...)
  		retu 1
  	elsei a:pmode == 'r'
  		let spath = a:0 ? a:1 : s:crfpath
