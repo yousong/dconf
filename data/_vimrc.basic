@@ -51,6 +51,11 @@ else
 	"endif
 	set ttymouse=xterm2
 end
+set ttyfast                     " Indicate fast terminal conn for faster redraw
+set ttyscroll=3                 " Speedup scrolling
+set nocursorcolumn              " Do not highlight column (speeds up highlighting)
+set nocursorline                " Do not highlight cursor (speeds up highlighting)
+set lazyredraw                  " Wait to redraw
 
 
 " turn off for performance
