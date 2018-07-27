@@ -110,6 +110,7 @@ set tabpagemax=31
 set number
 set autoread
 
+set encoding=utf-8              " Set default encoding to UTF-8
 set fileformat=unix
 set fileencodings+=utf-8
 

@@ -141,6 +141,9 @@ let g:tagbar_type_smali = {
 """"""" fatih/vim-go
 " Read vim-go-tutorial for more: https://github.com/fatih/vim-go-tutorial
 "
+" A sample .vimrc conf from fatih:
+" https://github.com/fatih/vim-go-tutorial/blob/master/vimrc
+"
 " - Use ctrl-t to jump back
 " - Use :GoDefStack to view and select the jump stack
 augroup go_group
