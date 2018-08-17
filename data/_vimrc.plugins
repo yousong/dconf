@@ -39,6 +39,7 @@ filetype plugin indent on		"required
 "call pathogen#infect()
 
 """"""" bling/vim-airline
+let g:airline_highlighting_cache = 1
 " disable tagbar integration (can be slow)
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
