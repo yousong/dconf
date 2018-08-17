@@ -130,23 +130,6 @@ set completeopt=menu,preview,longest
 						" insert only the longest matched part
 
 
-" NOTES on PuTTY: for molokai or solarized to work under PuTTY, the following
-" customizations are needed, otherwise many elements such as comments, line
-" numbers, etc. will become invisible, possibly caused by them having the same
-" color as the foreground color setting.
-"
-" 1. Apply dark or light color palette registry files.  It will add by default
-"    either "Solarized Dark" or "Solarized Light" session.  Rename it in the
-"    file content to change color settings for existing sessions
-" 2. Window - Colours : Enable "Allow terminal to use xterm 256-colour mode"
-" 3. Connection - Data - Terminal details : Terminal-type string: " "xterm-256color"
-"
-" - http://blog.cochard.me/2014/09/putty-and-solarized-colors.html
-"
-"silent! colorscheme molokai
-silent! colorscheme solarized
-
-
 " To let netrw be silent when opening a new window
 let g:netrw_silent=1
 let mapleader=","
