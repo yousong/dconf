@@ -13,7 +13,7 @@ openwrt_build_current() {
 		cmake -DCMAKE_PREFIX_PATH="$prefix"			\
 		-DCMAKE_INSTALL_PREFIX="$prefix"			\
 		-DLUAPATH="$lua_path" ..					\
-			&& make
+			&& make VERBOSE=1
 	cd ..
 }
 
