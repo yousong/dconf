@@ -47,8 +47,6 @@ DISABLE_AUTO_TITLE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #
-# FIXME later we try antigen, https://github.com/zsh-users/antigen
-plugins+=(gitfast coffee sprunge)
 #plugins+=(django coffee)
 if [ -n "$commands[yum]" ]; then
 	plugins+=(yum)
@@ -63,7 +61,8 @@ elif [ -n "$commands[pbcopy]" ]; then
 	# copydir,  copy pwd name
 	plugins+=(osx copyfile)
 fi
-#plugins+=(dirhistory)
+[ -z "$commands[go]" ] || plugins+=(golang)
+[ -z "$commands[git]" ] || plugins+=(gitfast)
 
 # User configuration
 source $ZSH/oh-my-zsh.sh
