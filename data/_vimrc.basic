@@ -208,9 +208,9 @@ nmap <C-L> :tabnext<CR>
 "set makeprg=xetex\ %
 "set errorformat=%f:%l:\ %m
 
-" statusline: colorscheme resets all existing highlight definitions.
-" http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim
-set laststatus=2		" always status line
+" make the last window always display statusline.  0 for never; 1 to display
+" when there are at least two windows
+set laststatus=2
 
 function! DoProfile()
 	let l:log = expand("$HOME") . "/.vim.tmp.d/profile.log"
