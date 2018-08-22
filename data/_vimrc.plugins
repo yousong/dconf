@@ -107,6 +107,10 @@ let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 let g:multi_cursor_select_all_word_key = '<A-m>'
 let g:multi_cursor_select_all_key      = 'g<A-m>'
+" press g:multi_cursor_quit_key will not quit multi-cursor mode, instead it
+" will continue in normal mode
+let g:multi_cursor_exit_from_insert_mode = 0
+let g:multi_cursor_exit_from_visual_mode = 0
 
 
 """"""" ultisnips
