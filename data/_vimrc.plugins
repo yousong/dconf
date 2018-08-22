@@ -24,13 +24,13 @@ Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 Plugin 'Align'				"Name of vim-script.org package mirrors.
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
-Plugin 'mattn/emmet-vim'			" L: HTML
-Plugin 'fatih/vim-go'				" L: Go
+"Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
+"Plugin 'mattn/emmet-vim'		" L: HTML
+"Plugin 'groenewege/vim-less'		" L: LESS
+"Plugin 'alderz/smali-vim'		" L: Smali
+Plugin 'fatih/vim-go'			" L: Go
 Plugin 'plasticboy/vim-markdown'	" L: Markdown
-Plugin 'groenewege/vim-less'		" L: LESS
 Plugin 'python-mode/python-mode'	" L: Python
-Plugin 'alderz/smali-vim'			" L: Smali
 call vundle#end()
 filetype plugin indent on		"required
 
@@ -107,7 +107,6 @@ let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 let g:multi_cursor_select_all_word_key = '<A-m>'
 let g:multi_cursor_select_all_key      = 'g<A-m>'
-
 
 
 """"""" ultisnips
