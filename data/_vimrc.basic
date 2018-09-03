@@ -136,10 +136,9 @@ let mapleader=","
 
 " setfiletype
 augroup filetypedetect
-	au! BufReadPre,BufNewFile *.nc setfiletype nc
-	au! BufReadPre,BufNewFile *.as setfiletype actionscript
-	au! BufReadPre,BufNewFile *.coffeeb setfiletype coffee
-	au! BufReadPre,BufNewFile * setlocal bufhidden=wipe
+	autocmd! BufReadPre,BufNewFile *.nc setfiletype nc
+	autocmd! BufReadPre,BufNewFile *.as setfiletype actionscript
+	autocmd! BufReadPre,BufNewFile *.coffeeb setfiletype coffee
 augroup END
 
 " TeX editing
