@@ -86,3 +86,28 @@ go_get() {
 			go get "$@"
 	esac
 }
+
+cgo_env() {
+	export PKG_CONFIG_PATH="$o_usr/lib/pkgconfig:$o_usr/share/pkgconfig"
+
+	# The following is for flags in the source code, security limitations
+	# do not apply to flags from environment variables
+	#
+	#export CGO_CFLAGS_ALLOW='.*'
+	#export CGO_CFLAGS_DISALLOW='.*'
+
+	# cgo will be enabled by default for native build.  When doing cross
+	# compilation, there are at least 3 methods to specify the c/cxx
+	# compiler to use.
+	#
+	#export CGO_ENABLED=1
+	#export CC_FOR_TARGET=triplet-cc
+	#export CC_FOR_linux_arm=triplet-cc
+	#export CC=triplet-cc
+
+	# Better if packages use "cgo pkg-config: libnl-3.0 libnl-genl-3.0"
+	#
+	#export CGO_CFLAGS="-g -O2"
+	export CGO_CPPFLAGS="-I$o_usr/include/libnl3 -I$o_usr/include"
+	export CGO_LDFLAGS="-g -O2 -L$o_usr/lib -Wl,-rpath,$o_usr/lib -lnl-3 -lnl-genl-3"
+}
