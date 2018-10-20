@@ -197,3 +197,4 @@ let g:pymode_lint_ignore = ['E501', 'E272', 'E221', 'E225', 'E303', 'W601', 'E30
 "syntax enable
 "set background=light
 "silent! colorscheme solarized
+silent! colorscheme desert
