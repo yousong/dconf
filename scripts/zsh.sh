@@ -3,11 +3,24 @@
 . "$TOPDIR/env.sh"
 
 ohmyzsh_dir="$o_homedir/.oh-my-zsh"
+ohmyzsh_c_dir="$ohmyzsh_dir/custom"
+ohmyzsh_cp_dir="$ohmyzsh_c_dir/plugins"
 
 config() {
+	local p
+
 	[ -d "$ohmyzsh_dir" ] || {
 		git clone https://github.com/robbyrussell/oh-my-zsh.git "$ohmyzsh_dir"
 	}
+
+	for p in \
+			zsh-autosuggestions \
+			zsh-syntax-highlighting \
+			; do
+		[ -d "$ohmyzsh_cp_dir/$p" ] || {
+			git clone "https://github.com/zsh-users/$p" "$ohmyzsh_cp_dir/$p"
+		}
+	done
 
 	cd "$ohmyzsh_dir"
 	git checkout -B dconf origin/master

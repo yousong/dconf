@@ -64,6 +64,11 @@ fi
 [ -z "$commands[go]" ] || plugins+=(golang)
 [ -z "$commands[git]" ] || plugins+=(gitfast)
 
+plugins+=(
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+)
+
 # User configuration
 source $ZSH/oh-my-zsh.sh
 source ~/.usr.env/init-shell.sh
