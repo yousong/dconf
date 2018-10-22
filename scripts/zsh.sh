@@ -6,8 +6,12 @@ ohmyzsh_dir="$o_homedir/.oh-my-zsh"
 ohmyzsh_c_dir="$ohmyzsh_dir/custom"
 ohmyzsh_cp_dir="$ohmyzsh_c_dir/plugins"
 
+__ohmyzsh_foreach_patchdir() {
+	find "$PATCH_DIR/_oh-my-zsh" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+}
+
 config() {
-	local p
+	local p d
 
 	[ -d "$ohmyzsh_dir" ] || {
 		git clone https://github.com/robbyrussell/oh-my-zsh.git "$ohmyzsh_dir"
@@ -26,6 +30,16 @@ config() {
 	git checkout -B dconf origin/master
 	git am "$PATCH_DIR/_oh-my-zsh"/*
 
+	for patchdir in `__ohmyzsh_foreach_patchdir`; do
+		d="$ohmyzsh_cp_dir/${patchdir##*/}"
+		if [ -d "$d" ]; then
+			__info "zsh: Patching $d"
+			cd "$d"
+			git checkout -B dconf refs/remotes/origin/HEAD
+			git am "$patchdir"/*
+		fi
+	done
+
 	cp "$DATA_DIR/_zshrc" "$o_homedir/.zshrc"
 	__notice "zsh: use 'chsh -s /bin/zsh' to change shell."
 }
@@ -34,4 +48,20 @@ collect() {
 	if [ -f "$o_homedir/.zshrc" ]; then
 		cp "$o_homedir/.zshrc" "$DATA_DIR/_zshrc"
 	fi
+}
+
+refresh_patches() {
+	local d
+
+	cd "$ohmyzsh_dir"
+	git format-patch --output-directory "$PATCH_DIR/_oh-my-zsh" refs/remotes/origin/HEAD..dconf
+
+	for patchdir in `__ohmyzsh_foreach_patchdir`; do
+		d="$ohmyzsh_cp_dir/${patchdir##*/}"
+		if [ -d "$d" ]; then
+			cd "$d"
+			rm -vf "$patchdir"/*
+			git format-patch --output-directory "$patchdir" refs/remotes/origin/HEAD..dconf
+		fi
+	done
 }

@@ -1,4 +1,4 @@
-From 0b2a68d2418e3a88d0a5698acc1a6c52ed781c97 Mon Sep 17 00:00:00 2001
+From 98f9bb0fd6612a8d3a59edc5f01c4f6374757532 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers

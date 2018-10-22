@@ -1,4 +1,4 @@
-From 15810b0806a886fb8dfb538de44cca48c6f65178 Mon Sep 17 00:00:00 2001
+From dab037c2729a607a49014cb54b7721adbeb18966 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <zhouyousong@meituan.com>
 Date: Sun, 14 Feb 2016 13:24:20 +0800
 Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
@@ -9,7 +9,7 @@ Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/themes/robbyrussell.zsh-theme b/themes/robbyrussell.zsh-theme
-index f9eca6a..48e8489 100644
+index f9eca6a8..48e84890 100644
 --- a/themes/robbyrussell.zsh-theme
 +++ b/themes/robbyrussell.zsh-theme
 @@ -1,5 +1,5 @@
@@ -19,6 +19,3 @@ index f9eca6a..48e8489 100644
  
  ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
--- 
-2.6.3
-
