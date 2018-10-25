@@ -157,6 +157,9 @@ augroup go_group
 	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
 	autocmd FileType go nested :TagbarOpen
 augroup END
+" When enabled, "gocode -source" will be used to scan source code for a
+" reliable experience.  It's slow.  Use binaries installed
+let g:go_gocode_propose_source = 0
 
 
 """"""" python-mode/python-mode
