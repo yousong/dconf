@@ -72,6 +72,9 @@ EOF
 }
 
 # list files containing root ca certificates
+#
+# ca-bundle.crt, normal authority roots
+# ca-bundle.trust.crt, higher authority roots (usually with EV capability)
 cafiles() {
 	local cafiles="
 /etc/ssl/certs/ca-certificates.crt
@@ -108,12 +111,7 @@ keystores() {
 			jrecerts="$djava/jre/lib/security/cacerts"
 		fi
 	fi
-	# ca-bundle.crt, normal authority roots
-	# ca-bundle.trust.crt, higher authority roots (usually with EV capability)
-	# java/cacerts, Java KeyStore
 	keystorefiles="
-/etc/ssl/certs/ca-bundle.crt
-/etc/ssl/certs/ca-bundle.trust.crt
 /etc/ssl/certs/java/cacerts
 /etc/pki/java/cacerts
 $jrecerts
