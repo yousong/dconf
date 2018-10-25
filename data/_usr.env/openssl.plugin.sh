@@ -93,7 +93,7 @@ cafiles() {
 keystores() {
 	local keystorefiles
 	local f
-	local fjava="$(which java)"
+	local fjava="$(which java 2>/dev/null)"
 	local djava
 	local jrecerts
 	if [ -x "$fjava" ]; then
@@ -108,7 +108,12 @@ keystores() {
 			jrecerts="$djava/jre/lib/security/cacerts"
 		fi
 	fi
+	# ca-bundle.crt, normal authority roots
+	# ca-bundle.trust.crt, higher authority roots (usually with EV capability)
+	# java/cacerts, Java KeyStore
 	keystorefiles="
+/etc/ssl/certs/ca-bundle.crt
+/etc/ssl/certs/ca-bundle.trust.crt
 /etc/ssl/certs/java/cacerts
 /etc/pki/java/cacerts
 $jrecerts
