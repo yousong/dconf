@@ -82,6 +82,10 @@ go_get() {
 			go get -u github.com/coreos/etcd/cmd/etcd
 			go get -u github.com/coreos/etcd/cmd/etcdctl
 			;;
+		goreman)
+			# foreman in golang for Procfile
+			go get -u github.com/mattn/goreman
+			;;
 		*)
 			go get "$@"
 	esac
