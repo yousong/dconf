@@ -1,3 +1,37 @@
+#
+# An example
+#
+#	tmux_do \
+#		sv \
+#		sh \
+#		gu \
+#		sh \
+#		sk 0 "ssh root@1.2.3.4" \
+#		sk 1 "ssh root@1.2.3.4" \
+#		sk 2 "ssh root@1.2.3.4" \
+#		sk 3 "ssh root@1.2.3.4" \
+#		sk 0 Enter \
+#		sk 1 Enter \
+#		sk 2 Enter \
+#		sk 3 Enter \
+#		wt 2 \
+#		sk 0 "password" \
+#		sk 1 "password" \
+#		sk 2 "password" \
+#		sk 3 "password" \
+#		sk 0 Enter \
+#		sk 1 Enter \
+#		sk 2 Enter \
+#		sk 3 Enter \
+#		&
+#
+# See "KEY BINDINGS" to find key spec details
+#
+#	C-a	Ctrl-a
+#	Enter
+#	Up, Down, Left, Right
+#	BSpace
+#
 tmux_do() {
 	local insn
 
