@@ -21,6 +21,7 @@ export LANG=en_US.UTF-8
 . $o_usr_env/rust.plugin.sh
 . $o_usr_env/sshfs.plugin.sh
 . $o_usr_env/tmux.plugin.sh
+. $o_usr_env/jdk.plugin.sh
 
 if [ "$__os" = "Darwin" ]; then
 	if [ -x "/usr/local/bin/brew" ]; then

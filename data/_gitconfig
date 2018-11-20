@@ -1,7 +1,7 @@
 # vi: ft=gitconfig
 [user]
 	name = Yousong Zhou
-	email = yszhou4tech@gmail.com
+	email = zhouyousong@yunionyun.com
 
 [color]
 	ui = true
