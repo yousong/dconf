@@ -132,6 +132,22 @@ let g:tagbar_compact = 1			" no help info at the above
 let g:tagbar_singleclick = 1		" jump on singleclick
 nmap <F8> :TagbarToggle<CR>
 
+" rst2ctags.py was taken from https://github.com/jszakmeister/rst2ctags
+let g:tagbar_type_rst = {
+	\ 'ctagstype': 'rst',
+	\ 'ctagsbin' : $HOME . '/.usr.env/bin/rst2ctags.py',
+	\ 'ctagsargs' : '-f - --sort=yes',
+	\ 'kinds' : [
+		\ 's:sections',
+		\ 'i:images'
+	\ ],
+	\ 'sro' : '|',
+	\ 'kind2scope' : {
+		\ 's' : 'section',
+	\ },
+	\ 'sort': 0,
+\ }
+
 let g:tagbar_type_smali = {
         \ 'ctagstype' : 'smali',
         \ 'kinds' : [
