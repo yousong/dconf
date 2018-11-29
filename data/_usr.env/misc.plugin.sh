@@ -47,18 +47,19 @@ path_action() {
 }
 
 path_ignore_match() {
-	local var="$1"
-	local func="$2"
+	local var="$1"; shift
+	local cb
 	local orig=$(eval echo \$$var)
 	local pathes p
 
+	cb=("$@") # this cannot sit with the local decl
 	eval set -- ${orig//:/ }
 	# strip out ending slashes for each element in "$@"
 	eval set -- ${@%//}
 	eval set -- ${@%/}
 	while [ -n "$1" ]; do
 		p="$1"
-		if ! eval "$func $p"; then
+		if ! eval "${cb[@]}" "$p"; then
 			pathes="$pathes:$p"
 		fi
 		shift

@@ -13,15 +13,12 @@ o_usr_env="$HOME/.usr.env"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-. $o_usr_env/go.plugin.sh
-. $o_usr_env/toolchain.plugin.sh
+. $o_usr_env/distver.plugin.sh
 . $o_usr_env/misc.plugin.sh
 . $o_usr_env/openssl.plugin.sh
 . $o_usr_env/openwrt.plugin.sh
-. $o_usr_env/rust.plugin.sh
 . $o_usr_env/sshfs.plugin.sh
 . $o_usr_env/tmux.plugin.sh
-. $o_usr_env/jdk.plugin.sh
 
 if [ "$__os" = "Darwin" ]; then
 	if [ -x "/usr/local/bin/brew" ]; then
