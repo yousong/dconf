@@ -198,9 +198,9 @@ Install jre/jdk from package managers
 Install from prebuilt binaries
 
 	jdk_src="openjdk-11.0.1_linux-x64_bin.tar.gz"
-	jdk_url="https://download.java.net/java/GA/jdk11/13/GPL/\$jdk11_src"
+	jdk_url="https://download.java.net/java/GA/jdk11/13/GPL/\$jdk_src"
 	mget --url "\$jdk_url" --count 8
-	tar -C "$o_usr/jdk" -xzf "\$jdk_src" --transform 's/^jdk-//'
+	tar -C "$o_usr/jdk" -xzf "\$jdk_src"
 
 - How to download and install prebuilt OpenJDK packages, https://openjdk.java.net/install/
 EOF
