@@ -153,21 +153,37 @@ cgo_env() {
 	export CGO_LDFLAGS="-g -O2 -L$o_usr/lib -Wl,-rpath,$o_usr/lib -lnl-3 -lnl-genl-3"
 }
 
-rust_select_() {
-	local distverroot="$1"; shift
+rust_install() {
+	cat <<EOF >&2
+Download, run rustup-init, do initialzation
 
-	path_ignore_match PATH distver_path_match_ rust
-	path_ignore_match MANPATH distver_path_match_ rust
-	path_action PATH prepend "$distverroot/bin"
-	path_action MANPATH prepend "$distverroot/share/man"
+	curl https://sh.rustup.rs -sSf | md5sum # last check: e4a1377ff6ec10f37ed30963b1383ff5
+	curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path --default-toolchain nightly -y
+
+Use rustup
+
+	rustup toolchain list
+	rustup toolchain install nightly
+	rustup toolchain install stable-gnu
+	rustup toolchain uninstall nightly
+	rustup update
+	rustup self update
+	rustup default nightly
+	rustup default stable
+	rustup run nightly rustc --version
+	rustup target list
+
+	# it's rustup proxy calling toolchain cargo
+	cargo +nightly install racer
+EOF
 }
 
-rust_select() {
-	[ "$#" -gt 1 ] || set -- "$@" "" ""
-	local ver="$1"; shift
-	local q="$1"; shift
-
-	distver_select_ rust "$ver" "$q" rust_select_
+rust_env_init() {
+	export CARGO_HOME="$HOME/.cargo"
+	export RUSTUP_HOME="$HOME/.rustup"
+	if [ -d "$CARGO_HOME/bin" ]; then
+		path_action PATH prepend "$CARGO_HOME/bin"
+	fi
 }
 
 jdk_select_() {
