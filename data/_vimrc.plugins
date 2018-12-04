@@ -29,6 +29,8 @@ Plugin 'Align'				"Name of vim-script.org package mirrors.
 "Plugin 'groenewege/vim-less'		" L: LESS
 "Plugin 'alderz/smali-vim'		" L: Smali
 Plugin 'fatih/vim-go'			" L: Go
+Plugin 'rust-lang/rust.vim'		" L: Rust, rustfmt
+Plugin 'racer-rust/vim-racer'		" L: Rust, completor
 Plugin 'plasticboy/vim-markdown'	" L: Markdown
 Plugin 'python-mode/python-mode'	" L: Python
 call vundle#end()
@@ -198,6 +200,26 @@ augroup END
 " When enabled, "gocode -source" will be used to scan source code for a
 " reliable experience.  It's slow.  Use binaries installed
 let g:go_gocode_propose_source = 0
+
+
+""""""" rust-lang/rust
+""""""" racer-rust/vim-racer
+let g:rustfmt_autosave = 1
+"
+" requires
+"
+"  - racer from nightly channel
+"  - rustup component add rust-src
+"
+let g:racer_experimental_completer = 1
+augroup rust_group
+	autocmd!
+	autocmd FileType rust nmap <C-]> <Plug>(rust-def)
+	autocmd FileType rust nmap <leader>s <Plug>(rust-def-split)
+	autocmd FileType rust nmap <leader>v <Plug>(rust-def-vertical)
+	autocmd FileType rust nmap <leader>t :tab split<CR><Plug>(rust-def-vertical)
+	autocmd FileType rust nmap K <Plug>(rust-doc)
+augroup END
 
 
 """"""" python-mode/python-mode
