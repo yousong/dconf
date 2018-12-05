@@ -1,4 +1,4 @@
-From 98f9bb0fd6612a8d3a59edc5f01c4f6374757532 Mon Sep 17 00:00:00 2001
+From 63afd211b9ff71848ed6c5ab80cc5f9c87b4cb0a Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers
@@ -11,7 +11,7 @@ preference as compared to other markers
 
 Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
 ---
- autoload/ctrlp.vim | 51 +++++++++++++++++++++++++++++++++------------------
+ autoload/ctrlp.vim | 51 ++++++++++++++++++++++++++++++----------------
  1 file changed, 33 insertions(+), 18 deletions(-)
 
 diff --git a/autoload/ctrlp.vim b/autoload/ctrlp.vim

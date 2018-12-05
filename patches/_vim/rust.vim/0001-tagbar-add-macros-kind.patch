@@ -1,0 +1,21 @@
+From 29931b1172938c898dedbf49d7815455223028cd Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <zhouyousong@yunionyun.com>
+Date: Wed, 5 Dec 2018 07:50:18 +0000
+Subject: [PATCH] tagbar: add macros kind
+
+---
+ ftplugin/rust/tagbar.vim | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/ftplugin/rust/tagbar.vim b/ftplugin/rust/tagbar.vim
+index 9cb1b48..190863f 100644
+--- a/ftplugin/rust/tagbar.vim
++++ b/ftplugin/rust/tagbar.vim
+@@ -22,6 +22,7 @@ if !exists('g:tagbar_type_rust')
+                 \'c:constants',
+                 \'t:traits',
+                 \'i:trait implementations',
++                \'d:macros',
+                 \ ]
+                 \ }
+ endif

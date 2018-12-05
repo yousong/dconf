@@ -1,4 +1,4 @@
-From 4652da2a890f4c993acb4b5fcae600fb02a91cf4 Mon Sep 17 00:00:00 2001
+From 5d6fb50761eafef6ea1304ac55a2604fdfc29569 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Wed, 27 Jun 2018 19:09:33 +0800
 Subject: [PATCH] Set g:pymode_python according to python support builtin in

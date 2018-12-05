@@ -1,4 +1,4 @@
-From 27be25a99e91bd26ee4eefd78ddda0b333f0c30d Mon Sep 17 00:00:00 2001
+From 49bfd6a8a5eafafe82183592b1ba36ec290c9075 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <zhouyousong@yunionyun.com>
 Date: Mon, 22 Oct 2018 09:50:46 +0000
 Subject: [PATCH] Fix "_zsh_autosuggest_modify:local:27: not valid in this
