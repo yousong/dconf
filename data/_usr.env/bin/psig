@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Copyright 2018 (c) Yousong Zhou
+#
+# This script will show a process's state on signal handling by parsing
+# /proc/<pid>/status
+#
+#	SigPnd		signals marked pending
+#	SigBlk		signals marked to be blocked
+#	SigIgn		signals marked to be ignored
+#	SigCgt		signals marked to be caught
+#
+# The raw value is a hexdecimal integer with each bit denoting a signal.  Bit 0
+# (the least significant bit) is for signal number 1 (SIGHUP).  Table of signal
+# name and number can be viewed by running the following command
+#
+# 	command kill -L
+#
+# The idea was taken from link Jander from link [1].  sigparse() was rewritten
+# with less dependency and process fork
+#
+# [1] https://unix.stackexchange.com/questions/85364/how-can-i-check-what-signals-a-process-is-listening-to
+#
+set -o errexit
+set -o pipefail
+
+sigparse() {
+	local v="$((0x$1 + 0 ))"
+	local i=0
+
+	while [ "$v" -gt 0 ]; do
+		let i="i+1"
+		if [ "$(($v & 1))" -gt 0 ]; then
+			echo -n " $(kill -l "$i")($i)"
+		fi
+		let v="v>>1"
+	done
+}
+
+grep "^Sig...:" "/proc/$1/status" \
+	| while read a b ; do
+		printf "%s%s\n" "$a" "$(sigparse "$b")"
+	done # | fmt -t  # uncomment for pretty-printing
