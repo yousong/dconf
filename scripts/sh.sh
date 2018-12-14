@@ -10,6 +10,8 @@ config() {
 		git clone https://github.com/seebi/dircolors-solarized.git "$dircolors_repo"
 	fi
 
+	find "$usrenv_dir" -maxdepth 1 -type f -name '*.plugin.sh' \
+		| xargs rm -f
 	cp -a "$DATA_DIR/_usr.env/" "$usrenv_dir"
 }
 
