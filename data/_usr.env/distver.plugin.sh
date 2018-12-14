@@ -92,11 +92,9 @@ go_select_() {
 	# thing is that "go install '...'" can fail prematurely by bad packages.
 	# Remove $GOPATH/pkg is a safe measure to do
 	export GOROOT="$distverroot"
-	export GOPATH="$HOME/go"
 
 	path_ignore_match PATH distver_path_match_ go
 	path_action PATH prepend "$GOROOT/bin"
-	path_action PATH prepend "$GOPATH/bin"
 }
 
 go_select() {
@@ -105,6 +103,10 @@ go_select() {
 	local q="$1"; shift
 
 	distver_select_ go "$ver" "$q" go_select_
+	if which go &>/dev/null; then
+		export GOPATH="$HOME/go"
+		path_action PATH prepend "$GOPATH/bin"
+	fi
 }
 
 go_get() {
