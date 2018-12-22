@@ -183,9 +183,18 @@ augroup go_group
 	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
 	autocmd FileType go nested :TagbarOpen
 augroup END
+"
 " When enabled, "gocode -source" will be used to scan source code for a
-" reliable experience.  It's slow.  Use binaries installed
+" reliable experience.  It's slow.  Use binaries installed.
+"
+" Recent versions of vim-go will try to call gocode mode with options
+" "-fallback-to-source -cache" when source mode is off
 let g:go_gocode_propose_source = 0
+"
+" These are for builtin types and functions, they should be well known to all
+" golang programmers and it's a short list on its own but can cause
+" distraction when mixed with others
+let g:go_gocode_propose_builtins = 0
 
 
 """"""" rust-lang/rust
