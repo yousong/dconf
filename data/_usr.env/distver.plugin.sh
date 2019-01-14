@@ -26,7 +26,7 @@ distver_list() {
 	fi
 
 	for dist in "${dists[@]}"; do
-		echo "$o_usr/$dist/"*
+		find "$o_usr/$dist/" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
 	done \
 		| tr ' ' '\n' \
 		| sort --version-sort --reverse
