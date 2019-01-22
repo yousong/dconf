@@ -242,7 +242,7 @@ mget() {
 
 	# sh must be used because zsh has shwordsplit off
 	_MGET_PGIDS=''
-	trap 'trap - INT; sh -c "kill $_MGET_PGIDS"' INT
+	trap 'trap - INT; sh -c "for p in $_MGET_PGIDS; do kill -0 \$p &>/dev/null && kill \$p; done"' INT
 
 	_fixup="$mget_fixup"
 	pos="$mget_pos_start"
