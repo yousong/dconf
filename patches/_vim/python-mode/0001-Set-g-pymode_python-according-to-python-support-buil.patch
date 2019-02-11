@@ -1,6 +1,6 @@
-From 5d6fb50761eafef6ea1304ac55a2604fdfc29569 Mon Sep 17 00:00:00 2001
+From 0c4ff773a0d03e62b7148d54d9d0361cd212a9b3 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
-Date: Wed, 27 Jun 2018 19:09:33 +0800
+Date: Mon, 11 Feb 2019 12:32:26 +0800
 Subject: [PATCH] Set g:pymode_python according to python support builtin in
  Vim
 
@@ -10,14 +10,14 @@ Instead of whether there exists a corresponding Python executable
  1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/plugin/pymode.vim b/plugin/pymode.vim
-index 218d4d8..7cdb248 100644
+index 8aab5d7..85a91d6 100644
 --- a/plugin/pymode.vim
 +++ b/plugin/pymode.vim
 @@ -19,10 +19,12 @@ filetype plugin on
  " OPTIONS: {{{
  
  " Vim Python interpreter. Set to 'disable' for remove python features.
--if executable('python3')
+-if has("python3") && executable('python3')
 +if has("python3")
      call pymode#default('g:pymode_python', 'python3')
 -else
@@ -28,7 +28,7 @@ index 218d4d8..7cdb248 100644
  endif
  
  " Disable pymode warnings
-@@ -284,10 +286,6 @@ if !len(g:pymode_python)
+@@ -290,10 +292,6 @@ if !len(g:pymode_python)
          let g:pymode_python = 'python'
      elseif exists('g:_uspy') && g:_uspy == ':py3'
          let g:pymode_python = 'python3'
