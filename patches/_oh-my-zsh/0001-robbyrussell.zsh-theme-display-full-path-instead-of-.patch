@@ -1,4 +1,4 @@
-From eccbaf490cfa372f8369cd3b042bd5fdfd38f454 Mon Sep 17 00:00:00 2001
+From 9b9cbd758e86ec0f45d9558bdc939feee0013dc8 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <zhouyousong@meituan.com>
 Date: Sun, 14 Feb 2016 13:24:20 +0800
 Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just

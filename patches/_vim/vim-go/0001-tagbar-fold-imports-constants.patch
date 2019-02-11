@@ -1,4 +1,4 @@
-From 62ee2cc0854df2397c83f91351134ea09ebca64a Mon Sep 17 00:00:00 2001
+From cbd47ccbafa844eb5bcb979aa759cc3712687c6e Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Mon, 9 Apr 2018 09:55:11 +0800
 Subject: [PATCH] tagbar: fold imports,constants
