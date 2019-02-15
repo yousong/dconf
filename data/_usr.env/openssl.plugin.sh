@@ -22,7 +22,7 @@ crtshow() {
 	local cmd
 
 	if [ -z "$opts" ]; then
-		opts="-subject -issuer -startdate -enddate -fingerprint"
+		opts="-subject -issuer -startdate -enddate -serial -fingerprint"
 	fi
 	cmd="openssl x509 -noout $opts"
 	_crtdo 'close(cmd); print ""' "print | cmd" -v "cmd=$cmd"
