@@ -146,3 +146,13 @@ qa_python() {
 	# Warning/Error codes, https://flake8.readthedocs.org/en/latest/warnings.html
 	$FLAKE8 --ignore=E501,E272,E221,E225,E303,W601,E302,E502,W291,E261,E262,W391,E127,E128,E126,E123,E125,E124,E711,E712,E121,E111,E265,E131,E226,E241,E701,D105 "$1"
 }
+
+# show tree of processes with the same tname as those whose process id matches output of "pgrep $@"
+pgrept() {
+	ps f -t "$(ps -o tname= -p "$(pgrep "$@" | paste -sd,)" | sed -re 's/^ +//' | paste -sd,)"
+}
+
+# show tree of processes with the same sess as those whose process id matches output of "pgrep $@"
+pgreps() {
+	ps f -s "$(ps -o sess=  -p "$(pgrep "$@" | paste -sd,)" | sed -re 's/^ +//' | paste -sd,)"
+}
