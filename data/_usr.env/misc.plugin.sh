@@ -149,10 +149,10 @@ qa_python() {
 
 # show tree of processes with the same tname as those whose process id matches output of "pgrep $@"
 pgrept() {
-	ps f -t "$(ps -o tname= -p "$(pgrep "$@" | paste -sd,)" | sed -re 's/^ +//' | paste -sd,)"
+	ps f -t "$(ps -o tname= -p "$(pgrep "$@" -d,)" | sed -re 's/^ +//' | paste -sd,)"
 }
 
 # show tree of processes with the same sess as those whose process id matches output of "pgrep $@"
 pgreps() {
-	ps f -s "$(ps -o sess=  -p "$(pgrep "$@" | paste -sd,)" | sed -re 's/^ +//' | paste -sd,)"
+	ps f -s "$(ps -o sess=  -p "$(pgrep "$@" -d,)" | sed -re 's/^ +//' | paste -sd,)"
 }
