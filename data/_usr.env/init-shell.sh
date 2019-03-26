@@ -13,6 +13,10 @@ o_usr_env="$HOME/.usr.env"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# required by hub from github, https://github.com/github/hub
+# it stores credentials at $HOME/.config/hub
+export GITHUB_USER=yousong
+
 . $o_usr_env/distver.plugin.sh
 . $o_usr_env/misc.plugin.sh
 . $o_usr_env/openssl.plugin.sh
