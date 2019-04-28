@@ -1,5 +1,6 @@
 TOPDIR="${TOPDIR:-$PWD}"
 
+o_os="$(uname -s)"
 o_homedir="${o_homedir:-$HOME}"
 DATA_DIR="$TOPDIR/data"
 PATCH_DIR="$TOPDIR/patches"
