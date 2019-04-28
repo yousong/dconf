@@ -14,7 +14,7 @@ __brew_ok() {
 config() {
 	local d
 
-	__brew_ok || return
+	__brew_ok || return 0
 
 	# Install homebrew
 	#/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -49,7 +49,7 @@ config() {
 }
 
 collect() {
-	__brew_ok || return
+	__brew_ok || return 0
 
 	if [ -f "$o_homedir/.Brewfile" ]; then
 		cp "$o_homedir/.Brewfile" "$DATA_DIR/_Brewfile"
