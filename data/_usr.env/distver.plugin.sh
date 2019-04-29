@@ -105,6 +105,10 @@ go_select() {
 	distver_select_ go "$ver" "$q" go_select_
 	if which go &>/dev/null; then
 		export GOPATH="$HOME/go"
+		if [ -z "$GOROOT" ]; then
+			# go installed by package managers
+			export GOROOT="$(go env GOROOT)"
+		fi
 		path_action PATH prepend "$GOPATH/bin"
 	fi
 }
