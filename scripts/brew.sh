@@ -12,7 +12,7 @@ __brew_ok() {
 }
 
 config() {
-	local d
+	local d dcore dcask
 
 	__brew_ok || return 0
 
@@ -20,17 +20,20 @@ config() {
 	#/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 	d="$(brew --repo)"
-	cd "$d";					 git remote set-url origin https://mirrors.ustc.edu.cn/brew.git
-	cd "$d/Library/Taps/homebrew/homebrew-core";	 git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
-	cd "$d/Library/Taps/homebrew/homebrew-cask";	 git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
+	dcore="$d/Library/Taps/homebrew/homebrew-core"
+	dcask="$d/Library/Taps/homebrew/homebrew-cask"
 
-	: cd "$d";					 git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
-	: cd "$d/Library/Taps/homebrew/homebrew-core";	 git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
-	: cd "$d/Library/Taps/homebrew/homebrew-cask";	 git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
+	git -C "$d" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+	git -C "$dcore" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+	git -C "$dcask" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
 
-	: cd "$d";					 git remote set-url origin https://github.com/Homebrew/brew.git
-	: cd "$d/Library/Taps/homebrew/homebrew-core";	 git remote set-url origin https://github.com/Homebrew/homebrew-core
-	: cd "$d/Library/Taps/homebrew/homebrew-cask";	 git remote set-url origin https://github.com/caskroom/homebrew-cask
+	# https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/
+	: git -C "$d" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
+	: git -C "$dcore" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+
+	: git -C "$d" remote set-url origin https://github.com/Homebrew/brew.git
+	: git -C "$dcore" remote set-url origin https://github.com/Homebrew/homebrew-core
+	: git -C "$dcask" remote set-url origin https://github.com/caskroom/homebrew-cask
 
 	if [ -f "$o_homedir/.Brewfile" ]; then
 		cp "$DATA_DIR/_Brewfile" "$o_homedir/.Brewfile"
