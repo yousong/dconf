@@ -40,6 +40,7 @@ _sshfs_umount() {
 
 	localdir=${localdir:-~/.sshfs/$name}
 	umount "$localdir"
+	rmdir "$localdir"
 }
 
 _sshfs_action() {
