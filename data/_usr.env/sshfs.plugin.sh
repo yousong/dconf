@@ -17,15 +17,19 @@ _sshfs_mount() {
 		return 1
 	fi
 
+	# https://github.com/osxfuse/osxfuse/wiki/Mount-options
 	localdir=${localdir:-~/.sshfs/$name}
-	option=${option:-auto_cache,reconnect,defer_permissions,negative_vncache,volname=$name,noappledouble}
+	option=${option:-auto_cache,reconnect,defer_permissions,negative_vncache,noappledouble}
 
 	[ -d "$localdir" ] || mkdir -p "$localdir" || {
 		__errmsg "sshfs: $name: cannot create local dir: $localdir"
 		return
 	}
 
-	sshfs -p "$port" "$user@$host:$remotedir" "$localdir" -o "$option"
+	sshfs -p "$port" "$user@$host:$remotedir" "$localdir" \
+		-o volname="$name" \
+		-o compression=no \
+		-o "$option"
 }
 
 _sshfs_umount() {
