@@ -14,6 +14,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 . $o_usr_env/distver.plugin.sh
+. $o_usr_env/fzf.plugin.sh
 . $o_usr_env/hub.plugin.sh
 . $o_usr_env/misc.plugin.sh
 . $o_usr_env/openssl.plugin.sh
