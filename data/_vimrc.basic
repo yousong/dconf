@@ -168,6 +168,15 @@ augroup markdown_group
 	autocmd FileType markdown inoremap ` ``<Left>
 augroup END
 
+augroup yaml_group
+	autocmd!
+	autocmd FileType yaml setlocal
+				\ tabstop=2
+				\ softtabstop=2
+				\ shiftwidth=2
+				\ expandtab
+augroup END
+
 
 "http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " Search for selected text, forwards or backwards.
