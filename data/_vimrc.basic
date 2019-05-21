@@ -144,7 +144,7 @@ augroup END
 " TeX editing
 augroup tex_group
 	autocmd!
-	au FileType plaintex set
+	au FileType plaintex setlocal
 				\ tabstop=2
 				\ expandtab
 				\ textwidth=67
@@ -157,14 +157,14 @@ augroup END
 
 augroup python_group
 	autocmd!
-	autocmd FileType python set
+	autocmd FileType python setlocal
 				\ tabstop=4
 				\ expandtab
 augroup END
 
 augroup markdown_group
 	autocmd!
-	autocmd FileType markdown set tabstop=4
+	autocmd FileType markdown setlocal tabstop=4
 	autocmd FileType markdown inoremap ` ``<Left>
 augroup END
 
