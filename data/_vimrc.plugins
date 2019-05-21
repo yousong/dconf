@@ -189,7 +189,7 @@ augroup END
 "
 " Recent versions of vim-go will try to call gocode mode with options
 " "-fallback-to-source -cache" when source mode is off
-let g:go_gocode_propose_source = 0
+let g:go_gocode_propose_source = 1
 "
 " These are for builtin types and functions, they should be well known to all
 " golang programmers and it's a short list on its own but can cause
