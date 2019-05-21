@@ -141,6 +141,19 @@ augroup filetypedetect
 	autocmd! BufReadPre,BufNewFile *.coffeeb setfiletype coffee
 augroup END
 
+augroup markdown_group
+	autocmd!
+	autocmd FileType markdown setlocal tabstop=4
+	autocmd FileType markdown inoremap ` ``<Left>
+augroup END
+
+augroup python_group
+	autocmd!
+	autocmd FileType python setlocal
+				\ tabstop=4
+				\ expandtab
+augroup END
+
 " TeX editing
 augroup tex_group
 	autocmd!
@@ -153,19 +166,6 @@ augroup tex_group
 	au FileType plaintex let g:tex_flavor="xetex"
 	au FileType plaintex compiler tex
 	au FileType plaintex map <C-P> :silent exec("!" . expand("%:r") . ".pdf")<CR> " Open the produced PDF file
-augroup END
-
-augroup python_group
-	autocmd!
-	autocmd FileType python setlocal
-				\ tabstop=4
-				\ expandtab
-augroup END
-
-augroup markdown_group
-	autocmd!
-	autocmd FileType markdown setlocal tabstop=4
-	autocmd FileType markdown inoremap ` ``<Left>
 augroup END
 
 augroup yaml_group
