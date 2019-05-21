@@ -49,10 +49,10 @@ _do() {
 	mkdir -p "$o_homedir"
 
 	. "$script"
+	__info "working on $script"
 	if type "$action" 1>/dev/null 2>&1; then
-		__info "working on $script"
 		"$action"
 	else
-		__notice "ignore non-defined action: $action"
+		__notice "ignore: action $action not defined"
 	fi
 }
