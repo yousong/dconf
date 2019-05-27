@@ -133,6 +133,10 @@ let g:tagbar_silent = 1				" no auto info about symbol after updatetime
 let g:tagbar_compact = 1			" no help info at the above
 let g:tagbar_singleclick = 1		" jump on singleclick
 nmap <F8> :TagbarToggle<CR>
+augroup tagbar_group
+	autocmd!
+	autocmd FileType * nested :call tagbar#autoopen()
+augroup END
 
 " rst2ctags.py was taken from https://github.com/jszakmeister/rst2ctags
 let g:tagbar_type_rst = {
@@ -181,7 +185,6 @@ augroup go_group
 	autocmd FileType go noremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR>
 	autocmd FileType go noremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR>
 	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
-	autocmd FileType go nested :TagbarOpen
 augroup END
 "
 " When enabled, "gocode -source" will be used to scan source code for a
