@@ -62,7 +62,7 @@ elif [ -n "$commands[pbcopy]" ]; then
 	plugins+=(osx copyfile)
 fi
 [ -z "$commands[go]" ] || plugins+=(golang)
-[ -z "$commands[git]" ] || plugins+=(gitfast)
+[ -z "$commands[git]" ] || plugins+=(git)
 
 plugins+=(
 	zsh-autosuggestions
