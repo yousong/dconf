@@ -136,7 +136,7 @@ let g:tagbar_singleclick = 1		" jump on singleclick
 nmap <F8> :TagbarToggle<CR>
 augroup tagbar_group
 	autocmd!
-	autocmd FileType * nested :call tagbar#autoopen()
+	autocmd FileType * :call tagbar#autoopen()
 augroup END
 
 " rst2ctags.py was taken from https://github.com/jszakmeister/rst2ctags
