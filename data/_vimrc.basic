@@ -211,6 +211,12 @@ noremap <C-V>	"+gP
 nmap <C-H> :tabprevious<CR>
 nmap <C-L> :tabnext<CR>
 
+" inspired by tpope/vim-unimpaired
+nmap [op :set paste<CR>
+nmap ]op :set nopaste<CR>
+nmap [ol :set list<CR>
+nmap ]ol :set nolist<CR>
+
 "let b:tex_flavor = 'xetex'
 "compiler tex
 "set makeprg=xetex\ %
