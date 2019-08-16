@@ -29,6 +29,7 @@ Plugin 'majutsushi/tagbar'
 "Plugin 'mattn/emmet-vim'		" L: HTML
 "Plugin 'groenewege/vim-less'		" L: LESS
 "Plugin 'alderz/smali-vim'		" L: Smali
+Plugin 'cespare/vim-toml'		" L: TOML
 Plugin 'chr4/nginx.vim'			" L: NGINX
 Plugin 'fatih/vim-go'			" L: Go
 Plugin 'rust-lang/rust.vim'		" L: Rust, rustfmt
