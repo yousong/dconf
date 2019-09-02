@@ -110,9 +110,11 @@ set tabpagemax=31
 set number
 set autoread
 
-set encoding=utf-8              " Set default encoding to UTF-8
+set encoding=utf-8
+" - order of gbk,big-5,gb18030 matters
+" - gbk instead of gb2312, gb18030 in the first position matters
+set fileencodings=ucs-bom,utf-8,gbk,big-5,gb18030,default,latin1
 set fileformat=unix
-set fileencodings+=utf-8
 
 
 " http://vimdoc.sourceforge.net/htmldoc/insert.html#ins-completion
