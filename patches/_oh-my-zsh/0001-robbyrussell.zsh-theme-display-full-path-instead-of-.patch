@@ -1,4 +1,4 @@
-From 9b9cbd758e86ec0f45d9558bdc939feee0013dc8 Mon Sep 17 00:00:00 2001
+From 7bbe2ea54e957158c5b994416b3ea8e3283cc23a Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <zhouyousong@meituan.com>
 Date: Sun, 14 Feb 2016 13:24:20 +0800
 Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
@@ -9,13 +9,13 @@ Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/themes/robbyrussell.zsh-theme b/themes/robbyrussell.zsh-theme
-index f9eca6a8..48e84890 100644
+index 2fd5f2cd..4aa89f2c 100644
 --- a/themes/robbyrussell.zsh-theme
 +++ b/themes/robbyrussell.zsh-theme
 @@ -1,5 +1,5 @@
- local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
--PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
-+PROMPT='${ret_status} %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)'
+ PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+-PROMPT+=' %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
++PROMPT+=' %{$fg[cyan]%}%C%{$reset_color%} $(git_prompt_info)'
  
  ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
