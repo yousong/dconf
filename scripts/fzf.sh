@@ -16,7 +16,7 @@ config() {
 			esac
 			url="https://github.com/junegunn/fzf-bin/releases/download/$fzf_ver/$f"
 
-			__warning "downloading $f"
+			__info "downloading $f"
 			wget -O /tmp/fzf.tgz "$url"
 			mkdir -p "$HOME/.usr/bin"
 			tar -xzf /tmp/fzf.tgz -C "$HOME/.usr/bin/"
