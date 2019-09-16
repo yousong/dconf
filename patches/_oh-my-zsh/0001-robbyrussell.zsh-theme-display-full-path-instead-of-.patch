@@ -15,7 +15,7 @@ index 2fd5f2cd..4aa89f2c 100644
 @@ -1,5 +1,5 @@
  PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 -PROMPT+=' %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
-+PROMPT+=' %{$fg[cyan]%}%C%{$reset_color%} $(git_prompt_info)'
++PROMPT+=' %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)'
  
  ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
