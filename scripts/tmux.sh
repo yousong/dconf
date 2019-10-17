@@ -13,16 +13,10 @@ config() {
 
 	cp "$DATA_DIR/_tmux.conf" "$o_homedir/.tmux.conf"
 
-	# from "tmux 2.1" to "21"
-	ver="$(tmux -V | tr -cd '0-9')"
-	if [ "$ver" -lt 21 ]; then
-		# these are only supported since tmux 2.1
-		sed -i''	\
-			-e '/set-option .* mouse /d' \
-			-e '/bind-key .* WheelUpPane /d' \
-			-e '/bind-key .* WheelDownPane /d' \
-			"$o_homedir/.tmux.conf"
-	fi
+	# from "tmux 2.1" to "201"
+	ver="$(tmux -V)"
+	ver="$(printf "%d%02d\n" ${ver//[^0-9]/ })"
+	template_eval "$o_homedir/.tmux.conf"
 	__notice "tmux: install plugins with <PREFIX+I>."
 }
 
