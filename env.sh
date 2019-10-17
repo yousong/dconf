@@ -40,6 +40,37 @@ __error() {
 	__errmsg "${o_rote}error:${o_norm} $1"
 }
 
+template_eval() {
+	local _f="$1"
+	local _tmpf
+	local _l
+	local _out=1
+	local _tmpl_sig="##DCONF "
+
+	_tmpf="$(mktemp dconf-XXX)"
+	while read _l; do
+		case "$_l" in
+			"$_tmpl_sig"*)
+				expr="${_l#$_tmpl_sig}"
+				if [ "$expr" = end ]; then
+					_out=1
+				elif eval "$expr"; then
+					_out=1
+				else
+					_out=
+				fi
+				;;
+			*)
+				if [ -n "$_out" ]; then
+					echo "$_l"
+				fi
+		esac
+	done <"$_f" >"$_tmpf"
+
+	mv "$_tmpf" "$_f"
+	rm -f "$_tmpf"
+}
+
 _do() {
 	local script="$1"
 	local action="$2"
