@@ -63,3 +63,13 @@ tmux_alert() {
 	done
 	# unmark it by <prefix>,m
 }
+
+tmux_show_pane_status() {
+	local cmd0
+	local cmd1
+
+	cmd0='ps --no-headers -o tpgid   -p "#{pane_pid}" | grep -oE "[0-9]+"'
+	cmd1='ps --no-headers -o command -p "$('"$cmd0"')"'
+	tmux set-window-option -t : pane-border-status top
+	tmux set-window-option -t : pane-border-format "#{pane_index} #($cmd1)"
+}
