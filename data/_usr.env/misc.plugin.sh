@@ -156,3 +156,27 @@ pgrept() {
 pgreps() {
 	ps f -s "$(ps -o sess=  -p "$(pgrep "$@" -d,)" | sed -re 's/^ +//' | paste -sd,)"
 }
+
+gpg_prep() {
+	local old
+	local cur
+	local pid
+
+	cur="$(tty 2>/dev/null)"
+	if [ -z "$cur" ]; then
+		__errmsg "cannot find current tty"
+		return 1
+	fi
+	pid="$(pgrep gpg-agent 2>/dev/null)"
+	if [ -n "$pid" ]; then
+		old="$(grep -oE --null-data '^GPG_TTY=[[:print:]]+' "/proc/$pid/environ" | cut -f2 -d=)"
+		if [ "$old" != "$cur" ]; then
+			__errmsg "gpg-agent($pid) is running with GPG_TTY=$old"
+			return 1
+		fi
+		return 0
+	fi
+	# To load passphrase-protected secret keys, gpg-agent invokes pinentry on
+	# $GPG_TTY to prompt for passphrase.  It's local to gpg-agent.
+	export GPG_TTY="$(tty 2>/dev/null)"
+}
