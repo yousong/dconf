@@ -2,6 +2,7 @@
 [user]
 	name = Yousong Zhou
 	email = yszhou4tech@gmail.com
+	signingkey = 790B7909094C4461693900AA35613D96A52C2176
 
 [color]
 	ui = true
