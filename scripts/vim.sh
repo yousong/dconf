@@ -4,6 +4,8 @@
 
 bundle_dir="$o_homedir/.vim/bundle"
 
+__vim_coc_nvim_bundle="$bundle_dir/coc.nvim"
+
 __vimrc_files="
 	$o_homedir/.vimrc
 	$o_homedir/.vimrc.plugins
@@ -12,6 +14,10 @@ __vimrc_files="
 
 __vim_foreach_patchdir() {
 	find "$PATCH_DIR/_vim" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+}
+
+__vim_has_node() {
+	which node &>/dev/null
 }
 
 config() {
@@ -30,9 +36,38 @@ config() {
 			cp "$dataf" "$f"
 		fi
 	done
+	if !__vim_has_node; then
+		# It requires nodejs (>= 8.10.0)
+		__notice "disable coc.nvim because nodejs is not found"
+		sed -i -e '/neoclide\/coc.nvim/d' "$o_homedir/.vimrc.plugins"
+	fi
 
 	__notice "vim: Installing Vundle packages, this may take a while."
 	vim +BundleInstall +qa
+	if [ -d "$bundle_dir/coc.nvim" ]; then
+		# It's written in typescript, javascript code available in
+		# "release" branch
+		git \
+			--git-dir "$bundle_dir/coc.nvim/.git" \
+			--work-tree "$bundle_dir/coc.nvim" \
+			checkout refs/remotes/origin/release
+		# Extensions are placed under $o_homedir/.config/coc/
+		#
+		# "-sync" means waiting for the command finish
+		vim -c 'CocInstall -sync coc-tsserver coc-json | q'
+
+		# Update & uninstall extensions
+		#CocUpdateSync
+		#CocUninstall coc-tsserver
+
+		# Settings is at $o_homedir/.vim/coc-settings.json
+		#
+		# TODO
+		#
+		#  - How it works?
+		#  - luci.js and friends
+		#  - golang packages
+	fi
 
 	for patchdir in `__vim_foreach_patchdir`; do
 		d="$bundle_dir/${patchdir##*/}"

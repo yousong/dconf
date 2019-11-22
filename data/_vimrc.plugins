@@ -15,7 +15,7 @@ Plugin 'tpope/vim-fugitive' " Required by vim-airline for git repo.
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'SirVer/ultisnips'	"The engine
 "Plugin 'honza/vim-snippets'	"The snippets
-"Plugin 'Shougo/neocomplete.vim'
+Plugin 'neoclide/coc.nvim'	"conquer of completion
 Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
