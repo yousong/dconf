@@ -34,7 +34,7 @@ __vim_handle_coc() {
 	# Extensions are placed under $o_homedir/.config/coc/
 	#
 	# "-sync" means waiting for the command finish
-	vim -c 'CocInstall -sync coc-tsserver coc-json | q'
+	#vim -c 'CocInstall -sync coc-tsserver coc-json | q'
 
 	# Update & uninstall extensions
 	#CocUpdateSync
