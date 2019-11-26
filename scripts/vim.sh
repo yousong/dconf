@@ -20,6 +20,43 @@ __vim_has_node() {
 	which node &>/dev/null
 }
 
+__vim_handle_coc() {
+	if [ ! -d "$bundle_dir/coc.nvim" ]; then
+		return
+	fi
+
+	# It's written in typescript, javascript code available in
+	# "release" branch
+	git \
+		--git-dir "$bundle_dir/coc.nvim/.git" \
+		--work-tree "$bundle_dir/coc.nvim" \
+		checkout refs/remotes/origin/release
+	# Extensions are placed under $o_homedir/.config/coc/
+	#
+	# "-sync" means waiting for the command finish
+	vim -c 'CocInstall -sync coc-tsserver coc-json | q'
+
+	# Update & uninstall extensions
+	#CocUpdateSync
+	#CocUninstall coc-tsserver
+	# Edit config ~/.vim/coc-settings.json
+	#CocConfig
+
+	# TODO
+	#
+	#  - How it works?
+	#  - luci.js and friends
+	#  - golang packages
+	#
+	# Languages, https://github.com/neoclide/coc.nvim/wiki/Language-servers
+	#
+	#  - c/c++/objective-c: ccls
+	#    - build big c++ project
+	#    - per-project ccls settings
+	#  - js/ts: coc-tsserver extension
+	#    - how to use it?
+}
+
 config() {
 	local f dataf
 	local vundle_repo="$bundle_dir/Vundle.vim"
@@ -44,30 +81,6 @@ config() {
 
 	__notice "vim: Installing Vundle packages, this may take a while."
 	vim +BundleInstall +qa
-	if [ -d "$bundle_dir/coc.nvim" ]; then
-		# It's written in typescript, javascript code available in
-		# "release" branch
-		git \
-			--git-dir "$bundle_dir/coc.nvim/.git" \
-			--work-tree "$bundle_dir/coc.nvim" \
-			checkout refs/remotes/origin/release
-		# Extensions are placed under $o_homedir/.config/coc/
-		#
-		# "-sync" means waiting for the command finish
-		vim -c 'CocInstall -sync coc-tsserver coc-json | q'
-
-		# Update & uninstall extensions
-		#CocUpdateSync
-		#CocUninstall coc-tsserver
-
-		# Settings is at $o_homedir/.vim/coc-settings.json
-		#
-		# TODO
-		#
-		#  - How it works?
-		#  - luci.js and friends
-		#  - golang packages
-	fi
 
 	for patchdir in `__vim_foreach_patchdir`; do
 		d="$bundle_dir/${patchdir##*/}"
