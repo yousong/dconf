@@ -121,14 +121,6 @@ go_get() {
 			go get -u google.golang.org/grpc
 			go get -u github.com/golang/protobuf/protoc-gen-go
 			;;
-		etcd)
-			go get -u github.com/coreos/etcd/cmd/etcd
-			go get -u github.com/coreos/etcd/cmd/etcdctl
-			;;
-		goreman)
-			# foreman in golang for Procfile
-			go get -u github.com/mattn/goreman
-			;;
 		*)
 			go get "$@"
 	esac
