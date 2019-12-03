@@ -42,6 +42,7 @@ config() {
 
 	cp "$DATA_DIR/_zshrc" "$o_homedir/.zshrc"
 	__notice "zsh: use 'chsh -s /bin/zsh' to change shell."
+	__notice "zsh: rm $o_homedir/.zcompdump* if completion does not work"
 }
 
 collect() {
