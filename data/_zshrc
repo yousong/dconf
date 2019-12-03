@@ -64,6 +64,7 @@ fi
 [ -z "$commands[go]" ] || plugins+=(golang)
 [ -z "$commands[git]" ] || plugins+=(git)
 [ -z "$commands[kubectl]" ] || plugins+=(kubectl)
+[ -z "$commands[docker]" ] || plugins+=(docker)
 
 plugins+=(
 	zsh-autosuggestions
