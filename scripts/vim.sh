@@ -82,6 +82,8 @@ config() {
 	__notice "vim: Installing Vundle packages, this may take a while."
 	vim +BundleInstall +qa
 
+	__vim_handle_coc
+
 	for patchdir in `__vim_foreach_patchdir`; do
 		d="$bundle_dir/${patchdir##*/}"
 		if [ -d "$d" ]; then
