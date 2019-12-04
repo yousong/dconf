@@ -158,10 +158,17 @@ let g:tagbar_type_rst = {
 \ }
 
 let g:tagbar_type_markdown = {
-	\ 'ctagstype' : 'markdown',
+	\ 'ctagstype': 'markdown',
+	\ 'ctagsbin' : $HOME . '/.usr.env/bin/markdown2ctags.py',
+	\ 'ctagsargs' : '-f - --sort=yes',
 	\ 'kinds' : [
-		\ 'h:headings',
+		\ 's:sections',
+		\ 'i:images'
 	\ ],
+	\ 'sro' : '|',
+	\ 'kind2scope' : {
+		\ 's' : 'section',
+	\ },
 	\ 'sort': 0,
 \ }
 
