@@ -73,7 +73,7 @@ config() {
 			cp "$dataf" "$f"
 		fi
 	done
-	if !__vim_has_node; then
+	if ! __vim_has_node; then
 		# It requires nodejs (>= 8.10.0)
 		__notice "disable coc.nvim because nodejs is not found"
 		sed -i -e '/neoclide\/coc.nvim/d' "$o_homedir/.vimrc.plugins"
