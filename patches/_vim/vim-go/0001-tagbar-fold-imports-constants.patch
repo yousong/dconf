@@ -1,12 +1,10 @@
 From cbd47ccbafa844eb5bcb979aa759cc3712687c6e Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Mon, 9 Apr 2018 09:55:11 +0800
-Subject: [PATCH] tagbar: fold imports,constants
+Subject: [PATCH] tagbar: fold imports
 
 Too many imports can slow the "redraw" command invoked by tagbar with a
 visible delay.
-
-Constants are to be lookup anyway
 ---
  ftplugin/go/tagbar.vim | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
@@ -15,14 +13,12 @@ diff --git a/ftplugin/go/tagbar.vim b/ftplugin/go/tagbar.vim
 index 2d22fd7..f8914fb 100644
 --- a/ftplugin/go/tagbar.vim
 +++ b/ftplugin/go/tagbar.vim
-@@ -25,8 +25,8 @@ function! s:SetTagbar()
+@@ -25,7 +25,7 @@ function! s:SetTagbar()
            \ 'ctagstype' : 'go',
            \ 'kinds'     : [
            \ 'p:package',
 -          \ 'i:imports',
--          \ 'c:constants',
 +          \ 'i:imports:1',
-+          \ 'c:constants:1',
+           \ 'c:constants',
            \ 'v:variables',
            \ 't:types',
-           \ 'n:interfaces',
