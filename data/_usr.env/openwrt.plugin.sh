@@ -17,6 +17,42 @@ openwrt_build_current() {
 	cd ..
 }
 
+openwrt_planwan() {
+	local cmds
+	cmds="
+	ip netns del lan0
+	ip netns del wan0
+
+	set -x
+
+	ip netns add lan0
+	ip link add lan0 type veth peer name plan0
+	ip link set plan0 master br-lan up
+	ip link set lan0 netns lan0 up
+	ip netns exec lan0 bash -c '
+	  ip addr add 192.168.1.99/24 dev lan0
+	  ip route add 0.0.0.0/0 via 192.168.1.1 dev lan0
+	'
+
+	ip netns add wan0
+	ip link add wan0 type veth peer name pwan0
+	ip link set pwan0 master br-wan up
+	ip link set wan0 netns wan0 up
+	ip netns exec wan0 bash -c '
+	  ip addr add 192.168.7.99/24 dev wan0
+	  ip route add 0.0.0.0/0 via 192.168.7.84 dev wan0
+	  bash
+	'
+	"
+	if [ -z "$openwrt_planwan_confirmed" ]; then
+		__errmsg "planwan: about to run commands with sudo"
+		__errmsg "planwan: confirm or ctrl-c to abort"
+		read
+	fi
+	sudo true
+	sudo bash -x -c "$cmds"
+}
+
 dl_linux() {
 	local ver="$1"
 	local oIFS="$IFS"; IFS="."; set -- $ver; IFS="$oIFS"
