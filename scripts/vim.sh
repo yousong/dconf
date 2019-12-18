@@ -62,6 +62,11 @@ config() {
 	local vundle_repo="$bundle_dir/Vundle.vim"
 	local patchdir d
 
+	if ! vim --version &>/dev/null; then
+		__notice "vim: skipped because vim was not found"
+		return
+	fi
+
 	if [ ! -d "$vundle_repo/.git" ]; then
 		git clone https://github.com/gmarik/Vundle.vim.git "$vundle_repo"
 	fi

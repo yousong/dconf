@@ -6,6 +6,10 @@ fzf_ver=0.18.0
 fzf_dir="$o_homedir/.fzf"
 
 config() {
+	if ! go version &>/dev/null; then
+		__notice "fzf: skipped because go command was not found"
+		return
+	fi
 	[ -d "$fzf_dir" ] || {
 		go get -u github.com/junegunn/fzf || {
 			local f url

@@ -6,6 +6,11 @@ tpm_dir="$tmux_plugins_dir/tpm"
 config() {
 	local ver
 
+	if ! tmux -V &>/dev/null; then
+		__notice "tmux: skipped because tmux was not found"
+		return
+	fi
+
 	mkdir -p "$tmux_plugins_dir"
 	[ -x "$tmux_plugins_dir/tpm/tpm" ] || {
 		git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
