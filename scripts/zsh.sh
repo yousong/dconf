@@ -41,8 +41,12 @@ config() {
 	done
 
 	cp "$DATA_DIR/_zshrc" "$o_homedir/.zshrc"
-	__notice "zsh: use 'chsh -s /bin/zsh' to change shell."
-	__notice "zsh: rm $o_homedir/.zcompdump* if completion does not work"
+	if ! grep -q "^$USER\>.*/zsh" /etc/passwd &>/dev/null; then
+		__notice "zsh: use 'chsh -s /bin/zsh' to change shell."
+	fi
+	if ls "$o_homedir/".zcompdump* &>/dev/null; then
+		__notice "zsh: rm $o_homedir/.zcompdump* if completion does not work"
+	fi
 }
 
 collect() {
