@@ -66,6 +66,7 @@ if executable('ag')
 	let g:ackprg = 'ag --vimgrep'
 endif
 
+" let g:ack_mappings
 
 """"""" ctrlpvim/ctrlp.vim
 " use project-specific .vimrc settings as a root marker.  In the patched
@@ -96,6 +97,8 @@ nmap <C-N> :NERDTree %:p:h<CR>
 " How can I close vim if the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeMapOpenSplit = 's'
+let NERDTreeMapOpenVSplit = 'v'
 
 
 """"""" terryma/vim-multiple-cursors
