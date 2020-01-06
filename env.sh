@@ -71,6 +71,20 @@ template_eval() {
 	rm -f "$_tmpf"
 }
 
+format_patch() {
+	local wokd="$1"; shift
+	local outd="$1"; shift
+	local rang="$1"; shift
+
+	git \
+		--work-tree "$wokd" \
+		--git-dir "$wokd/.git" \
+		format-patch \
+		--output-directory "$outd" \
+		--zero-commit \
+		"$rang"
+}
+
 _do() {
 	local script="$1"
 	local action="$2"
