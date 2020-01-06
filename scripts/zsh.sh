@@ -58,15 +58,13 @@ collect() {
 refresh_patches() {
 	local d
 
-	cd "$ohmyzsh_dir"
-	git format-patch --output-directory "$PATCH_DIR/_oh-my-zsh" refs/remotes/origin/HEAD..dconf
+	format_patch "$ohmyzsh_dir" "$PATCH_DIR/_oh-my-zsh" refs/remotes/origin/HEAD..dconf
 
 	for patchdir in `__ohmyzsh_foreach_patchdir`; do
 		d="$ohmyzsh_cp_dir/${patchdir##*/}"
 		if [ -d "$d" ]; then
-			cd "$d"
 			rm -vf "$patchdir"/*
-			git format-patch --output-directory "$patchdir" refs/remotes/origin/HEAD..dconf
+			format_patch "$d" "$patchdir" refs/remotes/origin/HEAD..dconf
 		fi
 	done
 }

@@ -129,9 +129,8 @@ refresh_patches() {
 		name="${patchdir##*/}"
 		d="$bundle_dir/$name"
 		if [ -d "$d" ]; then
-			cd "$d"
 			rm -vf "$patchdir"/*
-			git format-patch --output-directory "$patchdir" "$(__vim_bundle_ref "$name")"..dconf
+			format_patch "$d" "$patchdir" "$(__vim_bundle_ref "$name")"..dconf
 		fi
 	done
 }
