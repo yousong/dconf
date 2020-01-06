@@ -1,4 +1,4 @@
-From cbd47ccbafa844eb5bcb979aa759cc3712687c6e Mon Sep 17 00:00:00 2001
+From 75686bc83f8ecd0b209f93198861cc9dfcc6e3ce Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Mon, 9 Apr 2018 09:55:11 +0800
 Subject: [PATCH] tagbar: fold imports
@@ -6,14 +6,14 @@ Subject: [PATCH] tagbar: fold imports
 Too many imports can slow the "redraw" command invoked by tagbar with a
 visible delay.
 ---
- ftplugin/go/tagbar.vim | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ ftplugin/go/tagbar.vim | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/ftplugin/go/tagbar.vim b/ftplugin/go/tagbar.vim
-index 2d22fd7..f8914fb 100644
+index 3ca244b..b051452 100644
 --- a/ftplugin/go/tagbar.vim
 +++ b/ftplugin/go/tagbar.vim
-@@ -25,7 +25,7 @@ function! s:SetTagbar()
+@@ -29,7 +29,7 @@ function! s:SetTagbar()
            \ 'ctagstype' : 'go',
            \ 'kinds'     : [
            \ 'p:package',

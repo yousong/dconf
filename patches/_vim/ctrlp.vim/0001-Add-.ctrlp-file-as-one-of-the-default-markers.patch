@@ -1,4 +1,4 @@
-From 7080365462ffed9e4b433f2894aad3d34f4cc218 Mon Sep 17 00:00:00 2001
+From 9b180618822f9aed9a465f632c5b3a4845fbbfe2 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yszhou4tech@gmail.com>
 Date: Fri, 8 Jul 2016 17:41:39 +0800
 Subject: [PATCH] Add .ctrlp file as one of the default markers
@@ -15,7 +15,7 @@ Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
  1 file changed, 33 insertions(+), 18 deletions(-)
 
 diff --git a/autoload/ctrlp.vim b/autoload/ctrlp.vim
-index 6128e28..c1af500 100644
+index d1e2369..9f3be69 100644
 --- a/autoload/ctrlp.vim
 +++ b/autoload/ctrlp.vim
 @@ -222,6 +222,8 @@ let s:coretype_names = {
@@ -27,7 +27,7 @@ index 6128e28..c1af500 100644
  " Get the options {{{2
  fu! s:opts(...)
  	unl! s:usrign s:usrcmd s:urprtmaps
-@@ -490,6 +492,27 @@ fu! s:UserCmd(lscmd)
+@@ -558,6 +560,27 @@ fu! s:UserCmd(lscmd)
  	en
  endf
  
@@ -55,7 +55,7 @@ index 6128e28..c1af500 100644
  fu! s:lsCmd()
  	let cmd = s:usrcmd
  	if type(cmd) == 1
-@@ -503,20 +526,17 @@ fu! s:lsCmd()
+@@ -571,20 +594,17 @@ fu! s:lsCmd()
  	elsei type(cmd) == 4 && ( has_key(cmd, 'types') || has_key(cmd, 'fallback') )
  		let fndroot = []
  		if has_key(cmd, 'types') && cmd['types'] != {}
@@ -84,7 +84,7 @@ index 6128e28..c1af500 100644
  	en
  endf
  " - Buffers {{{1
-@@ -1751,7 +1771,7 @@ fu! s:findroot(curr, mark, depth, type)
+@@ -1825,7 +1845,7 @@ fu! s:findroot(curr, mark, depth, type)
  		for markr in a:mark
  			if s:glbpath(s:fnesc(a:curr, 'g', ','), markr, 1) != ''
  				let fnd = 1
@@ -93,7 +93,7 @@ index 6128e28..c1af500 100644
  			en
  		endfo
  	en
-@@ -1776,12 +1796,7 @@ fu! ctrlp#setpathmode(pmode, ...)
+@@ -1850,12 +1870,7 @@ fu! ctrlp#setpathmode(pmode, ...)
  		retu 1
  	elsei a:pmode == 'r'
  		let spath = a:0 ? a:1 : s:crfpath
