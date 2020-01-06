@@ -57,10 +57,19 @@ __vim_handle_coc() {
 	#    - how to use it?
 }
 
+__vim_bundle_ref() {
+	local name="$1"
+
+	case "$name" in
+		vim-go) echo "v1.21" ;;
+		*) echo "refs/remotes/origin/HEAD" ;;
+	esac
+}
+
 config() {
 	local f dataf
 	local vundle_repo="$bundle_dir/Vundle.vim"
-	local patchdir d
+	local patchdir d name
 
 	if ! vim --version &>/dev/null; then
 		__notice "vim: skipped because vim was not found"
@@ -90,11 +99,12 @@ config() {
 	__vim_handle_coc
 
 	for patchdir in `__vim_foreach_patchdir`; do
-		d="$bundle_dir/${patchdir##*/}"
+		name="${patchdir##*/}"
+		d="$bundle_dir/$name"
 		if [ -d "$d" ]; then
 			__info "vim: Patching $d"
 			cd "$d"
-			git checkout -B dconf refs/remotes/origin/HEAD
+			git checkout -B dconf "$(__vim_bundle_ref "$name")"
 			git am "$patchdir"/*
 		fi
 	done
@@ -113,14 +123,15 @@ collect() {
 }
 
 refresh_patches() {
-	local d
+	local patchdir d name
 
 	for patchdir in `__vim_foreach_patchdir`; do
-		d="$bundle_dir/${patchdir##*/}"
+		name="${patchdir##*/}"
+		d="$bundle_dir/$name"
 		if [ -d "$d" ]; then
 			cd "$d"
 			rm -vf "$patchdir"/*
-			git format-patch --output-directory "$patchdir" refs/remotes/origin/HEAD..dconf
+			git format-patch --output-directory "$patchdir" "$(__vim_bundle_ref "$name")"..dconf
 		fi
 	done
 }
