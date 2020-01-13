@@ -28,9 +28,26 @@ if test -z "$found"; then
 	exit 1
 fi
 
+cherries=(
+	"$HOME/go/src/yunion.io/x/onecloud/scripts/cherry_pick_pull.sh"
+	"./scripts/cherry_pick_pull.sh"
+	"../onecloud/scripts/cherry_pick_pull.sh"
+)
+
+found=
+for cherry in "${cherries[@]}"; do
+	if test -x "$cherry"; then
+		found=1
+		break
+	fi
+done
+if test -z "$found"; then
+	echo "cannot find cherry picker" >&2
+	exit 1
+fi
 
 for b in $branches; do
-	./scripts/cherry_pick_pull.sh "upstream/release/$b" "$prn"
+	"$cherry" "upstream/release/$b" "$prn"
 	if test "$b" = "$til"; then
 		break
 	fi
