@@ -10,7 +10,7 @@ branches="
 "
 
 if test "$#" -lt 2; then
-	echo "usage: $(basename "$0") <prn> <til>" >&2
+	echo "usage: $(basename "$0") <til> <prn>" >&2
 	exit 1
 fi	
 
