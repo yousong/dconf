@@ -54,7 +54,7 @@ def add_usr():
     cli = api_client()
     usr = cli.users.create(**{
         'name': a_usr,
-        'password': '111111',
+        'password': a_usr + '123',
     })
     cli.projects.update_descendent(
         'system',
