@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 branches="
+3.1
 3.0
-2.14
 2.13
 2.12
 2.11
