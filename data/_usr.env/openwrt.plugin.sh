@@ -95,50 +95,41 @@ dl_gnu() {
 	wget -c "http://mirrors.ustc.edu.cn/gnu/$fpath"
 }
 
-openwrt_repo_dir=
+genpatches_usage() {
+	__errmsg "genpatches r=rel-ref o=out-dir"
+	__errmsg
+	__errmsg "example usage: "
+	__errmsg
+	__errmsg "    genpatches r=v4.2.0 o=../openwrt/packages/utils/qemu/patches"
+}
 
-# Run this from inside OpenWrt/LEDE sub-project repo <currepo>.
-#
-# It will prepare commits in range origin/master..HEAD as patches and moves
-# them into predefined patches/ subdir in <currepo>/../lede
-#
-# NOTE: old patches already present in target patches/ dir will be all deleted
-openwrt_genpatch() {
-	local def='
-name=libubox;pkgdir=package/libs/libubox
-name=procd;pkgdir=package/system/procd
-name=ubox;pkgdir=package/system/ubox
-name=uci;pkgdir=package/system/uci
-name=opkg-lede;pkgdir=package/system/opkg
-'
-	local currepo
-	local curname
-	local name dir
-	local patchdir fn
-	local line
+genpatches() {
+	local r o
+	local v
 
-	currepo="$(git rev-parse --show-toplevel)"
-	if [ -z "$currepo" ]; then
+	for v in "$@"; do
+		eval "$v"
+	done
+
+	if [ -z "$r" ]; then
+		genpatches_usage
 		return 1
 	fi
-	if [ -z "$openwrt_repo_dir" ]; then
-		openwrt_repo_dir="$(readlink -f "$currepo/../lede")"
-	fi
-	if [ ! -d "$openwrt_repo_dir" ]; then
-		__errmsg "openwrt_repo_dir $openwrt_repo_dir does not exist"
+	if [ -z "$o" ]; then
+		genpatches_usage
 		return 1
 	fi
-	curname="$(basename "$currepo")"
-	for line in $def; do
-		eval $line
-		if [ "$name" = "$curname" ]; then
-			patchdir="$openwrt_repo_dir/$pkgdir/patches"
-			for fn in $(ls "$patchdir"); do
-				rm -vf "$patchdir/$fn"
-			done
-			mkdir -p "$patchdir"
-			git format-patch --signoff --output-directory="$patchdir" origin/master..HEAD
-		fi
+
+	mkdir -p "$o"
+
+	local n=1
+	git rev-list --reverse "$r..HEAD" | while read v; do
+		git format-patch \
+			-1 \
+			--start-number "$n" \
+			--output-directory "$o/" \
+			$v
+		n=$((n+1))
 	done
 }
 
