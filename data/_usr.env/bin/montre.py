@@ -20,12 +20,10 @@ for line in lines:
 	mp = fields[4]
 	mids[mid] = [mid, pmid, line, True, []]
 
-mids['0'] = ['0', '0', '0', True, []]
-
 for mid in mids.keys():
-	if mid == '0':
-		continue
 	pmid = mids[mid][1]
+	if pmid not in mids:
+		continue
 	m = mids[mid] # me
 	p = mids[pmid] # parent
 	m[3] = False # root
@@ -37,7 +35,7 @@ def print_tree(mid, dep):
 		mid, i = q[-1]
 		m = mids[mid]
 		if i == 0 and mid != '0':
-			print(' '*(len(q)-2) + m[2])
+			print(' '*(len(q)-1) + m[2])
 		if i < len(m[4]):
 			q[-1][1] = i + 1
 			q.append([m[4][i][0], 0])
