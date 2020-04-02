@@ -2,7 +2,11 @@
 
 import sys
 
-d = sys.stdin.read()
+if len(sys.argv) > 1:
+	with open(sys.argv[1], 'r') as fin:
+		d = fin.read()
+else:
+	d = sys.stdin.read()
 
 mids = {}
 themid = ''
