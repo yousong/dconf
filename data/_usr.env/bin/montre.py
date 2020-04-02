@@ -32,8 +32,8 @@ def print_tree(mid, dep):
 	while len(q) > 0:
 		mid, i = q[-1]
 		m = mids[mid]
-		if i == 0:
-			print(' '*(len(q)-1) + m[2])
+		if i == 0 and mid != '0':
+			print(' '*(len(q)-2) + m[2])
 		if i < len(m[4]):
 			q[-1][1] = i + 1
 			q.append([m[4][i][0], 0])
