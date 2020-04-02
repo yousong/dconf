@@ -28,10 +28,17 @@ for mid in mids.keys():
 	p[4].append(m)
 
 def print_tree(mid, dep):
-	m = mids[mid]
-	print(' '*dep + m[2])
-	for i, c in enumerate(m[4]):
-		print_tree(c[0], dep+1)
+	q = [[mid, 0]]
+	while len(q) > 0:
+		mid, i = q[-1]
+		m = mids[mid]
+		if i == 0:
+			print(' '*(len(q)-1) + m[2])
+		if i < len(m[4]):
+			q[-1][1] = i + 1
+			q.append([m[4][i][0], 0])
+		else:
+			q.pop()
 
 for mid in mids.keys():
 	m = mids[mid]
