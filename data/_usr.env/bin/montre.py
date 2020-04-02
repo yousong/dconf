@@ -2,16 +2,15 @@
 
 import sys
 
+fin = None
 if len(sys.argv) > 1:
-	with open(sys.argv[1], 'r') as fin:
-		d = fin.read()
+	fin = open(sys.argv[1], 'r')
 else:
-	d = sys.stdin.read()
+	fin = sys.stdin
 
 mids = {}
 themid = ''
-lines = d.split('\n')
-for line in lines:
+for line in fin:
 	fields = line.split(' ', -1)
 	if len(fields) < 5:
 		continue
@@ -19,6 +18,8 @@ for line in lines:
 	pmid = fields[1]
 	mp = fields[4]
 	mids[mid] = [mid, pmid, line, True, []]
+
+fin.close()
 
 for mid in mids.keys():
 	pmid = mids[mid][1]
@@ -35,7 +36,7 @@ def print_tree(mid, dep):
 		mid, i = q[-1]
 		m = mids[mid]
 		if i == 0 and mid != '0':
-			print(' '*(len(q)-1) + m[2])
+			sys.stdout.write(' '*(len(q)-1) + m[2])
 		if i < len(m[4]):
 			q[-1][1] = i + 1
 			q.append([m[4][i][0], 0])
