@@ -30,7 +30,6 @@ else:
 	fin = sys.stdin
 
 mids = {}
-themid = ''
 for line in fin:
 	fields = line.split(' ', -1)
 	if len(fields) < 5:
@@ -56,7 +55,7 @@ def print_tree(mid, dep):
 	while len(q) > 0:
 		mid, i = q[-1]
 		m = mids[mid]
-		if i == 0 and mid != '0':
+		if i == 0:
 			sys.stdout.write(' '*(len(q)-1) + m[2])
 		if i < len(m[4]):
 			q[-1][1] = i + 1
