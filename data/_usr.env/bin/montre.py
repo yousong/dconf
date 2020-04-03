@@ -14,6 +14,11 @@ while i < len(sys.argv):
         else:
             sys.stderr.write("-p <pid>\n")
             sys.exit(1)
+    elif arg == '-h':
+        sys.stderr.write("usage:\n")
+        sys.stderr.write("  {} -p pid\n".format(sys.argv[0]))
+        sys.stderr.write("  {} path-to-mountinfo\n".format(sys.argv[0]))
+        sys.exit(0)
     else:
         fname = arg
     i += 1
