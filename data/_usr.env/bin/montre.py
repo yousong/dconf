@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-
+#
+# Copyright 2020 (c) Yousong Zhou
+#
 import sys
 
 fname = None
