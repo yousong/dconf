@@ -31,12 +31,11 @@ else:
 
 mids = {}
 for line in fin:
-	fields = line.split(' ', -1)
-	if len(fields) < 5:
+	fields = line.split(' ', 2)
+	if len(fields) < 3:
 		continue
 	mid = fields[0]
 	pmid = fields[1]
-	mp = fields[4]
 	mids[mid] = [mid, pmid, line, True, []]
 
 fin.close()
