@@ -2,9 +2,25 @@
 
 import sys
 
+fname = None
+i = 1
+while i < len(sys.argv):
+    arg = sys.argv[i]
+    if arg == '-p':
+        i += 1
+        if i < len(sys.argv):
+            pid = sys.argv[i].strip()
+            fname = '/proc/'+pid+'/mountinfo'
+        else:
+            sys.stderr.write("-p <pid>\n")
+            sys.exit(1)
+    else:
+        fname = arg
+    i += 1
+
 fin = None
-if len(sys.argv) > 1:
-	fin = open(sys.argv[1], 'r')
+if fname:
+	fin = open(fname, 'r')
 else:
 	fin = sys.stdin
 
