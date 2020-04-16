@@ -25,6 +25,7 @@ Plugin 'majutsushi/tagbar'
 "Plugin 'godlygeek/tabular'
 "Plugin 'Align'				"Name of vim-script.org package mirrors.
 "Plugin 'altercation/vim-colors-solarized'
+"Plugin 'xavierd/clang_complete'		" L: C/C++
 "Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
 "Plugin 'mattn/emmet-vim'		" L: HTML
 "Plugin 'groenewege/vim-less'		" L: LESS
@@ -183,6 +184,20 @@ let g:tagbar_type_smali = {
         \ ]
 \ }
 
+""""""" xavierd/clang_complete
+"NOTE there is a catch-22 with llvm+glibc built by build-script.  libclang
+"depends on different version of glibc files located elsewhere.  We cannot use
+"LD_LIBRARY_PATH becase that could segfault vim itself which depends on system
+"glibc libraries
+"
+"NOTE g:clang_use_library=0 won't work because clang_complete removes support
+"for invoking clang binary since 2013.
+"
+"let g:clang_debug=1
+"let g:llvmdirs = glob($HOME . '/.usr/toolchain/llvm-*', 0, 1)
+"if len(g:llvmdirs) > 0
+"	let g:clang_library_path=g:llvmdirs[0] . '/lib'
+"endif
 
 """"""" fatih/vim-go
 " Read vim-go-tutorial for more: https://github.com/fatih/vim-go-tutorial
