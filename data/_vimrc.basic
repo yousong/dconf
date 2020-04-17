@@ -128,8 +128,7 @@ set fileformat=unix
 "
 set wildmenu
 set complete=.,b,w,t,i	" exclude unloaded buffers from the default
-set completeopt=menu,preview,longest
-						" insert only the longest matched part
+set completeopt=menu,preview,noinsert
 
 
 " To let netrw be silent when opening a new window
