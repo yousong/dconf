@@ -57,6 +57,45 @@ __vim_handle_coc() {
 	#    - how to use it?
 }
 
+__vim_handle_ycm() {
+	local wd="$bundle_dir/YouCompleteMe"
+	[ -d "$wd" ] || return 0
+	[ ! -f "$wd/.dconf_done" ] || return 0
+
+	# Installation is done mainly by third_party/ycmd/build.py
+	#
+	# Binaries were downloaded from https://dl.bintray.com/ycm-core .
+	# Version numbers are hardcoded in the build.py script.  Note that the
+	# downloaded version may require newer versions of libc and cannot be
+	# run on systems like CentOS 7
+	#
+	# Dependencies are put in its own subdirectory in
+	# third_party/ycmd/third_party
+	#
+	# Arguments
+	#
+	#   --all			enable all completer
+	#   --clangd-completer		clangd
+	#   --go-completer		"go build" local gopls copy
+	#
+	"$wd/install.py" \
+		--clangd-completer
+
+	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"
+	if ! "$ycm_clangd" --version >/dev/null; then
+		local clangd="$(echo $o_homedir/.usr/toolchain/llvm-*/bin/clangd \
+					| sort --version-sort --reverse \
+					| head -n 1)"
+		if "$clangd" --version >/dev/null; then
+			if [ ! -e "$ycm_clangd.ycm" ]; then
+				mv "$ycm_clangd" "$ycm_clangd.ycm"
+			fi
+			ln -sf "$clangd" "$ycm_clangd"
+		fi
+	fi
+	touch "$wd/.dconf_done"
+}
+
 __vim_bundle_ref() {
 	local name="$1"
 
@@ -108,6 +147,8 @@ config() {
 			git am "$patchdir"/*
 		fi
 	done
+
+	__vim_handle_ycm
 }
 
 collect() {

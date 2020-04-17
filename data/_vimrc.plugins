@@ -28,6 +28,7 @@ Plugin 'majutsushi/tagbar'
 "Plugin 'xavierd/clang_complete'		" L: C/C++
 "Plugin 'prabirshrestha/async.vim'	"Needed by vim-lsp
 "Plugin 'prabirshrestha/vim-lsp'	" L: lang server
+Plugin 'ycm-core/YouCompleteMe'
 "Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
 "Plugin 'mattn/emmet-vim'		" L: HTML
 "Plugin 'groenewege/vim-less'		" L: LESS
@@ -307,3 +308,24 @@ let g:pymode_lint_ignore = ['E501', 'E272', 'E221', 'E225', 'E303', 'W601', 'E30
 "set background=light
 "silent! colorscheme solarized
 silent! colorscheme desert
+
+
+""""""" ycm-core/YouCompleteMe
+"
+" Debug
+"
+"	:YcmDebugInfo	ycm and lang-servers' status
+"	:YcmToggleLogs	ycm and lang-servers' log
+"
+"	let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+"
+let g:ycm_confirm_extra_conf = 0	" Load .ycm_extra_conf.py?
+let g:ycm_auto_trigger = 1		" Identifier completer, <C-Space> to force semance completer
+let g:ycm_filetype_blacklist = {
+	\ 'go': 1,
+	\ 'python': 1,
+	\ 'rust': 1
+\ }
+
+let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
+"let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
