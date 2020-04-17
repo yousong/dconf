@@ -128,7 +128,7 @@ set fileformat=unix
 "
 set wildmenu
 set complete=.,b,w,t,i	" exclude unloaded buffers from the default
-set completeopt=menu,preview,noinsert
+set completeopt=menu,noinsert
 
 
 " To let netrw be silent when opening a new window
