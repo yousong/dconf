@@ -271,5 +271,10 @@ let g:ycm_filetype_blacklist = {
 	\ 'rust': 1
 \ }
 
+" Generate compilation database
+"
+"	pip3 install compiledb
+"	compiledb make ARCH=mips CROSS_COMPILE=mips-openwrt-linux-musl- -j6
+"
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
