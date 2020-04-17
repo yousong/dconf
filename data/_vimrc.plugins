@@ -15,7 +15,6 @@ Plugin 'tpope/vim-fugitive' " Required by vim-airline for git repo.
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'SirVer/ultisnips'	"The engine
 "Plugin 'honza/vim-snippets'	"The snippets
-"Plugin 'neoclide/coc.nvim'	"conquer of completion
 Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
@@ -25,9 +24,6 @@ Plugin 'majutsushi/tagbar'
 "Plugin 'godlygeek/tabular'
 "Plugin 'Align'				"Name of vim-script.org package mirrors.
 "Plugin 'altercation/vim-colors-solarized'
-"Plugin 'xavierd/clang_complete'		" L: C/C++
-"Plugin 'prabirshrestha/async.vim'	"Needed by vim-lsp
-"Plugin 'prabirshrestha/vim-lsp'	" L: lang server
 Plugin 'ycm-core/YouCompleteMe'
 "Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
 "Plugin 'mattn/emmet-vim'		" L: HTML
@@ -186,38 +182,6 @@ let g:tagbar_type_smali = {
                 \ 'm:method',
         \ ]
 \ }
-
-
-""""""" xavierd/clang_complete
-"NOTE there is a catch-22 with llvm+glibc built by build-script.  libclang
-"depends on different version of glibc files located elsewhere.  We cannot use
-"LD_LIBRARY_PATH becase that could segfault vim itself which depends on system
-"glibc libraries
-"
-"NOTE g:clang_use_library=0 won't work because clang_complete removes support
-"for invoking clang binary since 2013.
-"
-"let g:clang_debug=1
-"let g:llvmdirs = glob($HOME . '/.usr/toolchain/llvm-*', 0, 1)
-"if len(g:llvmdirs) > 0
-"	let g:clang_library_path=g:llvmdirs[0] . '/lib'
-"endif
-
-
-""""""" prabirshrestha/vim-lsp
-"let g:clangds = glob($HOME . '/.usr/toolchain/llvm-*/bin/clangd', 0, 1)
-"if len(g:clangds) > 0
-"	let g:clangd=g:clangds[0]
-"else
-"	let g:clangd='clangd'
-"endif
-"if executable(g:clangd) > 0
-"	au User lsp_setup call lsp#register_server({
-"		\ 'name': 'clangd',
-"		\ 'cmd': {server_info->[g:clangd, '-background-index']},
-"		\ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-"	\ })
-"endif
 
 
 """"""" fatih/vim-go
