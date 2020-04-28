@@ -36,7 +36,8 @@ __vim_handle_ycm() {
 	#   --go-completer		"go build" local gopls copy
 	#
 	"$wd/install.py" \
-		--clangd-completer
+		--clangd-completer \
+		--go-completer
 
 	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"
 	if ! "$ycm_clangd" --version >/dev/null; then

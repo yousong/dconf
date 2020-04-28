@@ -30,7 +30,7 @@ Plugin 'ycm-core/YouCompleteMe'
 "Plugin 'alderz/smali-vim'		" L: Smali
 Plugin 'cespare/vim-toml'		" L: TOML
 Plugin 'chr4/nginx.vim'			" L: NGINX
-Plugin 'fatih/vim-go'			" L: Go
+"Plugin 'fatih/vim-go'			" L: Go
 Plugin 'rust-lang/rust.vim'		" L: Rust, rustfmt
 Plugin 'racer-rust/vim-racer'		" L: Rust, completor
 Plugin 'plasticboy/vim-markdown'	" L: Markdown
@@ -172,13 +172,13 @@ let g:tagbar_type_smali = {
 "
 " - Use ctrl-t to jump back
 " - Use :GoDefStack to view and select the jump stack
-augroup go_group
-	autocmd!
-	autocmd FileType go noremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR>
-	autocmd FileType go noremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR>
-	autocmd FileType go noremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR>
-	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
-augroup END
+"augroup go_group
+"	autocmd!
+"	autocmd FileType go noremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR>
+"	autocmd FileType go noremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR>
+"	autocmd FileType go noremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR>
+"	autocmd FileType go nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
+"augroup END
 "
 " When enabled, "gocode -source" will be used to scan source code for a
 " reliable experience.  It's slow.  Use binaries installed.
@@ -191,6 +191,8 @@ let g:go_gocode_propose_source = 1
 " golang programmers and it's a short list on its own but can cause
 " distraction when mixed with others
 let g:go_gocode_propose_builtins = 0
+
+let g:go_code_completion_enabled = 0
 
 
 """"""" rust-lang/rust
@@ -258,15 +260,15 @@ silent! colorscheme desert
 "
 " Debug
 "
-"	:YcmDebugInfo	ycm and lang-servers' status
-"	:YcmToggleLogs	ycm and lang-servers' log
+"	:YcmDebugInfo		ycm and lang-servers' status
+"	:YcmToggleLogs		ycm and lang-servers' log
+"	:YcmRestartServer	restart ycmd
 "
 "	let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 "
 let g:ycm_confirm_extra_conf = 0	" Load .ycm_extra_conf.py?
 let g:ycm_auto_trigger = 1		" Identifier completer, <C-Space> to force semance completer
 let g:ycm_filetype_blacklist = {
-	\ 'go': 1,
 	\ 'python': 1,
 	\ 'rust': 1
 \ }
@@ -278,3 +280,15 @@ let g:ycm_filetype_blacklist = {
 "
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
+
+augroup go_group
+	autocmd!
+	autocmd FileType go
+		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>. <Esc>:exec "YcmCompleter GoTo " . expand("<cword>")<Esc> |
+		\ autocmd BufWritePre *.go YcmCompleter Format
+
+augroup END
