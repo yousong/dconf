@@ -268,6 +268,7 @@ silent! colorscheme desert
 "
 let g:ycm_confirm_extra_conf = 0	" Load .ycm_extra_conf.py?
 let g:ycm_auto_trigger = 1		" Identifier completer, <C-Space> to force semance completer
+let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_filetype_blacklist = {
 	\ 'python': 1,
 	\ 'rust': 1
