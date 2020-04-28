@@ -78,7 +78,12 @@ autocmd VimEnter * call TurnOffParenMatch()
 " cinoptions
 "
 " smartindent, also for other languages;  has no effect when cindent is on or
-" indentexpr is set
+"
+" indentexpr is set.  Indent when
+"
+"  - after a line ending with "{"
+"  - before a line starting with "}"
+"  - after a line starting with keywords from cinwords (if, else, while, etc.)
 "
 " formatoptions, no effect when paste is set
 "
