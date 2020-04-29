@@ -37,7 +37,7 @@
 #	journalctl       /usr/bin/journalctl               13151  /proc/13151/fdinfo/3  2
 #	sdnagent         /opt/yunion/bin/sdnagent          20558  /proc/20558/fdinfo/7  90
 #	systemd-udevd    /usr/lib/systemd/systemd-udevd    46019  /proc/46019/fdinfo/7  4
-#	systemd-udevd    /usr/lib/systemd/systemd-udevd    46020  /proc/46020/fdinfo/7  4 
+#	systemd-udevd    /usr/lib/systemd/systemd-udevd    46020  /proc/46020/fdinfo/7  4
 #
 # The script is adapted from https://stackoverflow.com/questions/13758877/how-do-i-find-out-what-inotify-watches-have-been-registered/48938640#48938640
 #
