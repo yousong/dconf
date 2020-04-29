@@ -266,6 +266,12 @@ silent! colorscheme desert
 "
 "	let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 "
+" ycmd will use inotify to watch directories and consume a lot of watch
+" descriptor quota.  If commands fail because of this, increase sysctl setting
+"
+"	sysctl fs.inotify.max_user_instances=1280
+"	sysctl fs.inotify.max_user_watches=81920
+"
 let g:ycm_confirm_extra_conf = 0	" Load .ycm_extra_conf.py?
 let g:ycm_auto_trigger = 1		" Identifier completer, <C-Space> to force semance completer
 let g:ycm_enable_diagnostic_highlighting = 0
@@ -274,6 +280,7 @@ let g:ycm_filetype_blacklist = {
 	\ 'rust': 1
 \ }
 
+"" C
 " Generate compilation database
 "
 "	pip3 install compiledb
@@ -282,6 +289,7 @@ let g:ycm_filetype_blacklist = {
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
 
+"" Go
 augroup go_group
 	autocmd!
 	autocmd FileType go
