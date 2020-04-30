@@ -134,6 +134,7 @@ set fileformat=unix
 set wildmenu
 set complete=.,b,w,t,i	" exclude unloaded buffers from the default
 set completeopt=menu,noinsert
+set pumheight=13	" max num of items in insert completion menu
 
 
 " To let netrw be silent when opening a new window
