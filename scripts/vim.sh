@@ -37,7 +37,6 @@ __vim_handle_ycm() {
 	#
 	"$wd/install.py" \
 		--clangd-completer \
-		--go-completer
 
 	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"
 	if ! "$ycm_clangd" --version >/dev/null; then
