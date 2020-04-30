@@ -174,11 +174,11 @@ let g:tagbar_type_smali = {
 " - Use :GoDefStack to view and select the jump stack
 augroup go_group
 	autocmd!
-	autocmd FileType go |
-		\ nnoremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR>
+	autocmd FileType go
+		\ nnoremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>. :exec "GoDef " . expand("<cword>")<Esc> |
+		\ nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc> |
 		\ inoremap <buffer> . .<C-x><C-o>
 augroup END
 
