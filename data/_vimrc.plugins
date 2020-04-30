@@ -178,7 +178,7 @@ augroup go_group
 		\ nnoremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR>
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc> |
+		\ nnoremap <buffer> <leader>. :exec "GoDef " . expand("<cword>")<Esc> |
 		\ inoremap <buffer> . .<C-x><C-o>
 augroup END
 
