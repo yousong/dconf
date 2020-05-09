@@ -267,7 +267,8 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_filetype_blacklist = {
 	\ 'go': 1,
 	\ 'python': 1,
-	\ 'rust': 1
+	\ 'rust': 1,
+	\ 'tagbar': 1,
 \ }
 
 "" C
