@@ -279,6 +279,16 @@ let g:ycm_filetype_blacklist = {
 "
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
+augroup c_group
+	autocmd!
+	autocmd FileType c,cpp
+		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>. <Esc>:exec "YcmCompleter GoTo " . expand("<cword>")<Esc> |
+		\ autocmd BufWritePre *.c,*.cpp,*.h,*.hpp YcmCompleter Format
+augroup END
 
 "" Go
 "augroup go_group
