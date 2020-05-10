@@ -10,7 +10,7 @@ while [ "$repoRoot" != "/" ]; do
 		repoName="$(basename "$repoRoot")"
 		break
 	fi
-	cwd="$(readlink -f "$cwd/..")"
+	repoRoot="$(readlink -f "$repoRoot/..")"
 done
 if [ "$repoRoot" = "/" ]; then
 	echo "$0: Where am I" >&2
