@@ -68,11 +68,39 @@ while [ "$#" -gt 0 ]; do
 	esac
 done
 
-lsof +c 0 -n -P -K i "${uopt[@]}" \
-	| awk '/inotify$/ { gsub(/[urw]$/,"",$4); print $3" "$1" "$2" "$4 }' \
-	| while read user name pid fd; do \
-		exe="$(readlink -f /proc/$pid/exe || echo n/a)"; \
-		fdinfo="/proc/$pid/fdinfo/$fd" ; \
-		count="$(grep -c "^inotify" "$fdinfo" || true)"; \
-		echo "$user $name $pid $fdinfo $count $exe"; \
+# Output field identifier list
+#
+# 	K	task id
+# 	c	command name
+# 	u	user id
+# 	f	file descriptor
+# 	n	file name
+#
+# We print only main threads' info by excluding sets with tid set
+#
+lsof +c 0 -F Kcufn -n -P "${uopt[@]}" \
+	| while read f; do \
+		case "$f" in \
+			f*)
+				fd="${f:1}" \
+				;; \
+			n*)
+				fname="${f:1}"; \
+				if [ -z "$tid" -a "$fname" = inotify ]; then \
+					exe="$(readlink -f /proc/$pid/exe || echo n/a)"; \
+					fdinfo="/proc/$pid/fdinfo/$fd" ; \
+					count="$(grep -c "^inotify" "$fdinfo" 2>/dev/null || true)"; \
+					count="${count:--1}"; \
+					echo "$user $name $pid $fdinfo $count $exe"; \
+				fi \
+				;; \
+			p*) pid="${f:1}"; tid="" ;; \
+			K*) tid="${f:1}" ;; \
+			c*) name="${f:1}" ;; \
+			u*) \
+				user="${f:1}"; \
+				user="$(cut -d: -f3,1 /etc/passwd | grep ":$user$" | cut -d: -f1)"; \
+				user="${user:-$f:1}"; \
+				;; \
+		esac; \
 	done
