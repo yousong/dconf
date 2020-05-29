@@ -2,7 +2,7 @@
 
 . "$TOPDIR/env.sh"
 
-fzf_ver=0.18.0
+fzf_ver=0.21.1
 
 fzf_dir="$o_homedir/.fzf"
 fzf_bindir="$o_homedir/.usr/bin"
