@@ -172,6 +172,11 @@ let g:tagbar_type_smali = {
 "
 " - Use ctrl-t to jump back
 " - Use :GoDefStack to view and select the jump stack
+"
+" Settings, https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+"let g:go_gopls_deep_completion = v:false
+"let g:go_gopls_complete_unimported = v:false
+"let g:go_gopls_staticcheck = v:false
 augroup go_group
 	autocmd!
 	autocmd FileType go
