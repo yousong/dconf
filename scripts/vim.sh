@@ -91,9 +91,17 @@ config() {
 		name="${patchdir##*/}"
 		d="$bundle_dir/$name"
 		if [ -d "$d" ]; then
-			__info "vim: Patching $d"
+			local ref
+			ref="$(__vim_bundle_ref "$name")"
+
 			cd "$d"
-			git checkout -B dconf "$(__vim_bundle_ref "$name")"
+			if ! git rev-parse "$ref" &>/dev/null; then
+				__info "vim: fetching $d"
+				git fetch origin --tags
+			fi
+			git checkout -B dconf "$ref"
+
+			__info "vim: patching $d"
 			git am "$patchdir"/*
 		fi
 	done
