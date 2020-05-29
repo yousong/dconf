@@ -3,29 +3,40 @@
 . "$TOPDIR/env.sh"
 
 fzf_ver=0.18.0
+
 fzf_dir="$o_homedir/.fzf"
+fzf_bindir="$o_homedir/.usr/bin"
+fzf_bin="$fzf_bindir/fzf"
 
 config() {
-	if ! go version &>/dev/null; then
-		__notice "fzf: skipped because go command was not found"
-		return
-	fi
-	[ -d "$fzf_dir" ] || {
-		go get -u github.com/junegunn/fzf || {
-			local f url
-			case "$o_os" in
-				Darwin) f="fzf-$fzf_ver-darwin_amd64.tgz" ;;
-				Linux) f="fzf-$fzf_ver-linux_amd64.tgz" ;;
-				*) __error "unknown os $o_os"; false; ;;
-			esac
-			url="https://github.com/junegunn/fzf-bin/releases/download/$fzf_ver/$f"
+	local v
 
-			__info "downloading $f"
-			wget -O /tmp/fzf.tgz "$url"
-			mkdir -p "$HOME/.usr/bin"
-			tar -xzf /tmp/fzf.tgz -C "$HOME/.usr/bin/"
-			rm -f /tmp/fzf/tgz
-		}
+	if [ -x "$fzf_bin" ]; then
+		v="$("$fzf_bin" --version)"
+		v="${v% *}"
+	fi
+
+	[ "$v" = "$fzf_ver" ] || {
+		local f url
+		case "$o_os" in
+			Darwin) f="fzf-$fzf_ver-darwin_amd64.tgz" ;;
+			Linux) f="fzf-$fzf_ver-linux_amd64.tgz" ;;
+			*) __error "unknown os $o_os"; false; ;;
+		esac
+		url="https://github.com/junegunn/fzf-bin/releases/download/$fzf_ver/$f"
+
+		__info "downloading $f"
+		wget -c -O /tmp/fzf.tgz "$url"
+		mkdir -p "$fzf_bindir"
+		tar -xzf /tmp/fzf.tgz -C "$fzf_bindir"
+		rm -f /tmp/fzf.tgz
+	}
+
+	[ -d "$fzf_dir" ] || {
 		git clone https://github.com/junegunn/fzf.git "$fzf_dir"
 	}
+	git \
+		--work-tree "$fzf_dir" \
+		--git-dir "$fzf_dir/.git" \
+		checkout -B "$fzf_ver"
 }
