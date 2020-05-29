@@ -271,10 +271,27 @@ let g:ycm_filetype_blacklist = {
 \ }
 
 "" C
+"
 " Generate compilation database
 "
 "	pip3 install compiledb
 "	compiledb make ARCH=mips CROSS_COMPILE=mips-openwrt-linux-musl- -j6
+"
+" Ignore gcc args unknown to clang
+"
+"	args='
+"		-mindirect-branch=thunk-extern
+"		-mno-fp-ret-in-387
+"		-mpreferred-stack-boundary=3
+"		-mindirect-branch-register
+"		-fno-var-tracking-assignments
+"		-fconserve-stack
+"	'
+"
+"	for arg in $args; do
+"	  sed -i -e "/$arg/d" compile_commands.json
+"	  done
+"
 "
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
