@@ -111,6 +111,7 @@ go_select() {
 			export GOROOT="$(go env GOROOT)"
 		fi
 		path_action PATH prepend "$GOPATH/bin"
+		export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	fi
 }
 
