@@ -104,14 +104,15 @@ go_select() {
 
 	distver_select_ go "$ver" "$q" go_select_
 	if which go &>/dev/null; then
+		export GOPROXY=https://mirrors.aliyun.com/goproxy/
 		export GOPATH="$HOME/go"
+		export GO111MODULE=on
 		if [ -z "$GOROOT" -o ! -d "$GOROOT" ]; then
 			unset GOROOT
 			# go installed by package managers
 			export GOROOT="$(go env GOROOT)"
 		fi
 		path_action PATH prepend "$GOPATH/bin"
-		export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	fi
 }
 
