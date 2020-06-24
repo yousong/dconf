@@ -106,7 +106,6 @@ go_select() {
 	if which go &>/dev/null; then
 		export GOPROXY=https://mirrors.aliyun.com/goproxy/
 		export GOPATH="$HOME/go"
-		unset GO111MODULE
 		if [ -z "$GOROOT" -o ! -d "$GOROOT" ]; then
 			unset GOROOT
 			# go installed by package managers
