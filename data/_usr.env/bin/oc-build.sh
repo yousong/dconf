@@ -40,4 +40,10 @@ build_yunionapi() {
 	docker push "$dockerRepo:yunionapi"
 }
 
+build_sdnagent() {
+	cd "$repoRoot"
+	docker buildx build -f "$repoRoot/build/docker/Dockerfile" -t "$dockerRepo:sdnagent" .
+	docker push "$dockerRepo:sdnagent"
+}
+
 "build_$repoName" "$@"
