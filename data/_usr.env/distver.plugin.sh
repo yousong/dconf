@@ -123,8 +123,12 @@ go_get() {
 			go get -u google.golang.org/grpc
 			go get -u github.com/golang/protobuf/protoc-gen-go
 			;;
+		gops)
+			go get -u github.com/google/gops
+			;;
 		*)
 			go get "$@"
+			;;
 	esac
 }
 
