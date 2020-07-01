@@ -244,34 +244,26 @@ function! DoProfile()
 	echomsg " - View result with :edit " . l:log
 endfunction
 
-if ! exists("*DoFindSourceLocalVimrc")
-	function! DoFindSourceLocalVimrc()
-		"" Search from the directory where current file is, up to the $HOME directory
-		"" or / (root) directory until a .vimrc is found, then source that file
-		let l:d = fnamemodify(expand('%:p'), ':h')
-		if l:d[0] != '/'
-			" There are times the expand result is just a dot...
-			return 0
+"" Search from the directory where current file is, up to the $HOME directory
+"" or / (root) directory until a .vimrc is found, then source that file
+function! SourceCustomVimrc()
+	let l:d = fnamemodify(expand('%:p'), ':h')
+	" There are times the expand result is just a dot...
+	if l:d[0] != '/' | return | endif
+
+	while 1
+		if l:d == $HOME | return | endif
+
+		let l:f = l:d . '/.vimrc'
+		if filereadable(l:f)
+			" not quite sure if it's secure
+			set secure
+			execute 'source ' . l:f
+			return
 		endif
-		let l:h = $HOME
-		while 1
-			if l:d == l:h
-				return 0
-			endif
-			let l:f = l:d . '/.vimrc'
-			if filereadable(l:f)
-				execute 'source ' . l:f
-				return 1
-			endif
-			if l:d == '/'
-				return 0
-			else
-				let l:d = fnamemodify(l:d, ':h')
-			endif
-		endwhile
-	endfunction
-	" not quite sure if it's secure
-	set secure
-	" Directory specific .vimrc
-	call DoFindSourceLocalVimrc()
-endif
+
+		if l:d == '/' | return | endif
+		let l:d = fnamemodify(l:d, ':h')
+	endwhile
+endfunction
+call SourceCustomVimrc()
