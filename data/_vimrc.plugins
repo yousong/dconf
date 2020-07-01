@@ -317,17 +317,19 @@ let g:ycm_filetype_blacklist = {
 " Ignore gcc args unknown to clang
 "
 "	args='
+"		-maccumulate-outgoing-args
 "		-mindirect-branch=thunk-extern
 "		-mno-fp-ret-in-387
 "		-mpreferred-stack-boundary=3
 "		-mindirect-branch-register
 "		-fno-var-tracking-assignments
 "		-fconserve-stack
+"		-Wno-unused-but-set-variable
 "	'
 "
 "	for arg in $args; do
 "	  sed -i -e "/$arg/d" compile_commands.json
-"	  done
+"	done
 "
 "
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
