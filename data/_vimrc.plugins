@@ -186,6 +186,38 @@ augroup go_group
 		\ nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
 augroup END
 
+augroup go_group_mod_vendor
+	autocmd FileType go call GoCheckModVendor()
+augroup END
+
+function! GoCheckModVendor()
+	autocmd! go_group_mod_vendor
+
+	"" Search from the directory where current file is, up to the $HOME directory
+	"" or / (root) directory until a vendor directory is found
+	let l:d = fnamemodify(expand('%:p'), ':h')
+	if l:d[0] != '/'
+		" There are times the expand result is just a dot...
+		return
+	endif
+	let l:h = $HOME
+	while 1
+		if l:d == l:h
+			return
+		endif
+		let l:f = l:d . '/vendor'
+		if isdirectory(l:f)
+			let $GO111MODULE = "off"
+			return
+		endif
+		if l:d == '/'
+			return
+		else
+			let l:d = fnamemodify(l:d, ':h')
+		endif
+	endwhile
+endfunction
+
 
 """"""" rust-lang/rust
 """"""" racer-rust/vim-racer
