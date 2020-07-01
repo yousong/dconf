@@ -196,6 +196,14 @@ function! GoCheckModVendor()
 	autocmd! go_group_mod_vendor
 
 	let l:d = fnamemodify(expand('%:p'), ':h')
+
+	" only when l:d is a directory under $GOPATH
+	let l:l = strlen($GOPATH)
+	if l:l > 0
+		if stridx(l:d, $GOPATH) != 0 | return | endif
+		if strlen(l:d) > l:l && l:d[l:l] != '/' | return | endif
+	endif
+
 	" There are times the expand result is just a dot...
 	if l:d[0] != '/' | return | endif
 
