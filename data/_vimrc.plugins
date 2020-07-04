@@ -303,6 +303,7 @@ let g:ycm_filetype_blacklist = {
 	\ 'python': 1,
 	\ 'rust': 1,
 	\ 'tagbar': 1,
+	\ 'nerdtree': 1,
 \ }
 
 "" C
