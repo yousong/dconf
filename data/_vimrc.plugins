@@ -341,8 +341,11 @@ augroup c_group
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>. <Esc>:exec "YcmCompleter GoTo " . expand("<cword>")<Esc> |
-		\ autocmd BufWritePre *.c,*.cpp,*.h,*.hpp YcmCompleter Format
 augroup END
+
+function! YcmCAutoFormat()
+	autocmd BufWritePre *.c,*.cpp,*.h,*.hpp YcmCompleter Format
+endfunction
 
 "" Go
 "augroup go_group
