@@ -30,3 +30,5 @@
 	#	git rev-parse --show-toplevel
 	#
 	exec = "!exec "
+[pull]
+	ff = only
