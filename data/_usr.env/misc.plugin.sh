@@ -157,6 +157,28 @@ pgreps() {
 	ps f -s "$(ps -o sess=  -p "$(pgrep "$@" -d,)" | sed -re 's/^ +//' | paste -sd,)"
 }
 
+pkgprovides() {
+	local f="$1"
+
+	if [ "${f##*/}" = "$f" ]; then
+		f="$(which --skip-alias --skip-functions "$f")"
+	fi
+	if [ -z "$f" ]; then
+		__errmsg "empty arg0"
+		return 1
+	fi
+
+	if command -v rpm 2>&1 >/dev/null; then
+		rpm -qf "$f"
+	elif command -v dpkg 2>&1 >/dev/null; then
+		dpkg --search "$f"
+	elif command -v apk 2>&1 >/dev/null; then
+		apk info --who-owns "$f"
+	else
+		__errmsg "cannot determin package manager"
+	fi
+}
+
 gpg_prep() {
 	local old
 	local cur
