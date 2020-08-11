@@ -101,11 +101,14 @@ genpatches_usage() {
 	__errmsg "example usage: "
 	__errmsg
 	__errmsg "    genpatches r=v4.2.0 o=../openwrt/packages/utils/qemu/patches"
+	__errmsg "    genpatches r=v4.2.0 o=../openwrt/packages/utils/qemu/patches ns=600 nw=3"
 }
 
 genpatches() {
 	local r o
+	local ns nw
 	local v
+	local fp fn
 
 	for v in "$@"; do
 		eval "$v"
@@ -119,17 +122,25 @@ genpatches() {
 		genpatches_usage
 		return 1
 	fi
+	[ "$ns" -gt 1 ] || ns=1
+	[ "$nw" -gt 0 ] || nw=4
 
 	mkdir -p "$o"
 
-	local n=1
+	local i="$ns"
 	git rev-list --reverse "$r..HEAD" | while read v; do
-		git format-patch \
+		fp="$(git format-patch \
 			-1 \
-			--start-number "$n" \
+			--start-number "$i" \
 			--output-directory "$o/" \
-			$v
-		n=$((n+1))
+			$v 2>&1)"
+		fn="$(basename "$fp")"
+		n="${fn%%-*}"
+		while [ "${#n}" -gt "$nw" ]; do
+			n="${n#?}"
+		done
+		mv "$fp" "$(dirname "$fp")/${n}-${fn#*-}"
+		i=$((i+1))
 	done
 }
 
