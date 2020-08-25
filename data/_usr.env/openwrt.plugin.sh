@@ -108,7 +108,7 @@ genpatches() {
 	local r o
 	local ns nw
 	local v
-	local fp fn
+	local fp nfp fn
 
 	for v in "$@"; do
 		eval "$v"
@@ -132,14 +132,17 @@ genpatches() {
 		fp="$(git format-patch \
 			-1 \
 			--start-number "$i" \
-			--output-directory "$o/" \
+			--output-directory "$o" \
 			$v 2>&1)"
 		fn="$(basename "$fp")"
 		n="${fn%%-*}"
 		while [ "${#n}" -gt "$nw" ]; do
 			n="${n#?}"
 		done
-		mv "$fp" "$(dirname "$fp")/${n}-${fn#*-}"
+		nfp="$(dirname "$fp")/${n}-${fn#*-}"
+		if [ "$fp" != "$nfp" ]; then
+			mv "$fp" "$nfp"
+		fi
 		i=$((i+1))
 	done
 }
