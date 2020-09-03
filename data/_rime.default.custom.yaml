@@ -1,0 +1,9 @@
+# 文档
+#
+# - https://github.com/rime/home/wiki/RimeWithSchemata
+# - https://github.com/rime/home/wiki/CustomizationGuide
+#
+patch:
+  schema_list:
+    - schema: luna_pinyin
+    - schema: wubi86
