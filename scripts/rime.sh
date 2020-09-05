@@ -19,6 +19,27 @@ rime_rm_symlinks() {
 	fi
 }
 
+rime_cp_custom_yaml() {
+	local src="$1"; shift
+	local dst="$1"; shift
+
+	if [ "$src" = "$DATA_DIR" ]; then
+		find "$src" -maxdepth 1 -name "_rime.*.custom.yaml" -type f \
+			| while read srcf; do
+				dstf="$(basename "$srcf")"
+				dstf="${dstf#_rime.}"
+				cp "$srcf" "$dst/$dstf"
+			done
+	else
+		find "$src" -maxdepth 1 -name "*.custom.yaml" -type f \
+			| while read srcf; do
+				dstf="$(basename "$srcf")"
+				dstf="_rime.$dstf"
+				cp "$srcf" "$dst/$dstf"
+			done
+	fi
+}
+
 config() {
 	local rd="$(rime_dir)"
 
@@ -29,7 +50,8 @@ config() {
 		rime_rm_symlinks
 		ln -sf rime-wubi/wubi86.dict.yaml "$rd/wubi86.dict.yaml"
 		ln -sf rime-wubi/wubi86.schema.yaml "$rd/wubi86.schema.yaml"
-		cp "$DATA_DIR/_rime.default.custom.yaml" "$rd/default.custom.yaml"
+
+		rime_cp_custom_yaml "$DATA_DIR" "$rd"
 	fi
 }
 
@@ -38,5 +60,8 @@ collect() {
 
 	if [ -s "$rd/default.custom.yaml" ]; then
 		cp "$rd/default.custom.yaml" "$DATA_DIR/_rime.default.custom.yaml"
+		cp "$rd/wubi86.custom.yaml" "$DATA_DIR/_rime.wubi86.custom.yaml"
+
+		rime_cp_custom_yaml "$rd" "$DATA_DIR"
 	fi
 }
