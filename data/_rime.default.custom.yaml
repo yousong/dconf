@@ -3,7 +3,15 @@
 # - https://github.com/rime/home/wiki/RimeWithSchemata
 # - https://github.com/rime/home/wiki/CustomizationGuide
 #
+# Keys
+#
+#   Ctrl-Option-`         Deploy (make effect)
+#   Ctrl-`                Switch schema
+#
 patch:
   schema_list:
     - schema: luna_pinyin
     - schema: wubi86
+  ascii_composer/switch_key:
+    Shift_L: commit_code
+    Shift_R: commit_code
