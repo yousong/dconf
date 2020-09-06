@@ -21,3 +21,4 @@ patch:
     Shift_L: commit_code
     Shift_R: commit_code
   menu/page_size: 8
+  switcher/caption: "`"
