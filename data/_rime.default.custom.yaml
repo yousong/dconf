@@ -3,6 +3,11 @@
 # - https://github.com/rime/home/wiki/RimeWithSchemata
 # - https://github.com/rime/home/wiki/CustomizationGuide
 #
+# 路径
+#
+#   /Library/Input Methods/Squirrel.app/Contents/SharedSupport
+#   $HOME/Library/Rime
+#
 # Keys
 #
 #   Ctrl-Option-`         Deploy (make effect)
