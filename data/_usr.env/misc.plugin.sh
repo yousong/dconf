@@ -202,3 +202,12 @@ gpg_prep() {
 	# $GPG_TTY to prompt for passphrase.  It's local to gpg-agent.
 	export GPG_TTY="$(tty 2>/dev/null)"
 }
+
+# prepend timestamps to cmd stdout
+tsit() {
+	local l
+
+	"$@" | while read l; do
+		echo "$(date) | $l"
+	done
+}
