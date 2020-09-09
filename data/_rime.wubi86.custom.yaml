@@ -1,3 +1,2 @@
 patch:
-  punctuator/import_preset: symbols
-  recognizer/patterns/punct: '^/([0-9]0?|[A-Za-z]+)$'
+  __include: symbols:/patch
