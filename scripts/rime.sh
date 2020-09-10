@@ -11,14 +11,6 @@ rime_dir() {
 	esac
 }
 
-rime_rm_symlinks() {
-	local rd="$(rime_dir)"
-
-	if [ -d "$rd" ]; then
-		find "$rd" -maxdepth 1 -type l | xargs rm -vf
-	fi
-}
-
 rime_cp_custom_yaml() {
 	local src="$1"; shift
 	local dst="$1"; shift
@@ -47,10 +39,12 @@ config() {
 		if [ ! -d "$rd/rime-wubi" ]; then
 			git clone https://github.com/rime/rime-wubi.git "$rd/rime-wubi"
 		fi
-		rime_rm_symlinks
+
+		find "$rd" -maxdepth 1 -type l | xargs rm -vf
 		ln -sf rime-wubi/wubi86.dict.yaml "$rd/wubi86.dict.yaml"
 		ln -sf rime-wubi/wubi86.schema.yaml "$rd/wubi86.schema.yaml"
 
+		find "$rd" -maxdepth 1 -type f -name '*.custom.yaml' | xargs rm -vf
 		rime_cp_custom_yaml "$DATA_DIR" "$rd"
 	fi
 }
