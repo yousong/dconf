@@ -53,9 +53,6 @@ collect() {
 	local rd="$(rime_dir)"
 
 	if [ -s "$rd/default.custom.yaml" ]; then
-		cp "$rd/default.custom.yaml" "$DATA_DIR/_rime.default.custom.yaml"
-		cp "$rd/wubi86.custom.yaml" "$DATA_DIR/_rime.wubi86.custom.yaml"
-
 		rime_cp_custom_yaml "$rd" "$DATA_DIR"
 	fi
 }
