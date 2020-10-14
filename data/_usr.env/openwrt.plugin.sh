@@ -2,6 +2,7 @@ openwrt_build_current() {
 	local prefix="$HOME/.usr"
 	local lua_path="$prefix/lib/lua5.1"
 	local build_dir="_t"
+	local compiledb="$(which compiledb)"
 
 	mkdir -p "$prefix"
 	rm -rf "$build_dir"
@@ -9,11 +10,12 @@ openwrt_build_current() {
 
 	cd "$build_dir";
 	CFLAGS="-g3 -I$prefix/include -I$prefix/include/lua5.1 -isystem=$prefix"	\
-	LDFLAGS="-L$prefix/lib -Wl,-rpath,$prefix/lib"	\
-		cmake -DCMAKE_PREFIX_PATH="$prefix"			\
-		-DCMAKE_INSTALL_PREFIX="$prefix"			\
-		-DLUAPATH="$lua_path" ..					\
-			&& make VERBOSE=1
+	LDFLAGS="-L$prefix/lib -Wl,-rpath,$prefix/lib"		\
+	PKG_CONFIG_PATH="$prefix/lib/pkgconfig"			\
+		cmake -DCMAKE_PREFIX_PATH="$prefix"		\
+		-DCMAKE_INSTALL_PREFIX="$prefix"		\
+		-DLUAPATH="$lua_path" ..			\
+			&& ${compiledb:-} --output ../compile_commands.json make VERBOSE=1
 	cd ..
 }
 
