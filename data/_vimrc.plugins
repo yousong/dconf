@@ -174,9 +174,15 @@ let g:tagbar_type_smali = {
 " - Use :GoDefStack to view and select the jump stack
 "
 " Settings, https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+"
 "let g:go_gopls_deep_completion = v:false
 "let g:go_gopls_complete_unimported = v:false
 "let g:go_gopls_staticcheck = v:false
+"let g:go_gopls_options = [
+"	\ '-logfile', 'auto',
+"	\ '-vv',
+"\ ]
+
 augroup go_group
 	autocmd!
 	autocmd FileType go
@@ -209,7 +215,18 @@ function! GoCheckModVendor()
 
 	while 1
 		if l:d == $HOME                 | return | endif
-		if isdirectory(l:d . '/vendor') | let $GO111MODULE = "off" | return | endif
+		if isdirectory(l:d . '/vendor')
+			let $GO111MODULE = "off"
+			" when "-mod vendor" and GO111MODULE=off is needed,
+			" gopls should not use go build flag -modfile
+			"
+			" 	build flag -modfile only valid when using modules
+			"
+			" - go src, src/cmd/go/internal/work/init.go
+			" - go tools, internal/lsp/cache/imports.go
+			let g:go_gopls_temp_modfile = v:false
+			return
+		endif
 		if isdirectory(l:d . '/.git')   | return | endif
 		if l:d == '/'                   | return | endif
 		let l:d = fnamemodify(l:d, ':h')
