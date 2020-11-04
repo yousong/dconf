@@ -224,6 +224,8 @@ nmap ]op :set nopaste<CR>
 nmap [ol :set list<CR>
 nmap ]ol :set nolist<CR>
 
+nnoremap <leader>z :write\|bdelete<cr>
+
 "let b:tex_flavor = 'xetex'
 "compiler tex
 "set makeprg=xetex\ %
