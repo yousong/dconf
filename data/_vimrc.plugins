@@ -186,10 +186,10 @@ let g:tagbar_type_smali = {
 augroup go_group
 	autocmd!
 	autocmd FileType go
-		\ nnoremap <buffer> <leader>s :split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>s     :split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
+		\ nnoremap <buffer> <leader>v    :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>. <Esc>:exec "GoDef " . expand("<cword>")<Esc>
+		\ nnoremap <buffer> <leader>.          <Esc>:exec("GoDef ".expand("<cword>"))<Esc>
 augroup END
 
 augroup go_group_mod_vendor
