@@ -34,6 +34,21 @@ build_onecloud() {
 	docker push "${dockerRepo}:$name"
 }
 
+build_onecloud_operator() {
+	docker run --rm \
+		-v $repoRoot:/root/go/src/yunion.io/x/$repoName \
+		-v $repoRoot/_output/alpine-build:/root/go/src/yunion.io/x/$repoName/_output \
+		-v $repoRoot/_output/alpine-build/_cache:/root/.cache \
+		registry.cn-beijing.aliyuncs.com/yunionio/alpine-build:1.0-3 \
+		/bin/sh -c "set -ex; cd /root/go/src/yunion.io/x/$repoName;
+			make;
+			chown -R $(id -u):$(id -g) _output;
+			find _output/bin -type f |xargs ls -lh"
+
+	docker buildx build -f images/onecloud-operator/Dockerfile -t "${dockerRepo}:operator" .
+	docker push "${dockerRepo}:operator"
+}
+
 build_yunionapi() {
 	cd "$repoRoot"
 	docker buildx build -f Dockerfile -t "$dockerRepo:yunionapi" .
@@ -46,4 +61,4 @@ build_sdnagent() {
 	docker push "$dockerRepo:sdnagent"
 }
 
-"build_$repoName" "$@"
+"build_${repoName//-/_}" "$@"
