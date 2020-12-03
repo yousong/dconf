@@ -37,7 +37,7 @@ _mget_chunk() {
 		remaining="$(($chunk - $existing))"
 	fi
 
-	__errmsg "mget: $outn: size $remaining from $startpos to $(($startpos + $remaining))"
+	__errmsg "mget: $outn: size $(printf "%${#mget_chunk}d" $remaining) from $(printf "%${#mget_total}d" $startpos) to $(printf "%${#mget_total}d" $(($startpos + $remaining)))"
 	case "$mget_bin_type" in
 		wget)
 			"${mget_cmd[@]}" --tries=5 --no-verbose --start-pos="$startpos" -O- "$url" \
