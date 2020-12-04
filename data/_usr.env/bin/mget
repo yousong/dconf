@@ -45,7 +45,7 @@ _mget_chunk() {
 				>>"$outn" 2>/dev/null &
 			;;
 		curl)
-			"${mget_cmd[@]}" --retry 5 --silent --range "$startpos-$(($startpos+$remaining-1))" "$url" \
+			"${mget_cmd[@]}" --globoff --retry 5 --silent --range "$startpos-$(($startpos+$remaining-1))" "$url" \
 				>>"$outn" 2>/dev/null &
 			;;
 		*)
@@ -64,7 +64,7 @@ _mget_url_file_size() {
 			size="$("${mget_cmd[@]}" --spider "$url" 2>&1 | awk '/Length:/ { print $2 }')"
 			;;
 		curl)
-			size="$("${mget_cmd[@]}" --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); LEN=$2 } END { print LEN }')"
+			size="$("${mget_cmd[@]}" --globoff --head --silent "$url" | awk '/Content-Length:/ { gsub(/[^0-9]/, "", $2); LEN=$2 } END { print LEN }')"
 			;;
 		*)
 			return 1
