@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+#
+# Copyright 2020 (c) Yousong Zhou
+#
+
+__errmsg() {
+	echo "$*" >&2
+}
+
+append_chain() {
+	local var="$1"; shift
+	local line="$1"; shift
+	local chain
+
+	chain="${line%% *}"
+	chain="${chain#:}"
+	eval "$var=\"\$$var $chain\""
+}
+
+ast="*"
+while read line; do
+	case "$line" in
+		"$ast"*)
+			table="${line#\*}"
+			;;
+		":"*" - "*)
+			append_chain chains_user "$line"
+			;;
+		:*)
+			append_chain chains_builtin "$line"
+			;;
+		COMMIT)
+			if [ -z "$table" ]; then
+				__errmsg "abort: COMMIT but got no table"
+				exit 1
+			fi
+			for chain in $chains_builtin $chains_user; do
+				iptables -t "$table" -F "$chain"
+			done
+			for chain in $chains_user; do
+				iptables -t "$table" -X "$chain"
+			done
+			table=
+			chains_builtin=
+			chains_user=
+			;;
+	esac
+done
