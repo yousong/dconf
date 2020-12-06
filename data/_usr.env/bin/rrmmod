@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# Copyright 2020 (c) Yousong Zhou
+#
+
+__errmsg() {
+	echo "$*" >&2
+}
+
+rrmmod() {
+	local name="$1"; shift
+	local rdeps
+
+	rdeps="$(grep "^$name " /proc/modules | cut -d' ' -f4 | tr , ' ')"
+	if [ "$rdeps" = "-" ]; then
+		__errmsg rmmod "$name"
+		rmmod "$name"
+		return "$?"
+	fi
+
+	local dep
+	for dep in $rdeps; do
+		__errmsg rrmmod "$dep"
+		rrmmod "$dep"
+	done
+}
+
+case "$1" in
+	-h|--help)
+		__errmsg "rrmmod - recursively rmmod"
+		__errmsg "rrmmod mod0 mod1 ..."
+		__errmsg "rrmmod -h|--help"
+		exit 0
+		;;
+esac
+
+for mod in "$@"; do
+	rmmmod "$mod"
+done
