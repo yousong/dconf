@@ -85,7 +85,6 @@ path_action PATH prepend "$o_usr/sbin"
 path_action PATH prepend "$o_usr/bin"
 
 export CLICOLOR=1
-export GREP_OPTIONS="--color=auto"
 
 # colorful ls output
 _init_color() {
