@@ -10,6 +10,14 @@ if [ -z "$action" ]; then
 	exit 1
 fi
 
+binsh="$(readlink -f /bin/sh)"
+if [ "${binsh##*/}" = dash ]; then
+	# Dash does not support ${var//pattern/repl}
+	# Dash does not support &>/dev/null
+	echo "dash as /bin/sh is not supported" >&2
+	exit 1
+fi
+
 INCLUDE_ONLY=1
 . "$PWD/env.sh"
 export TOPDIR
