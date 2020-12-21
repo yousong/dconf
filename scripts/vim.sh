@@ -58,6 +58,7 @@ __vim_bundle_ref() {
 
 	case "$name" in
 		vim-go) echo "v1.24" ;;
+		ctrlp.vim) echo "1.81" ;;
 		*) echo "refs/remotes/origin/HEAD" ;;
 	esac
 }
