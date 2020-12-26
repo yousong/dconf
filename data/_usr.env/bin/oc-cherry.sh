@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 branches="
+3.7
 3.6
 3.5
 3.4
