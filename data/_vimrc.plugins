@@ -163,6 +163,13 @@ let g:tagbar_type_smali = {
         \ ]
 \ }
 
+let g:tagbar_type_gdb = {
+        \ 'ctagstype' : 'gdb',
+        \ 'kinds' : [
+                \ 'c:command',
+        \ ]
+\ }
+
 
 """"""" fatih/vim-go
 " Read vim-go-tutorial for more: https://github.com/fatih/vim-go-tutorial
