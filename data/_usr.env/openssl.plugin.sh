@@ -52,6 +52,9 @@ examples:
   # verify and see the result (man 1 verify)
   s_client mos.meituan.com -CAfile `cafiles`
 
+  # set sni name.  For old openssl version as LibreSSL 2.2.7
+  s_client a.com -servername b.com
+
   # save certificate chain into a single file (stdout)
   s_client mos.meituan.com | crtsave
 
