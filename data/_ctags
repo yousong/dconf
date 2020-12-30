@@ -9,3 +9,7 @@
 --regex-markdown=/^##[ \t]+(.*)/... \1/h,heading2/
 --regex-markdown=/^###[ \t]+(.*)/..... \1/h,heading3/
 --regex-markdown=/^####[ \t]+(.*)/....... \1/h,heading4/
+
+--langdef=gdb
+--langmap=gdb:.gdbinit,gdb:+.gdb
+--regex-gdb=/^define[ \t]+(.*)/\1/c,command/
