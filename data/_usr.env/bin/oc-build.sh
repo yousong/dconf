@@ -20,7 +20,7 @@ fi
 set -o xtrace
 
 build_onecloud() {
-	local name="$1"
+	local name="$1"; shift
 
 	if [ -z "$name" ]; then
 		echo "usage: $0 <name>" >&2
@@ -30,6 +30,37 @@ build_onecloud() {
 	fi
 
 	cd "$repoRoot"
+	docker buildx build -f build/docker/Dockerfile.$name -t "${dockerRepo}:$name" .
+	docker push "${dockerRepo}:$name"
+}
+
+build_onecloud_ee() {
+	local name="$1"; shift
+
+	if [ -z "$name" ]; then
+		echo "usage: $0 <name>" >&2
+		echo "" >&2
+		ls build/docker/Dockerfile.* | sed -e 's/^/  /' >&2
+		exit 1
+	fi
+
+	local fs
+	case "$name" in
+		yunionapi)
+			fs="cmd/cloudmon cmd/ws cmd/yunionapi"
+			;;
+		*)
+			fs=cmd/$name
+			;;
+	esac
+
+	cd "$repoRoot"
+	make \
+		-f "$repoRoot/../onecloud/Makefile.common.mk" \
+		docker-alpine-build \
+		ModName="yunion.io/x/${repoRoot##*/}" \
+		F="$fs" \
+
 	docker buildx build -f build/docker/Dockerfile.$name -t "${dockerRepo}:$name" .
 	docker push "${dockerRepo}:$name"
 }
