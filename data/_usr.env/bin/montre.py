@@ -2,6 +2,14 @@
 #
 # Copyright 2020 (c) Yousong Zhou
 #
+# Organize /proc/<pid>/mountinfo into a tree based on first 2 fields on each
+# line in that file, i.e. mount id and parent mount id.
+#
+# See the following links for details
+#
+#  - https://man7.org/linux/man-pages/man7/mount_namespaces.7.html
+#  - https://man7.org/linux/man-pages/man5/procfs.5.html
+#
 import sys
 
 fname = None
