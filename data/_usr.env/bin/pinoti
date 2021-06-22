@@ -19,25 +19,38 @@
 #	inotify_init1(O_CLOEXEC)                = 4
 #	inotify_add_watch(4, "/run/systemd/ask-password", IN_CLOSE_WRITE|IN_MOVED_TO) = -1 ENOSPC (No space left on device)
 #
+# Other times it's inotify_init() returning EMFILE resulting "Too many open
+# files".  This can be caused by limit on max number of inotify fd instance
+#
+# 	sudo sysctl fs.inotify.max_user_instance=1280
+#
 # Sample output
 #
-#	[yunion@titan yousong]$ sudo bash a.sh  | column -t
-#	systemd          /usr/lib/systemd/systemd          1      /proc/1/fdinfo/10     1
-#	systemd          /usr/lib/systemd/systemd          1      /proc/1/fdinfo/14     4
-#	systemd          /usr/lib/systemd/systemd          1      /proc/1/fdinfo/20     4
-#	systemd-udevd    /usr/lib/systemd/systemd-udevd    689    /proc/689/fdinfo/7    4
-#	NetworkManager   /usr/sbin/NetworkManager          914    /proc/914/fdinfo/10   5
-#	NetworkManager   /usr/sbin/NetworkManager          914    /proc/914/fdinfo/11   4
-#	crond            /usr/sbin/crond                   939    /proc/939/fdinfo/5    3
-#	rsyslogd         /usr/sbin/rsyslogd                1212   /proc/1212/fdinfo/3   2
-#	kube-controller  /usr/bin/kube-controller-manager  4934   /proc/4934/fdinfo/8   1
-#	kubelet          /usr/bin/kubelet                  4955   /proc/4955/fdinfo/12  0
-#	kubelet          /usr/bin/kubelet                  4955   /proc/4955/fdinfo/17  1
-#	kubelet          /usr/bin/kubelet                  4955   /proc/4955/fdinfo/26  51494
-#	journalctl       /usr/bin/journalctl               13151  /proc/13151/fdinfo/3  2
-#	sdnagent         /opt/yunion/bin/sdnagent          20558  /proc/20558/fdinfo/7  90
-#	systemd-udevd    /usr/lib/systemd/systemd-udevd    46019  /proc/46019/fdinfo/7  4
-#	systemd-udevd    /usr/lib/systemd/systemd-udevd    46020  /proc/46020/fdinfo/7  4
+#	➜  ~ sudo pinoti | column -t
+#	root  systemd          1      /proc/1/fdinfo/10     1    /usr/lib/systemd/systemd
+#	root  systemd          1      /proc/1/fdinfo/14     4    /usr/lib/systemd/systemd
+#	root  systemd          1      /proc/1/fdinfo/32     4    /usr/lib/systemd/systemd
+#	root  systemd          1      /proc/1/fdinfo/41     3    /usr/lib/systemd/systemd
+#	root  systemd          1      /proc/1/fdinfo/42     3    /usr/lib/systemd/systemd
+#	root  systemd-udevd    468    /proc/468/fdinfo/7    7    /usr/lib/systemd/systemd-udevd
+#	root  crond            698    /proc/698/fdinfo/5    3    /usr/sbin/crond
+#	root  rsyslogd         1090   /proc/1090/fdinfo/5   2    /usr/sbin/rsyslogd
+#	root  kubelet          1092   /proc/1092/fdinfo/10  2    /usr/bin/kubelet
+#	root  kubelet          1092   /proc/1092/fdinfo/13  1    /usr/bin/kubelet
+#	root  kubelet          1092   /proc/1092/fdinfo/29  0    /usr/bin/kubelet
+#	root  kubelet          1092   /proc/1092/fdinfo/33  592  /usr/bin/kubelet
+#	root  kubelet          1092   /proc/1092/fdinfo/35  1    /usr/bin/kubelet
+#	root  kube-controller  5159   /proc/5159/fdinfo/11  1    /usr/local/bin/kube-controller-manager
+#	root  kube-proxy       7247   /proc/7247/fdinfo/3   1    /usr/local/bin/kube-proxy
+#	root  sdnagent         19962  /proc/19962/fdinfo/8  2    /opt/yunion/bin/sdnagent
+#
+# Example usage
+#
+# 	# count total inotify instances
+# 	sudo pinoti | wc -l
+#
+# 	# count total inotify watches
+# 	sudo pinoti | cut -f5 -d' ' | paste -sd+ | bc
 #
 # The script is adapted from https://stackoverflow.com/questions/13758877/how-do-i-find-out-what-inotify-watches-have-been-registered/48938640#48938640
 #
