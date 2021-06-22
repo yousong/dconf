@@ -22,7 +22,7 @@
 # Other times it's inotify_init() returning EMFILE resulting "Too many open
 # files".  This can be caused by limit on max number of inotify fd instance
 #
-# 	sudo sysctl fs.inotify.max_user_instance=1280
+# 	sudo sysctl fs.inotify.max_user_instances=1280
 #
 # Sample output
 #
