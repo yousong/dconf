@@ -162,16 +162,19 @@ rust_install() {
 Download, run rustup-init, do initialzation
 
 	curl https://sh.rustup.rs -sSf | md5sum # last check: e4a1377ff6ec10f37ed30963b1383ff5
-	curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path --default-toolchain nightly -y
+	                                        # 2021/06/29: e0ee4d92a63afde5ab5210d355f9bbd6
+	curl https://sh.rustup.rs -sSf | sh -s -- --help
+	curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path --default-toolchain stable -y
 
 Use rustup
 
+	rustup self update
+	rustup self uninstall
 	rustup toolchain list
 	rustup toolchain install nightly
 	rustup toolchain install stable-gnu
 	rustup toolchain uninstall nightly
 	rustup update
-	rustup self update
 	rustup default nightly
 	rustup default stable
 	rustup run nightly rustc --version
