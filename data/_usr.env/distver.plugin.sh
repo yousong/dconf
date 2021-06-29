@@ -166,6 +166,8 @@ Download, run rustup-init, do initialzation
 	curl https://sh.rustup.rs -sSf | sh -s -- --help
 	curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path --default-toolchain stable -y
 
+Docs: https://rust-lang.github.io/rustup/concepts/profiles.html
+
 Use rustup
 
 	rustup self update
