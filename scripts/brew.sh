@@ -23,9 +23,13 @@ config() {
 	dcore="$d/Library/Taps/homebrew/homebrew-core"
 	dcask="$d/Library/Taps/homebrew/homebrew-cask"
 
-	git -C "$d" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
-	git -C "$dcore" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
-	git -C "$dcask" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
+	git -C "$d" remote set-url origin https://mirrors.aliyun.com/homebrew/brew.git
+	git -C "$dcore" remote set-url origin https://mirrors.aliyun.com/homebrew/homebrew-core.git
+	git -C "$dcask" remote set-url origin https://mirrors.aliyun.com/homebrew/homebrew-cask.git
+
+	: git -C "$d" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+	: git -C "$dcore" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+	: git -C "$dcask" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
 
 	# https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/
 	: git -C "$d" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
