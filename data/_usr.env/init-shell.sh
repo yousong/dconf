@@ -23,7 +23,10 @@ export LANG=en_US.UTF-8
 . $o_usr_env/tmux.plugin.sh
 
 if [ "$__os" = "Darwin" ]; then
-	if [ -x "/usr/local/bin/brew" ]; then
+	if [ -x "/opt/homebrew/bin/brew" ]; then
+		o_osx_who=brew
+		o_osx_where="/opt/homebrew"
+	elif [ -x "/usr/local/bin/brew" ]; then
 		o_osx_who=brew
 		o_osx_where="/usr/local"
 	elif [ -x "/opt/local/bin/port" ]; then
