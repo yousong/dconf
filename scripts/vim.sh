@@ -24,10 +24,13 @@ __vim_handle_ycm() {
 	# Binaries were downloaded from https://dl.bintray.com/ycm-core .
 	# Version numbers are hardcoded in the build.py script.  Note that the
 	# downloaded version may require newer versions of libc and cannot be
-	# run on systems like CentOS 7
+	# run on systems like CentOS 7.  In this case we can use
+	# bundle-libraries.sh
 	#
 	# Dependencies are put in its own subdirectory in
 	# third_party/ycmd/third_party
+	#
+	# ycmd now uses C++17 and requires at least GCC 8 to compile
 	#
 	# Arguments
 	#
