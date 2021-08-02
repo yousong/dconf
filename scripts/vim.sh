@@ -27,6 +27,25 @@ __vim_handle_ycm() {
 	# run on systems like CentOS 7.  In this case we can use
 	# bundle-libraries.sh
 	#
+	#	docker run --name dev -v $PWD:/code -it debian:9 /bin/bash
+	#	cat >/etc/apt/sources.list <<-EOF
+	#		deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib
+	#		deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib
+	#		deb http://mirrors.aliyun.com/debian-security stretch/updates main
+	#		deb-src http://mirrors.aliyun.com/debian-security stretch/updates main
+	#		deb http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib
+	#		deb-src http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib
+	#		deb http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib
+	#		deb-src http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib
+	#	EOF
+	#	apt update
+	#	apt install -y file curl zip build-essential
+	#	u='https://git.openwrt.org/?p=openwrt/staging/yousong.git;a=blob_plain;f=scripts/bundle-libraries.sh;hb=refs/heads/bundle-libraries'
+	#	curl -o bundle-libraries.sh "$u"
+	#	chmod a+x bundle-libraries.sh
+	#	./bundle-libraries.sh clangd.d/ clangd
+	#	#tar cJf clangd.tar.xz .clangd.bin clangd clangd.d/
+	#
 	# Dependencies are put in its own subdirectory in
 	# third_party/ycmd/third_party
 	#
