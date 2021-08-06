@@ -84,6 +84,17 @@ __vim_bundle_ref() {
 	case "$name" in
 		vim-go) echo "v1.24" ;;
 		ctrlp.vim) echo "1.81" ;;
+		#YouCompleteMe)
+			# 2020/09/20 6d877784 ("Resolve completions on-demand")
+			# bumps minimal vim version requirement from 7.4.1578
+			# to 8.1.2269
+			#
+			# 2020/11/13 604a2a02 ("Update the ycmd submodule")
+			# the merge bumps gcc version requirement from 4.8 to 8
+			#
+			# Revision before the bump
+			#echo 4e480a317d4858db91631c14883c5927243d4893
+			#;;
 		*) echo "refs/remotes/origin/HEAD" ;;
 	esac
 }
