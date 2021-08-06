@@ -51,6 +51,9 @@ __vim_handle_ycm() {
 	#
 	# ycmd now uses C++17 and requires at least GCC 8 to compile
 	#
+	# ycmd build.py invokes cmake for building.  It will parse and pass
+	# args from environment variable CMAKE_EXTRA_ARGS to cmake.
+	#
 	# Arguments
 	#
 	#   --all			enable all completer
