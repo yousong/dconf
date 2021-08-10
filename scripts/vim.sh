@@ -60,7 +60,12 @@ __vim_handle_ycm() {
 	#   --clangd-completer		clangd
 	#   --go-completer		"go build" local gopls copy
 	#
-	"$wd/install.py" \
+	# We use sudo command to run as another user when doing "docker build".
+	# ycmd b4cbf5696 ("Discourage running build.py with sudo, as it causes
+	# permission issues").  Using --force-sudo may cause old revision to
+	# fail for unrecognized argument
+	env -u SUDO_COMMAND \
+		"$wd/install.py" \
 		--clangd-completer \
 
 	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"
