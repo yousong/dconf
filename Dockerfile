@@ -20,17 +20,20 @@ RUN set -x \
 		cmake \
 		ctags \
 		docker \
+		file \
 		git \
 		glibc-langpack-en \
 		hostname \
 		iproute \
 		iputils \
+		jq \
 		man-db \
 		man-pages \
 		procps \
 		python3-devel \
 		strace \
 		tcpdump \
+		the_silver_searcher \
 		tmux \
 		vim \
 		wget \
