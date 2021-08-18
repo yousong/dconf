@@ -65,6 +65,7 @@ fi
 [ -z "$commands[git]" ] || plugins+=(git)
 [ -z "$commands[kubectl]" ] || plugins+=(kubectl)
 [ -z "$commands[docker]" ] || plugins+=(docker)
+[ -z "$commands[docker-compose]" ] || plugins+=(docker-compose)
 
 plugins+=(
 	zsh-autosuggestions
