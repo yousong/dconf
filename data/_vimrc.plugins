@@ -337,6 +337,10 @@ let g:ycm_filetype_blacklist = {
 "	pip3 install compiledb
 "	compiledb make ARCH=mips CROSS_COMPILE=mips-openwrt-linux-musl- -j6
 "
+" The kernel has scripts/clang-tools/gen_compile_commands.py
+"
+"	make compile_commands.json
+"
 " Ignore gcc args unknown to clang
 "
 "	args='
