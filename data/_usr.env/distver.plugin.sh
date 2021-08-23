@@ -189,7 +189,11 @@ EOF
 
 rust_env_init() {
 	export CARGO_HOME="$HOME/.cargo"
+
+	# https://rust-lang.github.io/rustup/environment-variables.html
 	export RUSTUP_HOME="$HOME/.rustup"
+	export RUSTUP_DIST_SERVER="https://mirrors.ustc.edu.cn/rust-static"
+	export RUSTUP_UPDATE_ROOT="https://mirrors.ustc.edu.cn/rust-static/rustup"
 	if [ -d "$CARGO_HOME/bin" ]; then
 		path_action PATH prepend "$CARGO_HOME/bin"
 	fi
