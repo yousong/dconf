@@ -79,6 +79,8 @@ plugins+=(
 # User configuration
 source $ZSH/oh-my-zsh.sh
 
+[ -z "$commands[aliyun]" ] || complete -o nospace -F `which aliyun` aliyun
+
 setopt SHWORDSPLIT
 
 # Append history to HISTFILE when I exit.
