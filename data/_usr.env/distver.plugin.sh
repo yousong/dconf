@@ -199,6 +199,22 @@ rust_env_init() {
 	fi
 }
 
+node_install() {
+	cat <<EOF >&2
+Bootstrap nodejs and n (nodejs version manager)
+
+	curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n
+	export N_PREFIX="$o_usr"   # install to $o_usr/n/
+	bash n lts                 # install latest nodejs LTS
+	npm install -g n           # install n command to path
+
+EOF
+}
+
+node_env_init() {
+	export N_PREFIX=$o_usr
+}
+
 jdk_select_() {
 	local distverroot="$1"; shift
 
