@@ -68,6 +68,8 @@ fi
 [ -z "$commands[kubectl]" ] || plugins+=(kubectl)
 [ -z "$commands[docker]" ] || plugins+=(docker)
 [ -z "$commands[docker-compose]" ] || plugins+=(docker-compose)
+[ -z "$commands[rustc]" ] || plugins+=(rust)
+[ -z "$commands[rustup]" ] || plugins+=(rustup)
 
 plugins+=(
 	zsh-autosuggestions
