@@ -43,7 +43,7 @@ path_action() {
 	fi
 	pathes="${pathes#:}"
 	pathes="${pathes%:}"
-	eval export $var=\"$pathes\"
+	eval "export $var=\"$pathes\""
 }
 
 path_ignore_match() {
@@ -65,7 +65,7 @@ path_ignore_match() {
 		shift
 	done
 	pathes="${pathes#:}"
-	eval export $var=\"$pathes\"
+	eval "export $var=\"$pathes\""
 }
 
 # netcat scan
