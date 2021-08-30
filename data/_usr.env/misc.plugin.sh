@@ -125,7 +125,7 @@ if ! which perror &>/dev/null; then
 		if [ "$errno" -lt 0 ]; then
 			errno="$((-1 * $errno))"
 		fi
-		python -c 'import os; print os.strerror('$errno')'
+		python -c 'import os; print(os.strerror('$errno'))'
 	}
 fi
 
