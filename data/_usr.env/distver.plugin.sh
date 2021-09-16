@@ -197,6 +197,14 @@ rust_env_init() {
 	if [ -d "$CARGO_HOME/bin" ]; then
 		path_action PATH prepend "$CARGO_HOME/bin"
 	fi
+	# rustc-docs is only available for tier1 targets
+	#
+	# rustup doc not working on m1 macbook,
+	# https://github.com/rust-lang/rustup/issues/2692#issuecomment-848406797
+	#
+	# Wait till aarch64-apple-darwin becomes tier1 target,
+	# https://doc.rust-lang.org/nightly/rustc/platform-support.html
+	alias rustdoc="rustup +stable-x86_64-unknown-linux-gnu doc"
 }
 
 node_install() {
