@@ -276,3 +276,44 @@ toolchain_select() {
 
 	distver_select_ toolchain "$ver" "" toolchain_select_
 }
+
+k8s_install() {
+	cat <<"EOF"
+[ "$(uname -m)" = "x86_64" ]
+[ "$(uname -s)" = "Linux" ]
+
+kubebin="$HOME/.kube/bin"
+mkdir -p "$kubebin"
+
+# Installing helm, https://helm.sh/docs/intro/install/
+u="https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz"
+u="https://mirrors.huaweicloud.com/helm/v3.7.0/helm-v3.7.0-linux-amd64.tar.gz"
+( helmd="$(mktemp -d helm.XXX)"
+  cd "$helmd"
+  wget -c -O "helm.tar.gz" "$u"
+  tar xzf helm.tar.gz
+  find . -name helm | xargs -I{} mv {} "$kubebin"
+  cd ..; rm -rvf "$helmd"
+)
+
+u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.22.2-00_amd64_9ef92050f0f5924a89dbdd8a62ea447828b1163f2d99b37f1f4b5435092959af.deb"
+( kubectld="$(mktemp -d k.XXX)"
+  cd "$kubectld"
+  wget -c -O kubectl.deb "$u"
+  ar x kubectl.deb data.tar.xz
+  tar xJf data.tar.xz
+  find . -name kubectl | xargs -I{} mv {} "$kubebin"
+  cd ..; rm -rvf "$kubectld"
+)
+
+regns=registry.aliyuncs.com/google_containers/kube-apiserver
+EOF
+}
+
+k8s_init() {
+	local d="$HOME/.kube/bin"
+
+	if [ -d "$d" ]; then
+		path_action PATH prepend "$d"
+	fi
+}
