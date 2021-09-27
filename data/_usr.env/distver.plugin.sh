@@ -104,7 +104,7 @@ go_select() {
 
 	distver_select_ go "$ver" "$q" go_select_
 	if which go &>/dev/null; then
-		export GOPROXY=https://mirrors.aliyun.com/goproxy/,https://proxy.golang.org,direct
+		export GOPROXY=https://goproxy.cn,https://proxy.golang.org,direct
 		export GOPATH="$HOME/go"
 		if [ -z "$GOROOT" -o ! -d "$GOROOT" ]; then
 			unset GOROOT
