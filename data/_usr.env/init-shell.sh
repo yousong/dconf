@@ -84,6 +84,7 @@ fi
 go_select "" quiet
 rust_env_init
 node_env_init
+k8s_init
 
 path_action MANPATH prepend "$o_usr/share/man"
 path_action PATH prepend "$o_usr/sbin"
