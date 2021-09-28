@@ -51,6 +51,8 @@ setup_dev_env() {
 	export LDFLAGS="$LDFLAGS -L$o_usr/lib"
 }
 
+# fedora pip3 may put executables at $HOME/.local/bin
+[ -d "$HOME/.local/bin" ] && path_action PATH peek_prepend "$HOME/.local/bin"
 [ -d "$o_usr_env/bin" ] && path_action PATH peek_prepend "$o_usr_env/bin"
 [ -d "/sbin" ] && path_action PATH peek_append "/sbin"
 [ -d "/usr/sbin" ] && path_action PATH peek_append "/usr/sbin"
