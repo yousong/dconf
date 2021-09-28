@@ -306,6 +306,16 @@ u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.22.2-00_amd64_9ef920
   cd ..; rm -rvf "$kubectld"
 )
 
+# Kustomize, https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/
+u="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.3.0/kustomize_v4.3.0_linux_amd64.tar.gz"
+( kustomized="$(mktemp -d kustomize.XXX)"
+  cd "$kustomized"
+  wget -c -O "kustomize.tar.gz" "$u"
+  tar xzf kustomize.tar.gz
+  find . -name kustomize | xargs -I{} mv {} "$kubebin"
+  cd ..; rm -rvf "$kustomized"
+)
+
 regns=registry.aliyuncs.com/google_containers/kube-apiserver
 EOF
 }
