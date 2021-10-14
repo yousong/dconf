@@ -46,6 +46,14 @@ RUN set -x \
 	&& echo "abc ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/abc \
 	&& true
 
+RUN set -x \
+	&& mkdir -p /home/abc/.usr/n \
+	&& curl -o n -L "https://raw.githubusercontent.com/tj/n/master/bin/n" \
+	&& N_PREFIX=/home/abc/.usr bash n lts \
+	&& rm -vf n \
+	&& chown -R abc:abc /home/abc/.usr \
+	&& true
+
 ARG GOVERSION=go1.16.7
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
@@ -62,7 +70,9 @@ ADD . /home/abc/git-repo/dconf
 RUN set -x \
 	&& cd /home/abc/git-repo/dconf \
 	&& chown -R abc:abc /home/abc/git-repo \
-	&& sudo -u abc ./dconf.sh config \
+	&& sudo -u abc \
+		PATH=/home/abc/.usr/bin:$PATH \
+		DCONF_VIM_YCM_INSTALL_ARGS=--ts-completer ./dconf.sh config \
 	&& cd /home/abc \
 	&& rm -rf git-repo \
 	&& sudo -iu abc PATH=/home/abc/.usr/go/$GOVERSION/bin:$PATH \
