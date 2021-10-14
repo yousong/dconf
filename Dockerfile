@@ -42,6 +42,13 @@ RUN set -x \
 	&& true
 
 RUN set -x \
+	&& dnf install -y \
+		python3-pip \
+	&& pip3 install \
+		yq \
+	&& true
+
+RUN set -x \
 	&& adduser --shell /bin/zsh abc \
 	&& echo "abc ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/abc \
 	&& true
