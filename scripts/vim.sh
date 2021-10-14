@@ -59,6 +59,7 @@ __vim_handle_ycm() {
 	#   --all			enable all completer
 	#   --clangd-completer		clangd
 	#   --go-completer		"go build" local gopls copy
+	#   --ts-completer		tsserver
 	#
 	# We use sudo command to run as another user when doing "docker build".
 	# ycmd b4cbf5696 ("Discourage running build.py with sudo, as it causes
@@ -67,6 +68,7 @@ __vim_handle_ycm() {
 	env -u SUDO_COMMAND \
 		"$wd/install.py" \
 		--clangd-completer \
+		$DCONF_VIM_YCM_INSTALL_ARGS \
 
 	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"
 	if ! "$ycm_clangd" --version >/dev/null; then
