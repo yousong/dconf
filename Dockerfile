@@ -61,7 +61,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.16.7
+ARG GOVERSION=go1.17.2
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \
@@ -70,7 +70,7 @@ RUN set -x \
 		| tar xzf - \
 	&& chmod -R a-w go \
 	&& mv go $GOVERSION \
-	&& chown -R abc:abc /home/abc/.usr \
+	&& chown -R abc:abc /home/abc/.usr/go \
 	&& true
 
 ADD . /home/abc/git-repo/dconf
