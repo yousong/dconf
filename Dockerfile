@@ -73,6 +73,12 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr/go \
 	&& true
 
+RUN set -x \
+	&& cd /home/abc \
+	&& curl https://sh.rustup.rs -sSf \
+		| sudo -u abc sh -s -- --no-modify-path --default-toolchain stable -y \
+	&& true
+
 ADD . /home/abc/git-repo/dconf
 RUN set -x \
 	&& cd /home/abc/git-repo/dconf \

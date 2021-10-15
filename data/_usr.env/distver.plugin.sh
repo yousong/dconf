@@ -183,7 +183,6 @@ Use rustup
 	rustup target list
 
 	# it's rustup proxy calling toolchain cargo
-	cargo +nightly install racer
 EOF
 }
 

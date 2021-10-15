@@ -60,6 +60,9 @@ __vim_handle_ycm() {
 	#   --clangd-completer		clangd
 	#   --go-completer		"go build" local gopls copy
 	#   --ts-completer		tsserver
+	#   --rust-completer		rust, it will installl
+	#
+	#   --skip-build		skip building ycm_core
 	#
 	# We use sudo command to run as another user when doing "docker build".
 	# ycmd b4cbf5696 ("Discourage running build.py with sudo, as it causes
@@ -68,6 +71,7 @@ __vim_handle_ycm() {
 	env -u SUDO_COMMAND \
 		"$wd/install.py" \
 		--clangd-completer \
+		--rust-completer \
 		$DCONF_VIM_YCM_INSTALL_ARGS \
 
 	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"

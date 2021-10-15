@@ -32,7 +32,6 @@ Plugin 'cespare/vim-toml'		" L: TOML
 Plugin 'chr4/nginx.vim'			" L: NGINX
 Plugin 'fatih/vim-go'			" L: Go
 Plugin 'rust-lang/rust.vim'		" L: Rust, rustfmt
-Plugin 'racer-rust/vim-racer'		" L: Rust, completor
 Plugin 'plasticboy/vim-markdown'	" L: Markdown
 Plugin 'python-mode/python-mode'	" L: Python
 call vundle#end()
@@ -242,23 +241,7 @@ endfunction
 
 
 """"""" rust-lang/rust
-""""""" racer-rust/vim-racer
 let g:rustfmt_autosave = 1
-"
-" requires
-"
-"  - racer from nightly channel
-"  - rustup component add rust-src
-"
-let g:racer_experimental_completer = 1
-augroup rust_group
-	autocmd!
-	autocmd FileType rust nmap <C-]> <Plug>(rust-def)
-	autocmd FileType rust nmap <leader>s <Plug>(rust-def-split)
-	autocmd FileType rust nmap <leader>v <Plug>(rust-def-vertical)
-	autocmd FileType rust nmap <leader>t :tab split<CR><Plug>(rust-def-vertical)
-	autocmd FileType rust nmap K <Plug>(rust-doc)
-augroup END
 
 
 """"""" python-mode/python-mode
@@ -325,7 +308,6 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_filetype_blacklist = {
 	\ 'go': 1,
 	\ 'python': 1,
-	\ 'rust': 1,
 	\ 'tagbar': 1,
 	\ 'nerdtree': 1,
 \ }
@@ -363,7 +345,7 @@ let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
 augroup c_group
 	autocmd!
-	autocmd FileType c,cpp,typescript,javascript
+	autocmd FileType c,cpp,typescript,javascript,rust
 		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
