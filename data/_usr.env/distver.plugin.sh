@@ -191,8 +191,15 @@ rust_env_init() {
 
 	# https://rust-lang.github.io/rustup/environment-variables.html
 	export RUSTUP_HOME="$HOME/.rustup"
-	export RUSTUP_DIST_SERVER="https://mirrors.ustc.edu.cn/rust-static"
-	export RUSTUP_UPDATE_ROOT="https://mirrors.ustc.edu.cn/rust-static/rustup"
+	# RUSTUP_UPDATE_ROOT can be used by https://sh.rustup.rs for fetching
+	# rustup-init binary.  As of 2021/10/20, the url will be like
+	# ${RUSTUP_UPDATE_ROOT}/dist/${_arch}/rustup-init${_ext}
+	export RUSTUP_DIST_SERVER=https://mirrors.sjtug.sjtu.edu.cn/rust-static
+	export RUSTUP_UPDATE_ROOT=https://mirrors.sjtug.sjtu.edu.cn/rust-static/rustup
+	#export RUSTUP_DIST_SERVER="https://mirrors.ustc.edu.cn/rust-static"
+	#export RUSTUP_UPDATE_ROOT="https://mirrors.ustc.edu.cn/rust-static/rustup"
+	#export RUSTUP_DIST_SERVER="https://mirrors.tuna.tsinghua.edu.cn/rustup"
+	#export RUSTUP_UPDATE_ROOT="https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup"
 	if [ -d "$CARGO_HOME/bin" ]; then
 		path_action PATH prepend "$CARGO_HOME/bin"
 	fi
