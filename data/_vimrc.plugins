@@ -343,14 +343,14 @@ let g:ycm_filetype_blacklist = {
 "
 let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
-augroup c_group
+augroup ycm_group
 	autocmd!
 	autocmd FileType c,cpp,typescript,javascript,rust
-		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>. <Esc>:exec "YcmCompleter GoTo " . expand("<cword>")<Esc> |
+		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc")<CR> |
+		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo")<CR> |
+		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo")<CR> |
+		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo")<CR> |
+		\ nnoremap <buffer> <leader>. <Esc>:exec("YcmCompleter GoTo")<Esc> |
 augroup END
 
 function! YcmCAutoFormat()
