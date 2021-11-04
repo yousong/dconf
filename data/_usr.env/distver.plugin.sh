@@ -284,46 +284,97 @@ toolchain_select() {
 }
 
 k8s_install() {
-	cat <<"EOF"
-[ "$(uname -m)" = "x86_64" ]
-[ "$(uname -s)" = "Linux" ]
+	local goos goarch
+	case "$(uname -m)" in
+		x86_64) goarch=amd64 ;;
+		arm64) goarch=arm64  ;;
+		*) __errmsg "unsupported machine type: $(uname -m)" ;;
+	esac
+	case "$(uname -s)" in
+		Darwin) goos=darwin ;;
+		Linux) goos=linux  ;;
+		*) __errmsg "unsupported system type: $(uname -s)" ;;
+	esac
 
-kubebin="$HOME/.kube/bin"
-mkdir -p "$kubebin"
+	local name="$1"; shift
 
-# Installing helm, https://helm.sh/docs/intro/install/
-u="https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz"
-u="https://mirrors.huaweicloud.com/helm/v3.7.0/helm-v3.7.0-linux-amd64.tar.gz"
-( helmd="$(mktemp -d helm.XXX)"
-  cd "$helmd"
-  wget -c -O "helm.tar.gz" "$u"
-  tar xzf helm.tar.gz
-  find . -name helm | xargs -I{} mv {} "$kubebin"
-  cd ..; rm -rvf "$helmd"
-)
+	local github_mirror
+	github_mirror="${GITHUB_MIRROR:-https://github.com}"
+	#GITHUB_MIRROR="https://hub.fastgit.org"
 
-u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.22.2-00_amd64_9ef92050f0f5924a89dbdd8a62ea447828b1163f2d99b37f1f4b5435092959af.deb"
-( kubectld="$(mktemp -d k.XXX)"
-  cd "$kubectld"
-  wget -c -O kubectl.deb "$u"
-  ar x kubectl.deb data.tar.xz
-  tar xJf data.tar.xz
-  find . -name kubectl | xargs -I{} mv {} "$kubebin"
-  cd ..; rm -rvf "$kubectld"
-)
+	local u
+	case "$name" in
+		helm)
+			# Installing helm, https://helm.sh/docs/intro/install/
+			u="https://get.helm.sh/helm-v3.7.1-${goos}-${goarch}.tar.gz"
+			u="https://mirrors.huaweicloud.com/helm/v3.7.1/helm-v3.7.1-${goos}-${goarch}.tar.gz"
+			;;
+		kustomize)
+			# Kustomize, https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/
+			u="$github_mirror/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.3.0/kustomize_v4.3.0_${goos}_${goarch}.tar.gz"
+			;;
+		kubectl)
+			if ! [ "$goos" = linux ]; then
+				__errmsg "no $goos support for kubectl at the moment"
+				return 1
+			fi
+			u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.22.2-00_${goarch}_9ef92050f0f5924a89dbdd8a62ea447828b1163f2d99b37f1f4b5435092959af.deb"
+			;;
+		kruise)
+			u="$github_mirror/openkruise/kruise-tools/releases/latest/download/kubectl-kruise_${goos}_${goarch}"
+			;;
+		*)
+			__errmsg "unexpected component: $name"
+			return 1
+			;;
+	esac
 
-# Kustomize, https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/
-u="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.3.0/kustomize_v4.3.0_linux_amd64.tar.gz"
-( kustomized="$(mktemp -d kustomize.XXX)"
-  cd "$kustomized"
-  wget -c -O "kustomize.tar.gz" "$u"
-  tar xzf kustomize.tar.gz
-  find . -name kustomize | xargs -I{} mv {} "$kubebin"
-  cd ..; rm -rvf "$kustomized"
-)
+	local kubebin="$HOME/.kube/bin"
+	mkdir -p "$kubebin"
 
-regns=registry.aliyuncs.com/google_containers/kube-apiserver
-EOF
+	local d
+	d="$(find "$PWD" -maxdepth 1 -name "$name.???" -type d | head -n1)"
+	if [ -z "$d" ]; then
+		d="$(mktemp -d "$name.XXX")"
+	fi
+	case "$name" in
+		helm|kustomize)
+			(
+				cd "$d"
+				wget -c -O "$name.tar.gz" "$u"
+				tar xzf "$name.tar.gz"
+				find . -name "$name" | xargs -I{} mv {} "$kubebin"
+				cd ..
+				rm -rvf "$d"
+			)
+			;;
+		kubectl)
+			(
+				cd "$d"
+				wget -c -O "$name.deb" "$u"
+				ar x "$name.deb" data.tar.xz
+				tar xJf data.tar.xz
+				find . -name "$name" | xargs -I{} mv {} "$kubebin"
+				cd ..
+				rm -rvf "$d"
+			)
+			;;
+		kruise)
+			(
+				cd "$d"
+				wget -c -O "kubectl-$name" "$u"
+				chmod a+x "kubectl-$name"
+				mv "kubectl-$name" "$kubebin"
+				cd ..
+				rm -rvf "$d"
+			)
+			;;
+		*)
+			__errmsg "unexpected component: $name"
+			return 1
+			;;
+	esac
+	# regns=registry.aliyuncs.com/google_containers/kube-apiserver
 }
 
 k8s_init() {
