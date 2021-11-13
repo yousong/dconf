@@ -323,6 +323,10 @@ k8s_install() {
 		kruise)
 			u="$github_mirror/openkruise/kruise-tools/releases/latest/download/kubectl-kruise_${goos}_${goarch}"
 			;;
+		krew)
+			# https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/
+			u="$github_mirror/kubernetes-sigs/krew/releases/latest/download/krew-${goos}_${goarch}.tar.gz"
+			;;
 		*)
 			__errmsg "unexpected component: $name"
 			return 1
@@ -338,7 +342,7 @@ k8s_install() {
 		d="$(mktemp -d "$name.XXX")"
 	fi
 	case "$name" in
-		helm|kustomize)
+		helm|krew|kustomize)
 			(
 				cd "$d"
 				wget -c -O "$name.tar.gz" "$u"
