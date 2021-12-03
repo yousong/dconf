@@ -15,6 +15,7 @@ RUN set -x \
 # python3-devel: ycmd build
 # glibc-langpack-en: en_US.UTF-8 locale when running manpath
 # hostname: for hostname command
+# mariadb: mysql client
 RUN set -x \
 	&& dnf install -y \
 		cmake \
@@ -29,6 +30,7 @@ RUN set -x \
 		jq \
 		man-db \
 		man-pages \
+		mariadb \
 		patch \
 		procps \
 		python3-devel \
@@ -46,6 +48,7 @@ RUN set -x \
 	&& dnf install -y \
 		python3-pip \
 	&& pip3 install \
+		polysh \
 		yq \
 	&& true
 
