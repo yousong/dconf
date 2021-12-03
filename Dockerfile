@@ -29,6 +29,7 @@ RUN set -x \
 		jq \
 		man-db \
 		man-pages \
+		patch \
 		procps \
 		python3-devel \
 		strace \
