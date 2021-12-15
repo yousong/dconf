@@ -35,6 +35,7 @@ RUN set -x \
 		procps \
 		python3-devel \
 		strace \
+		sysstat \
 		tcpdump \
 		the_silver_searcher \
 		tmux \
