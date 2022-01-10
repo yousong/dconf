@@ -34,6 +34,7 @@ RUN set -x \
 		patch \
 		procps \
 		python3-devel \
+		rsync \
 		strace \
 		sysstat \
 		tcpdump \
