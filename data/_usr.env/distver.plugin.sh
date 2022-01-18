@@ -232,7 +232,17 @@ node_env_init() {
 jdk_select_() {
 	local distverroot="$1"; shift
 
-	export JAVA_HOME="$distverroot"
+	case "$(jdk_os)" in
+		macos)
+			export JAVA_HOME="$distverroot/Contents/Home"
+			;;
+		linux)
+			export JAVA_HOME="$distverroot"
+			;;
+		*)
+			return 1
+			;;
+	esac
 	path_ignore_match PATH distver_path_match_ jdk
 	path_action PATH prepend "$JAVA_HOME/bin"
 }
@@ -245,23 +255,73 @@ jdk_select() {
 	distver_select_ jdk "$ver" "$q" jdk_select_
 }
 
+jdk_get_and_install() {
+	local jdk_url="$1"; shift
+	local jdk_src
+
+	jdk_src="$(basename "$jdk_url")"
+
+	mget --url "$jdk_url" --count 8
+	mkdir -p "$o_usr/jdk"
+	tar -C "$o_usr/jdk" -xzf "$jdk_src"
+}
+
+jdk_arch() {
+	case "$(uname -m)" in
+		arm64) echo aarch64 ;;
+		x86_64) echo x64 ;;
+		*) return 1 ;;
+	esac
+}
+
+jdk_os() {
+	case "$(uname -s)" in
+		Darwin) echo macos ;;
+		Linux) echo linux ;;
+		*) return 1 ;;
+	esac
+}
+
+# OS identifier for archives of jdk 16 and earlier
+jdk16_os() {
+	case "$(uname -s)" in
+		Darwin) echo osx ;;
+		Linux) echo linux ;;
+		*) return 1 ;;
+	esac
+}
+
+jdk11_install() {
+	local jdk_src="openjdk-11.0.2_$(jdk16_os)-x64_bin.tar.gz"
+	local jdk_url="https://download.java.net/java/GA/jdk11/9/GPL/$jdk_src"
+	jdk_get_and_install "$jdk_url"
+}
+
+jdk17_install() {
+	local jdk_src="openjdk-17.0.1_$(jdk_os)-$(jdk_arch)_bin.tar.gz"
+	local jdk_url="https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/$jdk_src"
+	jdk_get_and_install "$jdk_url"
+}
+
 jdk_install() {
 	cat <<EOF
-Install jre/jdk from package managers
+Install jre/jdk 8 from package managers
 
 	sudo apt-get install openjdk-8-jre
 	sudo apt-get install openjdk-8-jdk
 	sudo yum install -y java-1.8.0-openjdk
 	sudo yum install -y java-1.8.0-openjdk-devel
 
-Install from prebuilt binaries
+Install ready binaries for later versions
 
-	jdk_src="openjdk-11.0.1_linux-x64_bin.tar.gz"
-	jdk_url="https://download.java.net/java/GA/jdk11/13/GPL/\$jdk_src"
-	mget --url "\$jdk_url" --count 8
-	tar -C "$o_usr/jdk" -xzf "\$jdk_src"
+	jdk11_install
+	jdk17_install
+	jdk_get_and_install "URL"
 
 - How to download and install prebuilt OpenJDK packages, https://openjdk.java.net/install/
+- Ready for use, Early access, Reference implementations, https://jdk.java.net/
+- Archived OpenJDK General-Availability Releases, https://jdk.java.net/archive/
+- https://en.wikipedia.org/wiki/Java_(programming_language)#Versions
 EOF
 }
 
