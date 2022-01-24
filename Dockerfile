@@ -49,8 +49,8 @@ RUN set -x \
 RUN set -x \
 	&& dnf install -y \
 		python3-pip \
+	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
 	&& pip3 install \
-		polysh \
 		yq \
 	&& true
 
