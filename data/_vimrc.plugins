@@ -41,9 +41,18 @@ filetype plugin indent on		"required
 "call pathogen#infect()
 
 """"""" mileszs/ack.vim
-if executable('ag')
+"
+" Search results leak into terminal,
+" https://github.com/mileszs/ack.vim/issues/18#issuecomment-303860665
+
+if executable('rg')
+	" https://blog.burntsushi.net/ripgrep/
+	let g:ackprg = 'rg --vimgrep'
+elseif executable('ag')
 	let g:ackprg = 'ag --vimgrep'
 endif
+cnoreabbrev rg Ack
+
 
 " let g:ack_mappings
 
