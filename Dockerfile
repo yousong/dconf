@@ -38,7 +38,6 @@ RUN set -x \
 		strace \
 		sysstat \
 		tcpdump \
-		the_silver_searcher \
 		tmux \
 		vim \
 		wget \
@@ -97,6 +96,10 @@ RUN set -x \
 	&& sudo -iu abc PATH=/home/abc/.usr/go/$GOVERSION/bin:$PATH \
 		vim +GoInstallBinaries +qa \
 	&& rm -rf /home/abc/.cache/go-build \
+	&& true
+
+RUN set -x \
+	&& sudo -u abc /home/abc/.cargo/bin/cargo install ripgrep \
 	&& true
 
 ADD ./hack/docker/run.sh /run.sh
