@@ -72,6 +72,7 @@ __vim_handle_ycm() {
 		"$wd/install.py" \
 		--clangd-completer \
 		--rust-completer \
+		--ts-completer \
 		$DCONF_VIM_YCM_INSTALL_ARGS \
 
 	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"

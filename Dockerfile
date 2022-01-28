@@ -91,7 +91,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/git-repo \
 	&& sudo -u abc \
 		PATH=/home/abc/.usr/bin:$PATH \
-		DCONF_VIM_YCM_INSTALL_ARGS=--ts-completer ./dconf.sh config \
+		./dconf.sh config \
 	&& cd /home/abc \
 	&& rm -rf git-repo \
 	&& sudo -iu abc PATH=/home/abc/.usr/go/$GOVERSION/bin:$PATH \
