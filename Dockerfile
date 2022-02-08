@@ -103,10 +103,6 @@ RUN set -x \
 	&& rm -rf /home/abc/.cache/go-build \
 	&& true
 
-RUN set -x \
-	&& sudo -u abc /home/abc/.cargo/bin/cargo install ripgrep \
-	&& true
-
 ADD ./hack/docker/run.sh /run.sh
 
 CMD /run.sh entrypoint
