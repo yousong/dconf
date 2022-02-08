@@ -82,6 +82,11 @@ RUN set -x \
 	&& cd /home/abc \
 	&& curl https://sh.rustup.rs -sSf \
 		| sudo -u abc sh -s -- --no-modify-path --default-toolchain stable -y \
+	&& sudo -u abc /home/abc/.cargo/bin/rustup component list --installed \
+		| grep docs \
+		| xargs sudo -u abc /home/abc/.cargo/bin/rustup component remove \
+	&& sudo -u abc /home/abc/.cargo/bin/cargo install ripgrep \
+	&& rm -rf /home/abc/.cargo/registry \
 	&& true
 
 ADD . /home/abc/git-repo/dconf

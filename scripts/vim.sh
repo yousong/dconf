@@ -75,7 +75,11 @@ __vim_handle_ycm() {
 		--ts-completer \
 		$DCONF_VIM_YCM_INSTALL_ARGS \
 
-	local ycm_clangd="$wd/third_party/ycmd/third_party/clangd/output/bin/clangd"
+	local ycmd_3rdparty="$wd/third_party/ycmd/third_party/"
+	rm -rf "$ycmd_3rdparty/rust-analyzer/share/doc/"
+	rm -rf "$ycmd_3rdparty/clangd/cache/"
+
+	local ycm_clangd="$ycmd_3rdparty/clangd/output/bin/clangd"
 	if ! "$ycm_clangd" --version >/dev/null; then
 		local clangd="$(echo $o_homedir/.usr/toolchain/llvm-*/bin/clangd \
 					| sort --version-sort --reverse \
