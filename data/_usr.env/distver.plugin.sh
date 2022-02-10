@@ -307,8 +307,9 @@ jdk11_install() {
 }
 
 jdk17_install() {
-	local jdk_src="openjdk-17.0.1_$(jdk_os)-$(jdk_arch)_bin.tar.gz"
-	local jdk_url="https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/$jdk_src"
+	local ver=17.0.2
+	local jdk_src="openjdk-${ver}_$(jdk_os)-$(jdk_arch)_bin.tar.gz"
+	local jdk_url="https://download.java.net/java/GA/jdk${ver}/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/$jdk_src"
 	jdk_get_and_install "$jdk_url"
 }
 
