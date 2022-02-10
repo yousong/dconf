@@ -335,6 +335,35 @@ Install ready binaries for later versions
 EOF
 }
 
+jdk_src_get() {
+	cat <<EOF
+Repo jdk8 is for OpenJDK8 initially.  Then jdk8u is used for post-release
+updates to OpenJDK8.  Likely jdk8u-dev is for developement
+
+URL layout of hg.openjdk.java.net
+
+	http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/archive/3ab471c4760a.tar.bz2
+				     |    |     |
+				  project |     L subrepo
+				    umbrella repo
+
+	project: jdk6, jdk7, jdk8
+	umbrella repo for build tools: jdk8u, jdk8u-dev
+	subrepo: jdkcorba, hotspot, jaxp, jaxws, jdk, langtools, nashorn
+
+The OpenJDK GitHub mirror repos however merges all subrepos into a single git repo
+
+As of 2022/02/10
+
+	#jdk8u131_b11=http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/archive/3ab471c4760a.tar.bz2
+	jdk8u131_b11=https://github.com/openjdk/jdk8u/archive/refs/tags/jdk8u131-b11.tar.gz
+	curl -vL -o jdk8u131_b11.src.tar.gz "$jdk8u131_b11"
+
+- jdk8u jdk tags, http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/tags
+- https://stackoverflow.com/questions/44097483/what-version-of-openjdk8s-source-do-i-get-to-build-update-131-same-as-oracles/44190647
+EOF
+}
+
 toolchain_clear() {
 	path_ignore_match PATH distver_path_match_ toolchain
 }
