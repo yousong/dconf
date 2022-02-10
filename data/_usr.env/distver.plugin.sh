@@ -258,10 +258,19 @@ jdk_select() {
 jdk_get_and_install() {
 	local jdk_url="$1"; shift
 	local jdk_src
+	local sha256 sha256got
 
+	sha256="$(curl -s "$jdk_url.sha256")"
 	jdk_src="$(basename "$jdk_url")"
 
 	mget --url "$jdk_url" --count 8
+	sha256got="$(sha256sum "$jdk_src" | cut -f1 -d' ')"
+	if [ "$sha256" != "$sha256got" ]; then
+		__errmsg "$jdk_src: checksum mismatch"
+		__errmsg "$jdk_src: checksum got  $sha256got"
+		__errmsg "$jdk_src: checksum want $sha256got"
+		return 1
+	fi
 	mkdir -p "$o_usr/jdk"
 	tar -C "$o_usr/jdk" -xzf "$jdk_src"
 }
