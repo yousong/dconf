@@ -357,7 +357,9 @@ As of 2022/02/10
 
 	#jdk8u131_b11=http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/archive/3ab471c4760a.tar.bz2
 	jdk8u131_b11=https://github.com/openjdk/jdk8u/archive/refs/tags/jdk8u131-b11.tar.gz
-	curl -vL -o jdk8u131_b11.src.tar.gz "$jdk8u131_b11"
+	curl -vL -o jdk8u131_b11.src.tar.gz "\$jdk8u131_b11"
+
+Source code is also available within jdk dir: \$JAVA_HOME/lib/src.zip
 
 - jdk8u jdk tags, http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/tags
 - https://stackoverflow.com/questions/44097483/what-version-of-openjdk8s-source-do-i-get-to-build-update-131-same-as-oracles/44190647
