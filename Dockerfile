@@ -25,6 +25,7 @@ RUN set -x \
 		docker \
 		file \
 		git \
+		git-email \
 		glibc-langpack-en \
 		hostname \
 		iproute \
