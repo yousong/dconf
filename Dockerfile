@@ -5,8 +5,8 @@ MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 # docker run --privileged --pid=host --network=host /bin/zsh
 RUN set -x \
 	&& sed -i -e s/nodocs// /etc/dnf/dnf.conf \
-	&& curl -o /etc/yum.repos.d/fedora.repo https://mirrors.aliyun.com/repo/fedora.repo
-	&& curl -o /etc/yum.repos.d/fedora-updates.repo https://mirrors.aliyun.com/repo/fedora-updates.repo
+	&& curl -o /etc/yum.repos.d/fedora.repo https://mirrors.aliyun.com/repo/fedora.repo \
+	&& curl -o /etc/yum.repos.d/fedora-updates.repo https://mirrors.aliyun.com/repo/fedora-updates.repo \
 	&& dnf makecache \
 	&& true
 
