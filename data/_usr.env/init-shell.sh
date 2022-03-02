@@ -62,7 +62,6 @@ fi
 [ "$__os" = "Darwin" ] && {
 	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
 
-	# MacPorts
 	path_action PATH prepend "$o_osx_where/bin"
 	path_action PATH prepend "$o_osx_where/sbin"
 	case "$o_osx_who" in
@@ -70,8 +69,10 @@ fi
 			path_action PATH prepend "$o_osx_where/libexec/gnubin"
 			;;
 		brew)
-			path_action PATH prepend "$o_osx_where/opt/coreutils/libexec/gnubin"
-			path_action MANPATH prepend "$o_osx_where/opt/coreutils/libexec/gnuman"
+			for p in coreutils make; do
+				path_action PATH prepend "$o_osx_where/opt/$p/libexec/gnubin"
+				path_action MANPATH prepend "$o_osx_where/opt/$p/libexec/gnuman"
+			done
 			export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
 			#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 			#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
