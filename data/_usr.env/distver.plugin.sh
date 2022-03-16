@@ -419,7 +419,7 @@ k8s_install() {
 				__errmsg "no $goos support for kubectl at the moment"
 				return 1
 			fi
-			u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.22.2-00_${goarch}_9ef92050f0f5924a89dbdd8a62ea447828b1163f2d99b37f1f4b5435092959af.deb"
+			u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.23.4-00_${goarch}_8665604e01fca125404270822c0a15e1964e397bbe411277f49a6eb13a9d6fef.deb"
 			;;
 		kruise)
 			u="$github_mirror/openkruise/kruise-tools/releases/latest/download/kubectl-kruise_${goos}_${goarch}"
