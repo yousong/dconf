@@ -7,6 +7,7 @@ RUN set -x \
 	&& sed -i -e s/nodocs// /etc/dnf/dnf.conf \
 	&& curl -o /etc/yum.repos.d/fedora.repo https://mirrors.aliyun.com/repo/fedora.repo \
 	&& curl -o /etc/yum.repos.d/fedora-updates.repo https://mirrors.aliyun.com/repo/fedora-updates.repo \
+	&& curl -o /etc/yum.repos.d/jgoguen-universal-ctags.repo https://copr.fedorainfracloud.org/coprs/jgoguen/universal-ctags/repo/fedora-34/jgoguen-universal-ctags-fedora-34.repo \
 	&& dnf makecache \
 	&& true
 
@@ -46,6 +47,7 @@ RUN set -x \
 		wget \
 		which \
 		zsh \
+		universal-ctags \
 	&& true
 
 RUN set -x \
