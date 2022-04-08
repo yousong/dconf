@@ -5,9 +5,7 @@ MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 # docker run --privileged --pid=host --network=host /bin/zsh
 RUN set -x \
 	&& sed -i -e s/nodocs// /etc/dnf/dnf.conf \
-	&& curl -o /etc/yum.repos.d/fedora.repo https://mirrors.aliyun.com/repo/fedora.repo \
-	&& curl -o /etc/yum.repos.d/fedora-updates.repo https://mirrors.aliyun.com/repo/fedora-updates.repo \
-	&& curl -o /etc/yum.repos.d/jgoguen-universal-ctags.repo https://copr.fedorainfracloud.org/coprs/jgoguen/universal-ctags/repo/fedora-34/jgoguen-universal-ctags-fedora-34.repo \
+	&& curl -o /etc/yum.repos.d/copr-universal-ctags.repo https://copr.fedorainfracloud.org/coprs/jgoguen/universal-ctags/repo/fedora-34/jgoguen-universal-ctags-fedora-34.repo \
 	&& dnf makecache \
 	&& true
 
@@ -56,6 +54,13 @@ RUN set -x \
 	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
 	&& pip3 install \
 		yq \
+	&& true
+
+# We use repo settings in the build machine for installing packages.  The built
+# image is mostly to be used where aliyun mirrors is the faster accessible
+RUN set -x \
+	&& curl -o /etc/yum.repos.d/fedora.repo https://mirrors.aliyun.com/repo/fedora.repo \
+	&& curl -o /etc/yum.repos.d/fedora-updates.repo https://mirrors.aliyun.com/repo/fedora-updates.repo \
 	&& true
 
 RUN set -x \
