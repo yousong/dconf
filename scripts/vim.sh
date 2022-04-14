@@ -49,7 +49,12 @@ __vim_handle_ycm() {
 	# Dependencies are put in its own subdirectory in
 	# third_party/ycmd/third_party
 	#
-	# ycmd now uses C++17 and requires at least GCC 8 to compile
+	# ycmd now uses C++17 and requires at least GCC 8 to compile.  Or
+	# checkout branch "legacy-c++11" and manually download clangd from
+	#
+	# 	https://github.com/clangd/clangd/releases/latest
+	#
+	# , and put the binary inside ycmd clangd thirdparty output bin
 	#
 	# ycmd build.py invokes cmake for building.  It will parse and pass
 	# args from environment variable CMAKE_EXTRA_ARGS to cmake.
