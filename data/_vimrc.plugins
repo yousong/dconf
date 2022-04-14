@@ -263,6 +263,9 @@ let g:rustfmt_autosave = 1
 """"""" python-mode/python-mode
 " Additional project specific paths can be added to g:pymode_paths
 "
+" Sometimes it can fail with things related to lint like "CursorMoved ..."
+" etc.  Try git submodule update in the vim bundle directory
+"
 " we have tagbar
 let g:pymode_folding = 0
 let g:pymode_options_colorcolumn = 0
