@@ -11,7 +11,7 @@ set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()			"call with a path vundle#begin('~/some/path/here')
 Plugin 'gmarik/Vundle.vim'	"Github username/reponame
 Plugin 'tpope/vim-fugitive'
-Plugin 'terryma/vim-multiple-cursors'
+Plugin 'mg979/vim-visual-multi'
 "Plugin 'SirVer/ultisnips'	"The engine
 "Plugin 'honza/vim-snippets'	"The snippets
 Plugin 'mileszs/ack.vim'
@@ -96,24 +96,18 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 
 
-""""""" terryma/vim-multiple-cursors
-"   <C-N> for NERDTree
+""""""" mg979/vim-visual-multi
+" - ':h vm-quick-reference'
+" - doc/vm-mappings.txt
 "
-" It's okay if the tty converts C-M input to newline as long as it works
-" inside Vim.  See "stty -icrnl" for details
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_start_word_key      = '<C-m>'
-let g:multi_cursor_start_key           = 'g<C-m>'
-let g:multi_cursor_next_key            = '<C-m>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-let g:multi_cursor_select_all_word_key = '<A-m>'
-let g:multi_cursor_select_all_key      = 'g<A-m>'
-" press g:multi_cursor_quit_key will not quit multi-cursor mode, instead it
-" will continue in normal mode
-let g:multi_cursor_exit_from_insert_mode = 0
-let g:multi_cursor_exit_from_visual_mode = 0
+" - C-n is for NERDTree
+" - C-Down, C-Up is reserved on macos
+let g:VM_maps = {
+	\ 'Find Under': '<C-m>',
+	\ 'Find Subword Under': '<C-m>',
+	\ 'Add Cursor Down': '<C-j>',
+	\ 'Add Cursor Up': '<C-k>',
+\ }
 
 
 """"""" ultisnips
