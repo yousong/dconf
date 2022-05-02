@@ -403,7 +403,7 @@ k8s_install() {
 	github_mirror="${GITHUB_MIRROR:-https://github.com}"
 	#GITHUB_MIRROR="https://hub.fastgit.org"
 
-	local u
+	local u v
 	case "$name" in
 		helm)
 			# Installing helm, https://helm.sh/docs/intro/install/
@@ -415,11 +415,19 @@ k8s_install() {
 			u="$github_mirror/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.3.0/kustomize_v4.3.0_${goos}_${goarch}.tar.gz"
 			;;
 		kubectl)
-			if ! [ "$goos" = linux ]; then
-				__errmsg "no $goos support for kubectl at the moment"
-				return 1
-			fi
-			u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.23.4-00_${goarch}_8665604e01fca125404270822c0a15e1964e397bbe411277f49a6eb13a9d6fef.deb"
+			v=1.23.6 # curl -L -s https://dl.k8s.io/release/stable.txt
+			case "$goos/$goarch" in
+				linux/amd64)
+					u="https://mirrors.aliyun.com/kubernetes/apt/pool/kubectl_${v}-00_${goarch}_69db18624912cf4b199e7e54b2e2dd24b01e7d2b4b61c5098843eefa79e252e0.deb"
+					;;
+				darwin/*|linux/*)
+					u="https://dl.k8s.io/release/v$v/bin/$goos/$goarch/kubectl"
+					;;
+				*)
+					__errmsg "no $goos support for kubectl at the moment"
+					return 1
+					;;
+			esac
 			;;
 		kruise)
 			u="$github_mirror/openkruise/kruise-tools/releases/latest/download/kubectl-kruise_${goos}_${goarch}"
@@ -456,10 +464,19 @@ k8s_install() {
 		kubectl)
 			(
 				cd "$d"
-				wget -c -O "$name.deb" "$u"
-				ar x "$name.deb" data.tar.xz
-				tar xJf data.tar.xz
-				find . -name "$name" | xargs -I{} mv {} "$kubebin"
+				case "$goos" in
+					linux)
+						wget -c -O "$name.deb" "$u"
+						ar x "$name.deb" data.tar.xz
+						tar xJf data.tar.xz
+						find . -name "$name" | xargs -I{} mv {} "$kubebin"
+						;;
+					darwin)
+						wget -c -O "$name" "$u"
+						chmod a+x "$name"
+						mv "$name" "$kubebin"
+						;;
+				esac
 				cd ..
 				rm -rvf "$d"
 			)
