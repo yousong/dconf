@@ -4,12 +4,13 @@
 # ref (HEAD by default).  See "Pseudo-version" section in output of "go help
 # modules" for more details
 #
-
 ref="${1:-HEAD}"
 
 tri="$(git rev-list --pretty='%ct %H' --date=short -1 "$ref" | tail -n1)"
 set -- $tri
 
+# When this script is not available, we can run "go mod tidy" to figure out the
+# exact $ts after specifying only a ts of correct format 20220523080900
 ts=$1
 ts="$(TZ=UTC date +%Y%m%d%H%M%S --date=@$ts)"
 
