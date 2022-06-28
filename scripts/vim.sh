@@ -103,7 +103,7 @@ __vim_bundle_ref() {
 	local name="$1"
 
 	case "$name" in
-		vim-go) echo "v1.24" ;;
+		vim-go) echo "v1.26" ;;
 		ctrlp.vim) echo "1.81" ;;
 		#YouCompleteMe)
 			# 2020/09/20 6d877784 ("Resolve completions on-demand")
