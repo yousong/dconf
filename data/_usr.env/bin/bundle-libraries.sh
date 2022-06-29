@@ -184,7 +184,7 @@ for BIN in "$@"; do
 		_mv "$BIN" "$RUNDIR/.${BIN##*/}.bin"
 
 		cat <<-EOF > "$BIN"
-			#!/usr/bin/env bash
+			#!/usr/bin/env sh
 			dir="\$(dirname "\$0")"
 			export RUNAS_ARG0="\$0"
 			export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}\$dir/${REL:+$REL/}runas.so"
