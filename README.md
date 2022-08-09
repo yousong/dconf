@@ -56,28 +56,14 @@ Things to watch out for
 
 # Files and directories
 
-Git
-
 - `$HOME/.gitconfig`
-
-Tmux
-
 - `$HOME/.tmux/`
 - `$HOME/.tmux.conf`
-
-Screen
-
 - `$HOME/.screenrc`
-
-Vim
-
 - `$HOME/.vim/`
 - `$HOME/.vimrc`
-
-Shell
-
 - `$HOME/.usr.env/`
 - `$HOME/.oh-my-zsh/`
 - `$HOME/.zshrc`
 - `$HOME/.bashrc`
-
+- ...
