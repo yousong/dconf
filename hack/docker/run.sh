@@ -154,14 +154,14 @@ entrypoint() {
 		local npart
 		local groupsArg
 
-		ogroups=",$(id | grep -oE 'groups=[^ ]+' | cut -d= -f2)"
+		ogroups=",$(id "$ousr" | grep -oE 'groups=[^ ]+' | cut -d= -f2)"
 		for npart in ${id_groups//,/ }; do
 			local Gid
 
 			# append to supplementary groups new gids if
 			#  - the gid is not present in supplementary groups yet
 			Gid="$(partGetId "$npart")"
-			if [ "${ogroups/,$Gid\(/}" == "$ogroups" ]; then
+			if [ "${ogroups/,$Gid\(/}" = "$ogroups" ]; then
 				# create a new grp if the Gid is not present yet
 				if ! cut -d: -f3 /etc/group | grep -q -m1 "^$Gid$"; then
 					local Grp
