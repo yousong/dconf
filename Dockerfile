@@ -1,12 +1,9 @@
-FROM fedora:34
+FROM fedora:36
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
-# docker run --privileged --pid=host --network=host /bin/zsh
 RUN set -x \
 	&& sed -i -e s/nodocs// /etc/dnf/dnf.conf \
-	&& curl -o /etc/yum.repos.d/copr-universal-ctags.repo https://copr.fedorainfracloud.org/coprs/jgoguen/universal-ctags/repo/fedora-34/jgoguen-universal-ctags-fedora-34.repo \
-	&& dnf makecache \
 	&& true
 
 RUN set -x \
@@ -45,7 +42,6 @@ RUN set -x \
 		wget \
 		which \
 		zsh \
-		universal-ctags \
 	&& true
 
 RUN set -x \
@@ -76,7 +72,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.18.5
+ARG GOVERSION=go1.18.6
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \
