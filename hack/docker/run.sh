@@ -105,15 +105,23 @@ entrypoint() {
 	local ousr=abc
 	local ouid
 	local ogid
-
-	ouid="$(id -u "$ousr")"
-	ogid="$(id -g "$ousr")"
-
 	local susr="$ousr"
-	local args=()
 
 	local id_uid id_gid id_groups
 	init_id_x "$id_id"
+
+	# This is for starting a stopped container.  E.g. docker start -ai
+	if ! id -u "$ousr" &>/dev/null; then
+		if [ -n "$id_uid" ]; then
+			susr="$(partGetName "$id_uid")"
+			moveMounts "/home/$ousr" "/home/$susr"
+			logDo exec su - "$susr"
+		fi
+	fi
+
+	local args=()
+	ouid="$(id -u "$ousr")"
+	ogid="$(id -g "$ousr")"
 
 	if [ -n "$id_uid" ]; then
 		local nusr nuid
