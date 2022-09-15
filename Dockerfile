@@ -106,6 +106,7 @@ RUN set -x \
 	&& rm -rf git-repo \
 	&& sudo -iu abc PATH=/home/abc/.usr/go/$GOVERSION/bin:$PATH \
 		vim +GoInstallBinaries +qa \
+	&& /home/abc/go/bin/gopls version \
 	&& rm -rf /home/abc/.cache/go-build \
 	&& true
 

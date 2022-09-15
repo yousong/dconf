@@ -1,0 +1,31 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Billie Cleek <bhcleek@gmail.com>
+Date: Sat, 3 Sep 2022 13:07:54 -0700
+Subject: [PATCH 2/2] plugin: install tools with -mod=mod
+
+Install tools with -mod=mod instead of -mod=readonly to avoid problem
+when some dependency of the tool being updated needs a newer version of
+Go than some other dependency while also still satisfying the original
+motivation for using the -mod flag (i.e. installing tools even when
+GOFLAGSS=-mod=vendor).
+
+Fixes #3446
+
+(cherry picked from commit 1718bd8af89b297601a02681c5791bdf40156572)
+---
+ plugin/go.vim | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugin/go.vim b/plugin/go.vim
+index 5167e904..8ba65066 100644
+--- a/plugin/go.vim
++++ b/plugin/go.vim
+@@ -107,7 +107,7 @@ function! s:GoInstallBinaries(updateBinaries, ...)
+     set noshellslash
+   endif
+ 
+-  let l:get_base_cmd = ['go', 'install', '-v', '-mod=readonly']
++  let l:get_base_cmd = ['go', 'install', '-v', '-mod=mod']
+ 
+   " Filter packages from arguments (if any).
+   let l:packages = {}
