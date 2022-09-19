@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro: ["", ".ubuntu"]
     steps:
       - name: Docker meta
         id: meta
@@ -19,9 +22,9 @@ jobs:
             yousong/dconf
           # generate Docker tags based on the following events/attributes
           tags: |
-            type=raw,value={{date 'YYYYMMDD'}},enable=${{ github.ref == 'refs/heads/master' }}
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
-            type=raw,value=testing,enable=${{ github.ref == 'refs/heads/testing' }}
+            type=raw,value={{date 'YYYYMMDD'}}${{ matrix.distro }},enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=latest${{ matrix.distro }},enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=testing${{ matrix.distro }},enable=${{ github.ref == 'refs/heads/testing' }}
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -31,6 +34,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
+          file: Dockerfile${{ matrix.distro }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

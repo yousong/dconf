@@ -1,0 +1,134 @@
+#FROM ubuntu:20.04
+FROM tensorflow/tensorflow:2.10.0-gpu-jupyter
+
+MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# python3-dev: ycmd build
+# hostname: for hostname command
+#
+# Remove dpkg.cfg.d/excludes so that unminimize will not do reinstallation for
+# adding manpages.  Reinstall can cause upgrade of certain packages like
+# libnvinfer7 to make it depend on libnvrtc.so.11.1 instead of libnvrt.so.11.0
+#
+# USERGROUPS_ENAB no: su command reads it and when it's yes the umask will be
+# changed from 022 to 002.  Oh-my-zsh does not like it and require us to fix it by
+#
+# 	compaudit | xargs chmod g-w,o-w
+#
+# ubuntu uses dash as /bin/sh and it does not work well with dconf.sh
+# https://wiki.ubuntu.com/DashAsBinSh
+RUN set -x \
+	&& rm -vf /etc/dpkg/dpkg.cfg.d/excludes \
+	&& yes | unminimize \
+	&& sed -i 's:^USERGROUPS_ENAB .*:USERGROUPS_ENAB no:g' /etc/login.defs \
+	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+	&& apt-get update \
+	&& apt-get install -y \
+		build-essential \
+		cmake \
+		universal-ctags \
+		curl \
+		docker.io \
+		file \
+		git \
+		git-email \
+		hostname \
+		iproute2 \
+		iputils-arping \
+		iputils-clockdiff \
+		iputils-ping \
+		iputils-tracepath \
+		jq \
+		less \
+		locales \
+		man-db \
+		mariadb-client \
+		patch \
+		procps \
+		python3-dev \
+		rsync \
+		strace \
+		sudo \
+		sysstat \
+		tcpdump \
+		tmux \
+		vim \
+		wget \
+		zsh \
+	&& echo "dash dash/sh boolean false" | debconf-set-selections \
+	&& dpkg-reconfigure dash \
+	&& sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
+	&& locale-gen \
+	&& true
+
+RUN set -x \
+	&& apt-get install -y \
+		python3-pip \
+	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
+	&& pip3 install \
+		yq \
+	&& true
+
+# We use repo settings in the build machine for installing packages.  The built
+# image is mostly to be used where aliyun mirrors is the faster accessible
+RUN set -x \
+	&& sed -i 's:archive.ubuntu.com:mirrors.aliyun.com:g' /etc/apt/sources.list \
+	&& sed -i 's:security.ubuntu.com:mirrors.aliyun.com:g' /etc/apt/sources.list \
+	&& true
+
+RUN set -x \
+	&& adduser --shell /bin/zsh abc \
+	&& echo "abc ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/abc \
+	&& true
+
+RUN set -x \
+	&& mkdir -p /home/abc/.usr/n \
+	&& curl -o n -L "https://raw.githubusercontent.com/tj/n/master/bin/n" \
+	&& N_PREFIX=/home/abc/.usr bash n lts \
+	&& rm -vf n \
+	&& chown -R abc:abc /home/abc/.usr \
+	&& true
+
+ARG GOVERSION=go1.18.6
+ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
+RUN set -x \
+	&& mkdir -p /home/abc/.usr/go \
+	&& cd /home/abc/.usr/go \
+	&& curl -L "$GOURL" \
+		| tar xzf - \
+	&& chmod -R a-w go \
+	&& mv go $GOVERSION \
+	&& chown -R abc:abc /home/abc/.usr/go \
+	&& true
+
+RUN set -x \
+	&& cd /home/abc \
+	&& curl https://sh.rustup.rs -sSf \
+		| sudo -u abc sh -s -- --no-modify-path --default-toolchain stable -y \
+	&& sudo -u abc /home/abc/.cargo/bin/rustup component list --installed \
+		| grep docs \
+		| xargs sudo -u abc /home/abc/.cargo/bin/rustup component remove \
+	&& sudo -u abc /home/abc/.cargo/bin/cargo install ripgrep \
+	&& rm -rf /home/abc/.cargo/registry \
+	&& true
+
+ADD . /home/abc/git-repo/dconf
+RUN set -x \
+	&& cd /home/abc/git-repo/dconf \
+	&& chown -R abc:abc /home/abc/git-repo \
+	&& sudo -u abc \
+		PATH=/home/abc/.usr/bin:$PATH \
+		./dconf.sh config \
+	&& cd /home/abc \
+	&& rm -rf git-repo \
+	&& sudo -iu abc PATH=/home/abc/.usr/go/$GOVERSION/bin:$PATH \
+		vim +GoInstallBinaries +qa \
+	&& /home/abc/go/bin/gopls version \
+	&& rm -rf /home/abc/.cache/go-build \
+	&& true
+
+ADD ./hack/docker/run.sh /run.sh
+
+CMD /run.sh entrypoint
