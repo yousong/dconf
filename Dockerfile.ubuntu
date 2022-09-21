@@ -25,7 +25,7 @@ RUN set -x \
 	&& sed -i 's:^USERGROUPS_ENAB .*:USERGROUPS_ENAB no:g' /etc/login.defs \
 	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 	&& apt-get update \
-	&& apt-get install -y \
+	&& apt-get install -y --no-install-recommends \
 		build-essential \
 		cmake \
 		universal-ctags \
@@ -64,7 +64,7 @@ RUN set -x \
 	&& true
 
 RUN set -x \
-	&& apt-get install -y \
+	&& apt-get install -y --no-install-recommends \
 		python3-pip \
 	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
 	&& pip3 install \
