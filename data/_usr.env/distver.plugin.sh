@@ -506,3 +506,17 @@ k8s_init() {
 		path_action PATH prepend "$d"
 	fi
 }
+
+bazel_init() {
+	# https://github.com/bazelbuild/bazelisk#bazeliskrc-configuration-file
+	#
+	# .bazeliskrc is required to be at root directory of a workspace.
+	# That's why the setting was done through environment variables
+	export BAZELISK_BASE_URL=https://github.com/bazelbuild/bazel/releases/download
+	export USE_BAZEL_FALLBACK_VERSION=5.3.1
+}
+
+bazel_install() {
+	go install github.com/bazelbuild/bazelisk@latest
+	ln -sf "$(which bazelisk)" "$o_usr_env/bin/bazel"
+}
