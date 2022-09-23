@@ -205,7 +205,8 @@ augroup go_group
 		\ nnoremap <buffer> <leader>s     :split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>v    :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
-		\ nnoremap <buffer> <leader>.          <Esc>:exec("GoDef ".expand("<cword>"))<Esc>
+		\ nnoremap <buffer> <leader>.          <Esc>:exec("GoDef ".expand("<cword>"))<Esc> |
+		\ nnoremap <buffer> <leader>e :GoBuildTags ''<CR> |
 augroup END
 
 augroup go_group_mod_vendor
@@ -369,6 +370,7 @@ augroup ycm_group
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo")<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo")<CR> |
 		\ nnoremap <buffer> <leader>. <Esc>:exec("YcmCompleter GoTo")<Esc> |
+		\ nnoremap <buffer> <leader>e :YcmRestartServer<CR> |
 augroup END
 
 function! YcmCAutoFormat()
