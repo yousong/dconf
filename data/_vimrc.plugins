@@ -364,7 +364,7 @@ let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 "let g:ycm_clangd_binary_path = $HOME . '/.usr/toolchain/llvm-10.0.0/bin/clangd'
 augroup ycm_group
 	autocmd!
-	autocmd FileType c,cpp,typescript,javascript,rust
+	autocmd FileType c,cpp,cuda,typescript,javascript,rust
 		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc")<CR> |
 		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo")<CR> |
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo")<CR> |
