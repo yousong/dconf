@@ -57,6 +57,14 @@ RUN set -x \
 		vim \
 		wget \
 		zsh \
+	&& apt-get install -y --no-install-recommends \
+		libcublas-dev-11-2 \
+		libcurand-dev-11-2 \
+		libcusolver-dev-11-2 \
+		libcusparse-dev-11-2 \
+		libcudnn8-dev \
+		nftables \
+		openssh-client \
 	&& echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure dash \
 	&& sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
