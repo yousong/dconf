@@ -2,7 +2,7 @@
 
 . "$TOPDIR/env.sh"
 
-fzf_ver=0.21.1
+fzf_ver=0.34.0
 
 fzf_dir="$o_homedir/.fzf"
 fzf_bindir="$o_homedir/.usr/bin"
@@ -19,11 +19,11 @@ config() {
 	[ "$v" = "$fzf_ver" ] || {
 		local f url
 		case "$o_os" in
-			Darwin) f="fzf-$fzf_ver-darwin_amd64.tgz" ;;
-			Linux) f="fzf-$fzf_ver-linux_amd64.tgz" ;;
+			Darwin) f="fzf-$fzf_ver-darwin_amd64.tar.gz" ;;
+			Linux) f="fzf-$fzf_ver-linux_amd64.tar.gz" ;;
 			*) __error "unknown os $o_os"; false; ;;
 		esac
-		url="https://github.com/junegunn/fzf-bin/releases/download/$fzf_ver/$f"
+		url="https://github.com/junegunn/fzf/releases/download/$fzf_ver/$f"
 
 		__info "downloading $f"
 		wget -c -O /tmp/fzf.tgz "$url"
@@ -38,5 +38,5 @@ config() {
 	git \
 		--work-tree "$fzf_dir" \
 		--git-dir "$fzf_dir/.git" \
-		checkout -B "$fzf_ver"
+		checkout -B "$fzf_ver" "$fzf_ver"
 }
