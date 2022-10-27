@@ -27,6 +27,7 @@ RUN set -x \
 		iproute \
 		iputils \
 		jq \
+		lsof \
 		man-db \
 		man-pages \
 		mariadb \

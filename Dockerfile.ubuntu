@@ -43,6 +43,7 @@ RUN set -x \
 		jq \
 		less \
 		locales \
+		lsof \
 		man-db \
 		mariadb-client \
 		patch \
