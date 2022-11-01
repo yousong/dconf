@@ -5,7 +5,7 @@
 npm_conf="$o_homedir/.npmrc"
 
 config() {
-	cp "$DATA_DIR/_m2/settings.xml" "$npm_conf"
+	cp "$DATA_DIR/_npmrc" "$npm_conf"
 }
 
 collect() {
