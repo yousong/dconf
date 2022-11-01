@@ -1,6 +1,7 @@
 TOPDIR="${TOPDIR:-$PWD}"
 
 o_os="$(uname -s)"
+o_mach="$(uname -m)"
 o_homedir="${o_homedir:-$HOME}"
 DATA_DIR="$TOPDIR/data"
 PATCH_DIR="$TOPDIR/patches"
@@ -38,6 +39,17 @@ __notice() {
 
 __error() {
 	__errmsg "${o_rote}error:${o_norm} $1"
+}
+
+goarch(){
+	case "$o_mach" in
+		arm64) echo arm64;;
+		x86_64) echo amd64;;
+		*)
+			__error "unknown uname machine $o_mach"
+			return 1
+			;;
+	esac
 }
 
 template_eval() {
