@@ -19,8 +19,8 @@ config() {
 	[ "$v" = "$fzf_ver" ] || {
 		local f url
 		case "$o_os" in
-			Darwin) f="fzf-$fzf_ver-darwin_amd64.tar.gz" ;;
-			Linux) f="fzf-$fzf_ver-linux_amd64.tar.gz" ;;
+			Darwin) f="fzf-$fzf_ver-darwin_$(goarch).zip" ;;
+			Linux) f="fzf-$fzf_ver-linux_$(goarch).tar.gz" ;;
 			*) __error "unknown os $o_os"; false; ;;
 		esac
 		url="https://github.com/junegunn/fzf/releases/download/$fzf_ver/$f"
@@ -38,5 +38,9 @@ config() {
 	git \
 		--work-tree "$fzf_dir" \
 		--git-dir "$fzf_dir/.git" \
-		checkout -B "$fzf_ver" "$fzf_ver"
+		fetch origin
+	git \
+		--work-tree "$fzf_dir" \
+		--git-dir "$fzf_dir/.git" \
+		checkout -B "$fzf_ver" "refs/tags/$fzf_ver"
 }
