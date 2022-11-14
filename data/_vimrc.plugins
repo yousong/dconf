@@ -22,7 +22,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 "Plugin 'godlygeek/tabular'
 "Plugin 'Align'				"Name of vim-script.org package mirrors.
-"Plugin 'altercation/vim-colors-solarized'
+Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'ycm-core/YouCompleteMe'
 "Plugin 'kchmck/vim-coffee-script'	" L: CoffeeScript
 "Plugin 'mattn/emmet-vim'		" L: HTML
@@ -276,30 +276,6 @@ let g:pymode_lint_checkers = ['pyflakes']
 let g:pymode_lint_ignore = ['E501', 'E272', 'E221', 'E225', 'E303', 'W601', 'E302', 'E502', 'W291', 'E261', 'E262', 'W391', 'E127', 'E128', 'E126', 'E123', 'E125', 'E124', 'E711', 'E712', 'E121', 'E111', 'E265', 'E131', 'E226', 'E241', 'E701', 'D105']
 
 
-""""""" altercation/vim-colors-solarized
-" NOTES on PuTTY: for molokai or solarized to work under PuTTY, the following
-" customizations are needed, otherwise many elements such as comments, line
-" numbers, etc. will become invisible, possibly caused by them having the same
-" color as the foreground color setting.
-"
-" 1. Apply dark or light color palette registry files.  It will add by default
-"    either "Solarized Dark" or "Solarized Light" session.  Rename it in the
-"    file content to change color settings for existing sessions
-" 2. Window - Colours : Enable "Allow terminal to use xterm 256-colour mode"
-" 3. Connection - Data - Terminal details : Terminal-type string: " "xterm-256color"
-"
-" NOTES on iTerm2: Set Solarized pallette by selecting it in Preferences,
-" Profiles, Colors, Color Presets
-"
-" Degrade if changing terminal emulator's color pallette is not possible
-"let g:solarized_termcolors=256
-"syntax enable
-"set background=light
-"silent! colorscheme solarized
-silent! colorscheme evening
-highlight Pmenu ctermbg=cyan
-
-
 """"""" ycm-core/YouCompleteMe
 "
 " Debug
@@ -392,3 +368,22 @@ endfunction
 "		\ autocmd BufWritePre *.go YcmCompleter Format
 "
 "augroup END
+
+
+""""""" colorscheme
+" NOTES on PuTTY: for molokai or solarized to work under PuTTY, the following
+" customizations are needed, otherwise many elements such as comments, line
+" numbers, etc. will become invisible, possibly caused by them having the same
+" color as the foreground color setting.
+"
+" 1. Apply dark or light color palette registry files.  It will add by default
+"    either "Solarized Dark" or "Solarized Light" session.  Rename it in the
+"    file content to change color settings for existing sessions
+" 2. Window - Colours : Enable "Allow terminal to use xterm 256-colour mode"
+" 3. Connection - Data - Terminal details : Terminal-type string: " "xterm-256color"
+"
+" NOTES on iTerm2: Set Solarized pallette by selecting it in Preferences,
+" Profiles, Colors, Color Presets
+"
+" NOTES on tmux: start tmux with "-2" argument to force 256color tty feature
+silent! colorscheme PaperColor
