@@ -139,3 +139,6 @@ man() {
 if [ -r "$o_usr_env/.env.sh" ]; then
 	. "$o_usr_env/.env.sh"
 fi
+
+# -2 Force tmux to assume the terminal supports 256 colours.
+alias tmux="tmux -2"
