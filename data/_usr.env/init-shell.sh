@@ -117,6 +117,7 @@ if type vim 1>/dev/null 2>&1; then
 else
 	export EDITOR=vi
 fi
+alias visc="vi $HOME/.ssh/config"
 vim_basic() {
 	vim -u "$HOME/.vimrc.basic" "$@"
 }
