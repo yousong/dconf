@@ -141,3 +141,4 @@ RUN set -x \
 ADD ./hack/docker/run.sh /run.sh
 
 CMD /run.sh entrypoint
+# vi: ft=dockerfile
