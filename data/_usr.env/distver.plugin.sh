@@ -520,3 +520,29 @@ bazel_install() {
 	go install github.com/bazelbuild/bazelisk@latest
 	ln -sf "$(which bazelisk)" "$o_usr_env/bin/bazel"
 }
+
+docker_compose_install() {
+	local os arch
+
+	case "$(uname -m)" in
+		x86_64) arch=x86_64 ;;
+		arm64) arch=aarch64  ;;
+		*) __errmsg "unsupported machine type: $(uname -m)" ;;
+	esac
+	case "$(uname -s)" in
+		Darwin) os=darwin ;;
+		Linux) os=linux  ;;
+		*) __errmsg "unsupported system type: $(uname -s)" ;;
+	esac
+
+	local f="docker-compose-$os-$arch"
+	local v="2.18.1"
+
+	mget \
+		--count 16 \
+		--output docker-compose \
+		--url "https://github.com/docker/compose/releases/download/v$v/$f"
+	chmod a+x docker-compose
+	mv docker-compose "$o_usr_env/bin/docker-compose"
+	docker-compose version
+}
