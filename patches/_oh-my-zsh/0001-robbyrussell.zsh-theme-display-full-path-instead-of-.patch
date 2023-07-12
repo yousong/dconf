@@ -9,13 +9,12 @@ Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/themes/robbyrussell.zsh-theme b/themes/robbyrussell.zsh-theme
-index 2fd5f2cd..e4cebc58 100644
+index 173e6d57..35ac104c 100644
 --- a/themes/robbyrussell.zsh-theme
 +++ b/themes/robbyrussell.zsh-theme
-@@ -1,5 +1,5 @@
- PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
--PROMPT+=' %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
-+PROMPT+=' %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)'
+@@ -1,4 +1,4 @@
+-PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%c%{$reset_color%}"
++PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%~%{$reset_color%}"
+ PROMPT+=' $(git_prompt_info)'
  
  ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
- ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
