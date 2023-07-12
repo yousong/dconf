@@ -35,10 +35,15 @@ config() {
 	[ -d "$fzf_dir" ] || {
 		git clone https://github.com/junegunn/fzf.git "$fzf_dir"
 	}
-	git \
+	if ! git \
 		--work-tree "$fzf_dir" \
 		--git-dir "$fzf_dir/.git" \
-		fetch origin
+		tag | grep -qF --line-regexp "$fzf_ver"; then
+		git \
+			--work-tree "$fzf_dir" \
+			--git-dir "$fzf_dir/.git" \
+			fetch origin
+	fi
 	git \
 		--work-tree "$fzf_dir" \
 		--git-dir "$fzf_dir/.git" \
