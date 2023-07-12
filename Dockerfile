@@ -46,6 +46,7 @@ RUN set -x \
 	&& true
 
 RUN set -x \
+	&& alternatives --verbose --install /usr/bin/python python /usr/bin/python3.10 10 \
 	&& dnf install -y \
 		python3-pip \
 	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
