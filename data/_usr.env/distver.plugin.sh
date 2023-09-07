@@ -565,3 +565,31 @@ docker_compose_install() {
 	mv docker-compose "$o_usr_env/bin/docker-compose"
 	docker-compose version
 }
+
+conda_install() {
+	# anaconda vs. miniconda, anaconda is like dvd installer for linux
+	# distro releases, while miniconda is like minimal installer.
+	#
+	# Install to $HOME/anaconda3 (prefix dir)
+	#
+	# Install & Uninstall,
+	# https://conda.io/projects/conda/en/latest/user-guide/install/linux.html
+	local conda_installer=Anaconda3-2023.07-2-Linux-x86_64.sh
+	wget -c https://repo.anaconda.com/archive/$conda_installer
+	chmod a+x $conda_installer
+	./$conda_installer
+
+	# With Intel® Extension for Scikit-learn* you can accelerate your
+	# Scikit-learn applications and still have full conformance with all
+	# Scikit-Learn APIs and algorithms. Intel® Extension for Scikit-learn*
+	# is a free software AI accelerator that brings over 10-100X
+	# acceleration across a variety of applications.
+	#
+	# https://intel.github.io/scikit-learn-intelex/
+	conda install scikit-learn-intelex
+
+	#conda init zsh
+	#conda init --dry-run --verbose zsh
+	#
+	#conda config --set auto_activate_base false
+}
