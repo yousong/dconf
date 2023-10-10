@@ -115,21 +115,32 @@ go_select() {
 	fi
 }
 
-go_get() {
-	local group="$1"
+go_install() {
+	local ver="$1"
+	local goos goarch
 
-	case "$group" in
-		grpc)
-			go get -u google.golang.org/grpc
-			go get -u github.com/golang/protobuf/protoc-gen-go
-			;;
-		gops)
-			go get -u github.com/google/gops
-			;;
-		*)
-			go get "$@"
-			;;
-	esac
+	if test -z "$ver"; then
+		echo "Usage: go_install goVER" >&2
+		echo "Usage: go_install go1.21.2" >&2
+		return 1
+	fi
+
+	goos="$(go_os)"
+	goarch="$(go_arch)"
+
+	local f
+	local u
+	local d
+
+	f="$ver.linux-amd64.tar.gz"
+	u="https://go.dev/dl/$f"
+	d="$HOME/.usr/go/"
+	wget -c -O "$f" "$u"
+	tar xzf "$f"
+	mv go "$ver"
+	mkdir -p "$d"
+	mv "$ver" "$d"
+	chmod -R a-w "$d/$ver"
 }
 
 cgo_env() {
@@ -384,22 +395,30 @@ toolchain_select() {
 	distver_select_ toolchain "$ver" "" toolchain_select_
 }
 
-k8s_install() {
-	local goos goarch
-	case "$(uname -m)" in
-		x86_64) goarch=amd64 ;;
-		arm64) goarch=arm64  ;;
-		*) __errmsg "unsupported machine type: $(uname -m)" ;;
-	esac
+go_os() {
 	case "$(uname -s)" in
-		Darwin) goos=darwin ;;
-		Linux) goos=linux  ;;
-		*) __errmsg "unsupported system type: $(uname -s)" ;;
+		Darwin) echo darwin ;;
+		Linux) echo linux  ;;
+		*) __errmsg "unsupported system type: $(uname -s)"; return 1 ;;
 	esac
+}
 
+go_arch() {
+	case "$(uname -m)" in
+		x86_64) echo amd64 ;;
+		arm64) echo arm64  ;;
+		*) __errmsg "unsupported machine type: $(uname -m)"; return 1 ;;
+	esac
+}
+
+k8s_install() {
 	local name="$1"; shift
-
+	local goos goarch
 	local github_mirror
+
+	goos="$(go_os)"
+	goarch="$(go_arch)"
+
 	github_mirror="${GITHUB_MIRROR:-https://github.com}"
 	#GITHUB_MIRROR="https://hub.fastgit.org"
 
