@@ -71,7 +71,7 @@ build_onecloud_operator() {
 		-v $repoRoot/_output/alpine-build:/root/go/src/yunion.io/x/$repoName/_output \
 		-v $repoRoot/_output/alpine-build/_cache:/root/.cache \
 		registry.cn-beijing.aliyuncs.com/yunionio/alpine-build:1.0-3 \
-		/bin/sh -c "set -ex; cd /root/go/src/yunion.io/x/$repoName;
+		/bin/bash -c "set -ex; cd /root/go/src/yunion.io/x/$repoName;
 			make;
 			chown -R $(id -u):$(id -g) _output;
 			find _output/bin -type f |xargs ls -lh"

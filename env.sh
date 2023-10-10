@@ -8,9 +8,13 @@ PATCH_DIR="$TOPDIR/patches"
 SCRIPT_DIR="$TOPDIR/scripts"
 
 if cp --version | grep -q -m1 "GNU coreutils"; then
-	alias cp="cp --no-preserve=all -R -T"
+	cp() {
+		command cp --no-preserve=all -R -T "$@"
+	}
 elif which -s gcp &>/dev/null; then
-	alias cp="gcp --no-preserve=all -R -T"
+	cp() {
+		command gcp --no-preserve=all -R -T "$@"
+	}
 else
 	# we need echo, cp from coreutils
 	#

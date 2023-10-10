@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 # available actions are
 #  - config
@@ -10,20 +10,10 @@ if [ -z "$action" ]; then
 	exit 1
 fi
 
-if [ -h /bin/sh ]; then
-	binsh="$(readlink -f /bin/sh)"
-	if [ "${binsh##*/}" = dash ]; then
-		# Dash does not support ${var//pattern/repl}
-		# Dash does not support &>/dev/null
-		echo "dash as /bin/sh is not supported" >&2
-		exit 1
-	fi
-fi
-
 INCLUDE_ONLY=1
 . "$PWD/env.sh"
 export TOPDIR
 
 for script in "$SCRIPT_DIR"/*; do
-	sh -e -c ". '$TOPDIR/env.sh'; _do '$script' '$action'"
+	/bin/bash -e -c ". '$TOPDIR/env.sh'; _do '$script' '$action'"
 done

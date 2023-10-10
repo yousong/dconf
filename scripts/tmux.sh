@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 tmux_plugins_dir="$o_homedir/.tmux/plugins"
 tpm_dir="$tmux_plugins_dir/tpm"

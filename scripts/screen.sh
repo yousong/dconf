@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 config() {
 	cp "$DATA_DIR/_screenrc" "$o_homedir/.screenrc"
