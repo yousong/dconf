@@ -198,6 +198,7 @@ let g:tagbar_type_gdb = {
 "	\ '-logfile', 'auto',
 "	\ '-vv',
 "\ ]
+"let g:go_debug=['lsp']
 
 augroup go_group
 	autocmd!
