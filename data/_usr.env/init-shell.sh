@@ -143,3 +143,6 @@ fi
 
 # -2 Force tmux to assume the terminal supports 256 colours.
 alias tmux="tmux -2"
+if test -n "$TMUX"; then
+	eval "$(tmux show-env -s | grep ^SSH)"
+fi
