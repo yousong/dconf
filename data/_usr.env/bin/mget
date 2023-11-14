@@ -89,6 +89,7 @@ will be named with suffix .N with N starting from 1, ending with <count>
  --pos-start <int>  zero-based start position (default to 0)
  --pos-end <int>    non-inclusive end position (default to Content-Length)
  --no-combine       keep <fn>.N as they are
+ --xtrace           turn on shell xtrace option
  -h|--help          show this help text
 
 Those arguments not part of mget will be passed to each wget/curl process
@@ -186,6 +187,10 @@ mget() {
 				;;
 			--no-combine)
 				combine=0
+				shift 1
+				;;
+			--xtrace)
+				set -o xtrace
 				shift 1
 				;;
 			-h|--help)
