@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Yousong Zhou <zhouyousong@meituan.com>
-Date: Sun, 14 Feb 2016 13:24:20 +0800
+From: Yousong Zhou <yszhou4tech@gmail.com>
+Date: Fri, 22 Dec 2023 09:53:54 +0000
 Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
  basename.
 
@@ -9,12 +9,12 @@ Subject: [PATCH] robbyrussell.zsh-theme: display full path instead of just
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/themes/robbyrussell.zsh-theme b/themes/robbyrussell.zsh-theme
-index 173e6d57..35ac104c 100644
+index cfecfc89..20fa7baa 100644
 --- a/themes/robbyrussell.zsh-theme
 +++ b/themes/robbyrussell.zsh-theme
 @@ -1,4 +1,4 @@
--PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%c%{$reset_color%}"
-+PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%~%{$reset_color%}"
+-PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%}"
++PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%~%{$reset_color%}"
  PROMPT+=' $(git_prompt_info)'
  
  ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
