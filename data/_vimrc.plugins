@@ -297,6 +297,18 @@ let g:pymode_lint_ignore = ['E501', 'E272', 'E221', 'E225', 'E303', 'W601', 'E30
 let g:ycm_confirm_extra_conf = 0	" Load .ycm_extra_conf.py?
 let g:ycm_auto_trigger = 1		" Identifier completer, <C-Space> to force semance completer
 let g:ycm_enable_diagnostic_highlighting = 0
+" https://ycm-core.github.io/YouCompleteMe/#semantic-completion-for-other-languages
+" https://github.com/ycm-core/lsp-examples
+" language servers, https://microsoft.github.io/language-server-protocol/implementors/servers/
+" serve-d, https://github.com/Pure-D/serve-d/blob/master/editor-vim.md
+let g:ycm_lsp_dir = $HOME . '/.vim/bundle/YouCompleteMe/lsp-server'
+let g:ycm_language_server = [
+    \ {
+    \     'name': 'd',
+    \     'cmdline': [g:ycm_lsp_dir . '/d/serve-d'],
+    \     'filetypes': ['d'],
+    \ },
+\ ]
 let g:ycm_filetype_blacklist = {
 	\ 'go': 1,
 	\ 'python': 1,
@@ -343,7 +355,7 @@ let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 let g:ycm_auto_hover = ''
 augroup ycm_group
 	autocmd!
-	autocmd FileType c,cpp,cuda,typescript,javascript,rust
+	autocmd FileType c,cpp,cuda,d,javascript,rust,typescript
 		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc")<CR>|
 		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo")<CR>|
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo")<CR>|

@@ -16,8 +16,9 @@ __vim_foreach_patchdir() {
 
 __vim_handle_ycm() {
 	local wd="$bundle_dir/YouCompleteMe"
+	local donefile="$wd/.dconf_done_202401102014"
 	[ -d "$wd" ] || return 0
-	[ ! -f "$wd/.dconf_done" ] || return 0
+	[ ! -f "$donefile" ] || return 0
 
 	# Installation is done mainly by third_party/ycmd/build.py
 	#
@@ -73,12 +74,17 @@ __vim_handle_ycm() {
 	# ycmd b4cbf5696 ("Discourage running build.py with sudo, as it causes
 	# permission issues").  Using --force-sudo may cause old revision to
 	# fail for unrecognized argument
-	env -u SUDO_COMMAND \
-		"$wd/install.py" \
-		--clangd-completer \
-		--rust-completer \
-		--ts-completer \
-		$DCONF_VIM_YCM_INSTALL_ARGS \
+	local ycm_install_donefile="$wd/install_donefile_202401102027"
+	if ! test -e "$ycm_install_donefile"; then
+		env -u SUDO_COMMAND \
+			"$wd/install.py" \
+			--clangd-completer \
+			--rust-completer \
+			--ts-completer \
+			$DCONF_VIM_YCM_INSTALL_ARGS \
+
+		touch "$ycm_install_donefile"
+	fi
 
 	local ycmd_3rdparty="$wd/third_party/ycmd/third_party/"
 	rm -rf "$ycmd_3rdparty/rust-analyzer/share/doc/"
@@ -96,7 +102,44 @@ __vim_handle_ycm() {
 			ln -sf "$clangd" "$ycm_clangd"
 		fi
 	fi
-	touch "$wd/.dconf_done"
+	local lsp_server_dir="$wd/lsp-server"
+	mkdir -p "$lsp_server_dir"
+
+	local serve_d_ver=0.7.6
+	local dcd_ver=0.15.2
+	if ! "$lsp_server_dir/serve-d" -v 2>&1 | grep -F "$serve_d_ver"; then
+		local osa osn
+		if test "$(uname -m)" = x86_64; then
+			osa=x86_64
+			case "$(uname -s)" in
+				Linux) osn=linux ;;
+				Darwin) osn=osx ;;
+			esac
+		fi
+		if test -n "$osn"; then
+			local tempd
+			tempd="$(mktemp -d serve_d-XXX)"
+			(
+				local d="$lsp_server_dir/d"
+				mkdir -p "$d"
+
+				cd "$tempd"
+				wget -O serve-d.tar.xz "https://github.com/Pure-D/serve-d/releases/download/v$serve_d_ver/serve-d_$serve_d_ver-$osn-$osa.tar.xz"
+				tar xJf serve-d.tar.xz
+				mv serve-d "$d"
+
+				wget -O dcd.tar.gz "https://github.com/dlang-community/DCD/releases/download/v$dcd_ver/dcd-v$dcd_ver-$osn-$osa.tar.gz"
+				tar xzf dcd.tar.gz
+				mv dcd-client "$d"
+				mv dcd-server "$d"
+			)
+			rm -rf "$tempd"
+		else
+			__notice "skip installing serve-d for $(uname -s) $(uname -m)"
+		fi
+	fi
+
+	touch "$donefile"
 }
 
 __vim_bundle_ref() {
