@@ -34,3 +34,7 @@
 	ff = only
 [credential]
 	helper = cache
+[core]
+	# Show chinese characters verbatim with `git status`.  Also check `-z`
+	# option for git commands
+	quotepath = off
