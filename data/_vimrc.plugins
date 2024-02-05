@@ -28,6 +28,8 @@ Plugin 'ycm-core/YouCompleteMe'
 "Plugin 'mattn/emmet-vim'		" L: HTML
 "Plugin 'groenewege/vim-less'		" L: LESS
 "Plugin 'alderz/smali-vim'		" L: Smali
+Plugin 'yuezk/vim-js'			" L: Javascript, Flow.js
+Plugin 'MaxMEllon/vim-jsx-pretty'	" L: JSX, TSX
 Plugin 'cespare/vim-toml'		" L: TOML
 Plugin 'chr4/nginx.vim'			" L: NGINX
 Plugin 'fatih/vim-go'			" L: Go
