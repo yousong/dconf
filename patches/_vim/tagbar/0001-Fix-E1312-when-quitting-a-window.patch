@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <yszhou4tech@gmail.com>
+Date: Wed, 28 Feb 2024 08:50:58 +0000
+Subject: [PATCH] Fix E1312 when quitting a window
+
+Ref: https://github.com/preservim/tagbar/issues/851
+---
+ autoload/tagbar.vim | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/autoload/tagbar.vim b/autoload/tagbar.vim
+index de8b4b3..db90f53 100644
+--- a/autoload/tagbar.vim
++++ b/autoload/tagbar.vim
+@@ -3540,7 +3540,7 @@ function! s:HandleOnlyWindow() abort
+ 
+         try
+             try
+-                quit
++                call timer_start(0, {-> execute('q', 'silent!') })
+             catch /.*/ " This can be E173 and maybe others
+                 call s:OpenWindow('')
+                 echoerr v:exception
