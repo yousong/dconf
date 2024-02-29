@@ -324,6 +324,13 @@ jdk17_install() {
 	jdk_get_and_install "$jdk_url"
 }
 
+jdk21_install() {
+	local ver=21.0.1
+	local jdk_src="openjdk-${ver}_$(jdk_os)-$(jdk_arch)_bin.tar.gz"
+	local jdk_url="https://download.java.net/java/GA/jdk${ver}/415e3f918a1f4062a0074a2794853d0d/12/GPL/$jdk_src"
+	jdk_get_and_install "$jdk_url"
+}
+
 jdk_install() {
 	cat <<EOF
 Install jre/jdk 8 from package managers
