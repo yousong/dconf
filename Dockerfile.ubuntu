@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:24.02-py3
+FROM nvcr.io/nvidia/cuda:12.3.2-devel-ubuntu22.04
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -59,6 +59,15 @@ RUN set -x \
 		vim \
 		wget \
 		zsh \
+	&& apt-get install -y --no-install-recommends \
+		libcublas-dev-12-3           \
+		libcudnn9-dev-cuda-12        \
+		libcufft-dev-12-3            \
+		libcufile-dev-12-3           \
+		libcurand-dev-12-3           \
+		libcusolver-dev-12-3         \
+		libcusparse-dev-12-3         \
+		libcutensor-dev              \
 	&& echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure dash \
 	&& sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
