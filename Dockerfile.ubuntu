@@ -1,5 +1,4 @@
-#FROM ubuntu:20.04
-FROM tensorflow/tensorflow:2.10.0-gpu-jupyter
+FROM nvcr.io/nvidia/pytorch:24.02-py3
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -46,6 +45,8 @@ RUN set -x \
 		lsof \
 		man-db \
 		mariadb-client \
+		nftables \
+		openssh-client \
 		patch \
 		procps \
 		python3-dev \
@@ -58,14 +59,6 @@ RUN set -x \
 		vim \
 		wget \
 		zsh \
-	&& apt-get install -y --no-install-recommends \
-		libcublas-dev-11-2 \
-		libcurand-dev-11-2 \
-		libcusolver-dev-11-2 \
-		libcusparse-dev-11-2 \
-		libcudnn8-dev \
-		nftables \
-		openssh-client \
 	&& echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure dash \
 	&& sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
@@ -100,7 +93,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.20.6
+ARG GOVERSION=go1.22.1
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \
