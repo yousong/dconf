@@ -573,6 +573,23 @@ docker_compose_install() {
 	docker-compose version
 }
 
+docker_buildx_install() {
+	local goos goarch
+	local ver
+
+	goos="$(go_os)"
+	goarch="$(go_arch)"
+	ver=0.13.1
+	mget \
+		--count 16 \
+		--output docker-buildx \
+		--url "https://github.com/docker/buildx/releases/download/v$ver/buildx-v$ver.$goos-$goarch"
+	chmod a+x docker-buildx
+	mkdir -p "$HOME/.docker/cli-plugins"
+	mv docker-buildx "$HOME/.docker/cli-plugins/docker-buildx"
+	docker buildx version
+}
+
 conda_install() {
 	# anaconda vs. miniconda, anaconda is like dvd installer for linux
 	# distro releases, while miniconda is like minimal installer.
