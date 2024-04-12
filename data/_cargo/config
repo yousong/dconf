@@ -12,3 +12,7 @@ registry = "https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index"
 
 [source.rustcc]
 registry = "git://crates.rustcc.cn/crates.io-index"
+
+# https://doc.rust-lang.org/cargo/reference/unstable.html
+[unstable]
+sparse-registry = true
