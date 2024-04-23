@@ -60,8 +60,6 @@ if [ -z "$MANPATH" ]; then
 	MANPATH="$(manpath)"
 fi
 [ "$__os" = "Darwin" ] && {
-	alias lockscreen='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app'
-
 	path_action PATH prepend "$o_osx_where/bin"
 	path_action PATH prepend "$o_osx_where/sbin"
 	case "$o_osx_who" in
