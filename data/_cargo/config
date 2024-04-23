@@ -16,3 +16,6 @@ registry = "git://crates.rustcc.cn/crates.io-index"
 # https://doc.rust-lang.org/cargo/reference/unstable.html
 [unstable]
 sparse-registry = true
+# This is also intended for use when building container image where the
+# required credentials for accesssing internal repo is not available
+no-index-update = true
