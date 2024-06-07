@@ -56,6 +56,7 @@ setup_dev_env() {
 [ -d "$o_usr_env/bin" ] && path_action PATH peek_prepend "$o_usr_env/bin"
 [ -d "/sbin" ] && path_action PATH peek_append "/sbin"
 [ -d "/usr/sbin" ] && path_action PATH peek_append "/usr/sbin"
+[ -d "$HOME/anaconda3/condabin" ] && path_action PATH peek_append "$HOME/anaconda3/condabin"
 if [ -z "$MANPATH" ]; then
 	MANPATH="$(manpath)"
 fi
