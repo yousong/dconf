@@ -35,7 +35,6 @@ Plugin 'chr4/nginx.vim'			" L: NGINX
 Plugin 'fatih/vim-go'			" L: Go
 Plugin 'rust-lang/rust.vim'		" L: Rust, rustfmt
 Plugin 'plasticboy/vim-markdown'	" L: Markdown
-Plugin 'python-mode/python-mode'	" L: Python
 call vundle#end()
 filetype plugin indent on		"required
 
@@ -258,27 +257,6 @@ endfunction
 let g:rustfmt_autosave = 1
 
 
-""""""" python-mode/python-mode
-" Additional project specific paths can be added to g:pymode_paths
-"
-" Sometimes it can fail with things related to lint like "CursorMoved ..."
-" etc.  Try git submodule update in the vim bundle directory
-"
-" we have tagbar
-let g:pymode_folding = 0
-let g:pymode_options_colorcolumn = 0
-
-" regenerate on write can drag vim to unusable state
-let g:pymode_rope = 1
-let g:pymode_rope_regenerate_on_write = 0
-let g:pymode_rope_goto_definition_bind = '<C-]>'
-
-" lint with pyflakes just like qa_python() shell func does
-let g:pymode_lint = 1
-let g:pymode_lint_checkers = ['pyflakes']
-let g:pymode_lint_ignore = ['E501', 'E272', 'E221', 'E225', 'E303', 'W601', 'E302', 'E502', 'W291', 'E261', 'E262', 'W391', 'E127', 'E128', 'E126', 'E123', 'E125', 'E124', 'E711', 'E712', 'E121', 'E111', 'E265', 'E131', 'E226', 'E241', 'E701', 'D105']
-
-
 """"""" ycm-core/YouCompleteMe
 "
 " Debug
@@ -313,7 +291,6 @@ let g:ycm_language_server = [
 \ ]
 let g:ycm_filetype_blacklist = {
 	\ 'go': 1,
-	\ 'python': 1,
 	\ 'tagbar': 1,
 	\ 'nerdtree': 1,
 \ }
@@ -357,7 +334,7 @@ let g:ycm_clangd_uses_ycmd_caching = 0	" Suggested by clangd.llvm.org
 let g:ycm_auto_hover = ''
 augroup ycm_group
 	autocmd!
-	autocmd FileType c,cpp,cuda,d,javascript,rust,typescript
+	autocmd FileType c,cpp,cuda,d,javascript,python,rust,typescript
 		\ nnoremap <buffer> K :exec("YcmCompleter GetDoc")<CR>|
 		\ nnoremap <buffer> <leader>s :split<CR>:exec("YcmCompleter GoTo")<CR>|
 		\ nnoremap <buffer> <leader>v :vsplit<CR>:exec("YcmCompleter GoTo")<CR>|
