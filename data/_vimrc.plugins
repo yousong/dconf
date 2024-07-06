@@ -281,6 +281,7 @@ let g:ycm_enable_diagnostic_highlighting = 0
 " https://github.com/ycm-core/lsp-examples
 " language servers, https://microsoft.github.io/language-server-protocol/implementors/servers/
 " serve-d, https://github.com/Pure-D/serve-d/blob/master/editor-vim.md
+" ccls, https://github.com/MaskRay/ccls/wiki/YouCompleteMe
 let g:ycm_lsp_dir = $HOME . '/.vim/bundle/YouCompleteMe/lsp-server'
 let g:ycm_language_server = [
     \ {
