@@ -40,6 +40,7 @@ def main(cmd):
     while True:
         t0 = datetime.datetime.now()
         out = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).communicate()[0]
+        out = str(out)
 
         p = digits_re.split(out)
 
