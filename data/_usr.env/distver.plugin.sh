@@ -575,6 +575,37 @@ docker_compose_install() {
 	docker-compose version
 }
 
+terraform_install() {
+	local ver="$1"
+	local goos goarch
+	local zipf
+	local url
+
+	if test -z "$ver"; then
+		ver=1.9.8
+		__errmsg "Defaulting to version $ver, see the doc for recent details"
+		__errmsg ""
+		__errmsg "  https://developer.hashicorp.com/terraform/install"
+	fi
+	goos="$(go_os)"
+	goarch="$(go_arch)"
+	zipf="terraform_${ver}_${goos}_${goarch}.zip"
+	url="https://releases.hashicorp.com/terraform/${ver}/$zipf"
+
+	local tmpd
+	tmpd="$(mktemp -d terraform_install.XXX)"
+	(
+		cd "$tmpd"
+		mget \
+			--count 4 \
+			--url "$url"
+		unzip "$zipf"
+		mv terraform "$o_usr_env/bin/terraform"
+		terraform version
+	)
+	rm -rf "$tmpd"
+}
+
 docker_buildx_install() {
 	local goos goarch
 	local ver
