@@ -83,11 +83,17 @@ let g:ctrlp_custom_ignore = {
 """"""" scrooloose/nerdtree
 "   q to quit
 nmap <C-N> :NERDTree %:p:h<CR>
-" How can I close vim if the only window left open is a NERDTree?
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeIgnore = ['\.pyc$']
 let NERDTreeMapOpenSplit = 's'
 let NERDTreeMapOpenVSplit = 'v'
+" https://github.com/preservim/nerdtree?tab=readme-ov-file#how-can-i-close-vim-or-a-tab-automatically-when-nerdtree-is-the-last-window
+if v:version >= 900
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+	autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+else
+	autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+	autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+endif
 
 
 """"""" scrooloose/nerdcommenter
