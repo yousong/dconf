@@ -35,5 +35,5 @@ case "$1" in
 esac
 
 for mod in "$@"; do
-	rmmmod "$mod"
+	rrmmod "$mod"
 done
