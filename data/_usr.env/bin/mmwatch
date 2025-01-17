@@ -39,8 +39,8 @@ def main(cmd):
 
     while True:
         t0 = datetime.datetime.now()
-        out = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).communicate()[0]
-        out = str(out)
+        out = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+        out = out.decode('utf8')
 
         p = digits_re.split(out)
 
