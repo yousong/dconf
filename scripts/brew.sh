@@ -2,10 +2,6 @@
 
 . "$TOPDIR/env.sh"
 
-ohmyzsh_dir="$o_homedir/.oh-my-zsh"
-ohmyzsh_c_dir="$ohmyzsh_dir/custom"
-ohmyzsh_cp_dir="$ohmyzsh_c_dir/plugins"
-
 __brew_ok() {
 	[ "$o_os" = "Darwin" ] || return 1
 	[ -x "/opt/homebrew/bin/brew" -o -x "/usr/local/bin/brew" ] || return 1
