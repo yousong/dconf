@@ -1,4 +1,4 @@
-FROM fedora:36
+FROM fedora:41
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -7,7 +7,7 @@ RUN set -x \
 	&& true
 
 RUN set -x \
-	&& dnf group install -y "C Development Tools and Libraries" \
+	&& dnf install -y @c-development \
 	&& true
 
 # python3-devel: ycmd build
