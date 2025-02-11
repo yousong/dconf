@@ -20,7 +20,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 # https://wiki.ubuntu.com/DashAsBinSh
 RUN set -x \
 	&& rm -vf /etc/dpkg/dpkg.cfg.d/excludes \
-	&& yes | unminimize \
 	&& sed -i 's:^USERGROUPS_ENAB .*:USERGROUPS_ENAB no:g' /etc/login.defs \
 	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 	&& apt-get update \
@@ -60,13 +59,13 @@ RUN set -x \
 		wget \
 		zsh \
 	&& apt-get install -y --no-install-recommends \
-		libcublas-dev-12-3           \
+		libcublas-dev-12-8           \
 		libcudnn9-dev-cuda-12        \
-		libcufft-dev-12-3            \
-		libcufile-dev-12-3           \
-		libcurand-dev-12-3           \
-		libcusolver-dev-12-3         \
-		libcusparse-dev-12-3         \
+		libcufft-dev-12-8            \
+		libcufile-dev-12-8           \
+		libcurand-dev-12-8           \
+		libcusolver-dev-12-8         \
+		libcusparse-dev-12-8         \
 		libcutensor-dev              \
 	&& echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure dash \
@@ -77,8 +76,8 @@ RUN set -x \
 RUN set -x \
 	&& apt-get install -y --no-install-recommends \
 		python3-pip \
-	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
 	&& pip3 install \
+		polysh \
 		yq \
 	&& true
 
@@ -102,7 +101,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.22.1
+ARG GOVERSION=go1.23.6
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \
