@@ -73,10 +73,12 @@ RUN set -x \
 	&& locale-gen \
 	&& true
 
+# polysh depends on asyncore which was removed in python3.12
 RUN set -x \
 	&& apt-get install -y --no-install-recommends \
+		pipx \
 		python3-pip \
-	&& pip3 install \
+	&& pipx install \
 		polysh \
 		yq \
 	&& true
