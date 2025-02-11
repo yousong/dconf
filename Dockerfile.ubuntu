@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/cuda:12.3.2-devel-ubuntu22.04
+FROM nvcr.io/nvidia/cuda:12.8.0-devel-ubuntu24.04
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -19,11 +19,13 @@ ARG DEBIAN_FRONTEND=noninteractive
 # ubuntu uses dash as /bin/sh and it does not work well with dconf.sh
 # https://wiki.ubuntu.com/DashAsBinSh
 RUN set -x \
-	&& rm -vf /etc/dpkg/dpkg.cfg.d/excludes \
-	&& yes | unminimize \
 	&& sed -i 's:^USERGROUPS_ENAB .*:USERGROUPS_ENAB no:g' /etc/login.defs \
 	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 	&& apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		unminimize \
+	&& rm -vf /etc/dpkg/dpkg.cfg.d/excludes \
+	&& yes | unminimize \
 	&& apt-get install -y --no-install-recommends \
 		build-essential \
 		cmake \
@@ -60,13 +62,13 @@ RUN set -x \
 		wget \
 		zsh \
 	&& apt-get install -y --no-install-recommends \
-		libcublas-dev-12-3           \
+		libcublas-dev-12-8           \
 		libcudnn9-dev-cuda-12        \
-		libcufft-dev-12-3            \
-		libcufile-dev-12-3           \
-		libcurand-dev-12-3           \
-		libcusolver-dev-12-3         \
-		libcusparse-dev-12-3         \
+		libcufft-dev-12-8            \
+		libcufile-dev-12-8           \
+		libcurand-dev-12-8           \
+		libcusolver-dev-12-8         \
+		libcusparse-dev-12-8         \
 		libcutensor-dev              \
 	&& echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure dash \
@@ -74,11 +76,13 @@ RUN set -x \
 	&& locale-gen \
 	&& true
 
+# polysh depends on asyncore which was removed in python3.12
 RUN set -x \
 	&& apt-get install -y --no-install-recommends \
+		pipx \
 		python3-pip \
-	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
-	&& pip3 install \
+	&& pipx install \
+		polysh \
 		yq \
 	&& true
 
@@ -102,7 +106,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.22.1
+ARG GOVERSION=go1.23.6
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \

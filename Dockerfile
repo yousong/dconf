@@ -1,4 +1,4 @@
-FROM fedora:36
+FROM fedora:41
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -7,7 +7,7 @@ RUN set -x \
 	&& true
 
 RUN set -x \
-	&& dnf group install -y "C Development Tools and Libraries" \
+	&& dnf install -y @c-development \
 	&& true
 
 # python3-devel: ycmd build
@@ -46,11 +46,10 @@ RUN set -x \
 	&& true
 
 RUN set -x \
-	&& alternatives --verbose --install /usr/bin/python python /usr/bin/python3.10 10 \
 	&& dnf install -y \
 		python3-pip \
-	&& pip3 install https://github.com/yousong/polysh/archive/7fc055ef9075e5dbee4cc7abc020b89fccabfc67.zip \
 	&& pip3 install \
+		polysh \
 		yq \
 	&& true
 
@@ -74,7 +73,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.20.6
+ARG GOVERSION=go1.23.6
 ARG GOURL=https://storage.googleapis.com/golang/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \
