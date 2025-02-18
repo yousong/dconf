@@ -242,14 +242,6 @@ function! GoCheckModVendor()
 		if l:d == $HOME                 | return | endif
 		if isdirectory(l:d . '/vendor')
 			let $GO111MODULE = "off"
-			" when "-mod vendor" and GO111MODULE=off is needed,
-			" gopls should not use go build flag -modfile
-			"
-			" 	build flag -modfile only valid when using modules
-			"
-			" - go src, src/cmd/go/internal/work/init.go
-			" - go tools, internal/lsp/cache/imports.go
-			let g:go_gopls_temp_modfile = v:false
 			return
 		endif
 		if isdirectory(l:d . '/.git')   | return | endif
