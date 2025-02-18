@@ -83,6 +83,11 @@ RUN set -x \
 	&& chmod -R a-w go \
 	&& mv go $GOVERSION \
 	&& chown -R abc:abc /home/abc/.usr/go \
+	&& mkdir -p /home/abc/.config/go/telemetry \
+	&& echo off >/home/abc/.config/go/telemetry/mode \
+	&& chown -R abc:abc /home/abc/.config/go \
+	&& mode=$(sudo -u abc $GOVERSION/bin/go telemetry) \
+	&& test "$mode" = off \
 	&& true
 
 RUN set -x \
