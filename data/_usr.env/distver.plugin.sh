@@ -132,7 +132,7 @@ go_install() {
 	local u
 	local d
 
-	f="$ver.linux-amd64.tar.gz"
+	f="$ver.$goos-$goarch.tar.gz"
 	u="https://go.dev/dl/$f"
 	d="$HOME/.usr/go/"
 	wget -c -O "$f" "$u"
