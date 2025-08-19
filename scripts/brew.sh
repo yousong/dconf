@@ -16,24 +16,15 @@ config() {
 	#/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 	d="$(brew --repo)"
-	dcore="$d/Library/Taps/homebrew/homebrew-core"
-	dcask="$d/Library/Taps/homebrew/homebrew-cask"
-
-	git -C "$d" remote set-url origin https://mirrors.aliyun.com/homebrew/brew.git
-	git -C "$dcore" remote set-url origin https://mirrors.aliyun.com/homebrew/homebrew-core.git
-	git -C "$dcask" remote set-url origin https://mirrors.aliyun.com/homebrew/homebrew-cask.git
-
-	: git -C "$d" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
-	: git -C "$dcore" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
-	: git -C "$dcask" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
 
 	# https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/
+	#
+	# 注：自 brew 4.0.0 (2023 年 2 月 16 日) 起，HOMEBREW_INSTALL_FROM_API 会成为默认行为，无需设置。大部分用户无需再克隆 homebrew-core 仓库，故无需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量；但若需要运行 brew 的开发命令或者 brew 安装在非官方支持的默认 prefix 位置，则仍需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量。如果不想通过 API 安装，可以设置 HOMEBREW_NO_INSTALL_FROM_API=1。
+	#
+	git -C "$d" remote set-url origin https://mirrors.aliyun.com/homebrew/brew.git
 	: git -C "$d" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
-	: git -C "$dcore" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
-
+	: git -C "$d" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
 	: git -C "$d" remote set-url origin https://github.com/Homebrew/brew.git
-	: git -C "$dcore" remote set-url origin https://github.com/Homebrew/homebrew-core
-	: git -C "$dcask" remote set-url origin https://github.com/caskroom/homebrew-cask
 
 	if [ -f "$o_homedir/.Brewfile" ]; then
 		cp "$DATA_DIR/_Brewfile" "$o_homedir/.Brewfile"
