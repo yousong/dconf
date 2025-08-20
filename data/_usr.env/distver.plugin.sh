@@ -211,8 +211,14 @@ rust_env_init() {
 	#export RUSTUP_UPDATE_ROOT="https://mirrors.ustc.edu.cn/rust-static/rustup"
 	#export RUSTUP_DIST_SERVER="https://mirrors.tuna.tsinghua.edu.cn/rustup"
 	#export RUSTUP_UPDATE_ROOT="https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup"
+
 	if [ -d "$CARGO_HOME/bin" ]; then
 		path_action PATH prepend "$CARGO_HOME/bin"
+	fi
+	if test "$o_osx_who" = brew; then
+		if test -d "$o_osx_where/opt/rustup/bin"; then
+			path_action PATH prepend "$o_osx_where/opt/rustup/bin"
+		fi
 	fi
 	# rustc-docs is only available for tier1 targets
 	#
