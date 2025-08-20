@@ -2,8 +2,6 @@
 
 . "$TOPDIR/env.sh"
 
-fzf_ver=0.21.1
-
 rime_dir() {
 	case "$o_os" in
 		Darwin) echo "$HOME/Library/Rime" ;;
@@ -55,4 +53,44 @@ collect() {
 	if [ -s "$rd/default.custom.yaml" ]; then
 		rime_cp_custom_yaml "$rd" "$DATA_DIR"
 	fi
+}
+
+config_private_data() {
+	local rd="$(rime_dir)"
+	local rdp="$DATA_PRIVATE_DIR/rime"
+	local userdb_files f
+
+	if ! test -d "$rd"; then
+		return
+	fi
+	if ! test -d "$rdp"; then
+		return
+	fi
+	userdb_files="$(find "$rdp" -name "*.userdb.txt")"
+	for f in $userdb_files; do
+		cp "$f" "$rd/${f##*/}"
+	done
+
+	__notice_private 'rime: click "Deploy" to apply userdb config'
+}
+
+collect_private_data() {
+	local rd="$(rime_dir)"
+	local syncdir="$rd/sync"
+	local userdb_files f
+
+	if ! test -d "$rd"; then
+		return
+	fi
+
+	__notice_private 'rime: click "Sync user data" to save private data'
+	if ! test -d "$syncdir"; then
+		return
+	fi
+
+	userdb_files="$(find "$syncdir" -name "*.userdb.txt")"
+	mkdir -p "$DATA_PRIVATE_DIR/rime"
+	for f in $userdb_files; do
+		cp "$f" "$DATA_PRIVATE_DIR/rime/${f##*/}"
+	done
 }
