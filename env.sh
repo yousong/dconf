@@ -4,6 +4,7 @@ o_os="$(uname -s)"
 o_mach="$(uname -m)"
 o_homedir="${o_homedir:-$HOME}"
 DATA_DIR="$TOPDIR/data"
+DATA_PRIVATE_DIR="$TOPDIR/data_private"
 PATCH_DIR="$TOPDIR/patches"
 SCRIPT_DIR="$TOPDIR/scripts"
 
@@ -40,6 +41,11 @@ __info() {
 __notice() {
 	__errmsg "${o_gelb}notice:${o_norm} $1"
 }
+
+__notice_private() {
+	__notice "${o_gelb}private data:${o_norm} $*"
+}
+
 
 __error() {
 	__errmsg "${o_rote}error:${o_norm} $1"
@@ -107,6 +113,7 @@ _do() {
 
 	[ -n "$INCLUDE_ONLY" ] && return 0
 	mkdir -p "$DATA_DIR" "$PATCH_DIR" "$SCRIPT_DIR"
+	mkdir -p "$DATA_PRIVATE_DIR"
 	mkdir -p "$o_homedir"
 
 	. "$script"
