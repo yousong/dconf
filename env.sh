@@ -124,3 +124,45 @@ _do() {
 		__notice "ignore: action $action not defined"
 	fi
 }
+
+__config_private_data() {
+	local name="$1"; shift
+	local app_file="$1"; shift
+	local backup_file="$1"; shift
+
+	if ! test -s "$backup_file"; then
+		return
+	fi
+	if ! test -s "$app_file"; then
+		return
+	fi
+	if ! test "$backup_file" -nt "$app_file"; then
+		__notice_private "$name: skip as the $backup_file is NOT newer than $app_file"
+		return
+	fi
+
+	# On macos, check the following for permission issues
+	# - Full disk access.  System Settings, Privacy & Security, Full disk access
+	# - System integration protection.  Reboot into recovery mode (Hold Cmd-R on boot), "csrutil disable"
+	if ! rsync -aP "$backup_file" "$app_file"; then
+		__notice_private "$name: $app_file: retry with cp"
+		cp "$backup_file" "$app_file"
+	fi
+}
+
+__collect_private_data() {
+	local name="$1"; shift
+	local app_file="$1"; shift
+	local backup_file="$1"; shift
+	local app_dir="${app_file%/*}"
+
+	if ! test -d "$app_dir"; then
+		return
+	fi
+
+	mkdir -p "${backup_file%/*}"
+	if ! rsync -aP "$app_file" "$backup_file"; then
+		__notice_private "$name: $app_file: retry with cp"
+		cp "$app_file" "$backup_file"
+	fi
+}
