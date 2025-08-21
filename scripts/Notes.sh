@@ -10,6 +10,11 @@ config_private_data() {
 		Notes \
 		"$Notes_db" \
 		"$DATA_PRIVATE_DIR/Notes/${Notes_db##*/}"
+
+	__config_private_data \
+		Notes \
+		"$Notes_dir/Accounts/LocalAccount" \
+		"$DATA_PRIVATE_DIR/Notes/LocalAccount"
 }
 
 collect_private_data() {
@@ -17,4 +22,9 @@ collect_private_data() {
 		Notes \
 		"$Notes_db" \
 		"$DATA_PRIVATE_DIR/Notes/${Notes_db##*/}"
+
+	__collect_private_data \
+		Notes \
+		"$Notes_dir/Accounts/LocalAccount" \
+		"$DATA_PRIVATE_DIR/Notes/LocalAccount"
 }

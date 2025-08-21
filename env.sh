@@ -125,6 +125,16 @@ _do() {
 	fi
 }
 
+__rsync_d() {
+	local src="$1"; shift
+	local dst="$1"; shift
+
+	if test -d "$src" && test "${src%/}" = "$src"; then
+		src="$src/"
+	fi
+	rsync -aP "$src" "$dst"
+}
+
 __config_private_data() {
 	local name="$1"; shift
 	local app_file="$1"; shift
@@ -141,10 +151,17 @@ __config_private_data() {
 		return
 	fi
 
+	# Known issues
+	# - Notes: "Accounts/LocalAccount" does not exist on new macos
+	#   installations and as such it will fail the "test -s" check above
+	# - Notes: "NoteStore.sqlite". We need to also delete "-shm", "-wal"
+	#   files to let the new db file take effect
+	#
+	#
 	# On macos, check the following for permission issues
 	# - Full disk access.  System Settings, Privacy & Security, Full disk access
 	# - System integration protection.  Reboot into recovery mode (Hold Cmd-R on boot), "csrutil disable"
-	if ! rsync -aP "$backup_file" "$app_file"; then
+	if ! __rsync_d "$backup_file" "$app_file"; then
 		__notice_private "$name: $app_file: retry with cp"
 		cp "$backup_file" "$app_file"
 	fi
@@ -161,7 +178,7 @@ __collect_private_data() {
 	fi
 
 	mkdir -p "${backup_file%/*}"
-	if ! rsync -aP "$app_file" "$backup_file"; then
+	if ! __rsync_d "$app_file" "$backup_file"; then
 		__notice_private "$name: $app_file: retry with cp"
 		cp "$app_file" "$backup_file"
 	fi
