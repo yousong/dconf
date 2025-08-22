@@ -61,6 +61,7 @@ RUN set -x \
 		vim \
 		wget \
 		zsh \
+	&& apt-get full-upgrade --ignore-hold -y --allow-change-held-packages \
 	&& apt-get install -y --no-install-recommends \
 		libcublas-dev-12-8           \
 		libcudnn9-dev-cuda-12        \
