@@ -151,7 +151,7 @@ __vim_bundle_ref() {
 			# As of 2025-02-18, the most recent tag action (v1.28)  happens at 2022-12-18
 			#
 			# 2024-12-27
-			echo 6adc82bfef7f9a4b0db78065ae51b8ebb145c355;;
+			echo v1.29;;
 		ctrlp.vim) echo "1.81" ;;
 		#YouCompleteMe)
 			# 2020/09/20 6d877784 ("Resolve completions on-demand")
