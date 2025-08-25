@@ -203,7 +203,7 @@ config() {
 			cd "$d"
 			if ! git rev-parse "$ref" &>/dev/null; then
 				__info "vim: fetching $d"
-				git fetch origin --tags
+				git fetch origin --tags --unshallow
 			fi
 			git checkout -B dconf "$ref"
 
