@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro: ["", ".ubuntu"]
+        distro:
+          - ""
+          #- ".ubuntu"
     steps:
       - name: Docker meta
         id: meta
