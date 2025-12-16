@@ -86,6 +86,7 @@ RUN set -x \
 	&& mkdir -p /home/abc/.config/go/telemetry \
 	&& echo off >/home/abc/.config/go/telemetry/mode \
 	&& chown -R abc:abc /home/abc/.config/go \
+	&& chown -R abc:abc /home/abc/.config \
 	&& mode=$(sudo -u abc $GOVERSION/bin/go telemetry) \
 	&& test "$mode" = off \
 	&& true
