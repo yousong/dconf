@@ -210,6 +210,9 @@ let g:tagbar_type_gdb = {
 augroup go_group
 	autocmd!
 	autocmd FileType go
+		\ nnoremap <buffer> <leader>de     :GoDeclsDir<CR> |
+		\ nnoremap <buffer> <leader>vs     :split \| GoAlternate<CR> |
+		\ nnoremap <buffer> <leader>vv    :vsplit \| GoAlternate<CR> |
 		\ nnoremap <buffer> <leader>s     :split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>v    :vsplit<CR>:exec("GoDef ".expand("<cword>"))<CR> |
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("GoDef ".expand("<cword>"))<CR> |
