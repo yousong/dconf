@@ -142,6 +142,8 @@ RUN set -x \
 	&& mkdir -p /home/abc/.vim/bundle/ \
 	&& cd /home/abc/.vim/bundle/ \
 	&& git clone --branch legacy-vim-8.2 --depth 1 https://github.com/ycm-core/YouCompleteMe \
+	&& cd /home/abc/.vim/bundle/YouCompleteMe \
+	&& git submodule update --init --recursive \
 	&& chown -R abc:abc /home/abc/.vim/ \
 	\
 	&& cd /home/abc/git-repo/dconf \
