@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/cuda:12.8.0-devel-ubuntu24.04
+FROM nvcr.io/nvidia/pytorch:25.11-py3
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -62,7 +62,7 @@ RUN set -x \
 		wget \
 		zsh \
 	&& apt-get full-upgrade --ignore-hold -y --allow-change-held-packages \
-	&& apt-get install -y --no-install-recommends \
+	&& : apt-get install -y --no-install-recommends \
 		libcublas-dev-12-8           \
 		libcudnn9-dev-cuda-12        \
 		libcufft-dev-12-8            \
@@ -82,9 +82,9 @@ RUN set -x \
 	&& apt-get install -y --no-install-recommends \
 		pipx \
 		python3-pip \
-	&& pipx install \
-		polysh \
-		yq \
+	&& pipx install polysh \
+	&& pipx install yq \
+	&& pip install modelscope \
 	&& true
 
 # We use repo settings in the build machine for installing packages.  The built
