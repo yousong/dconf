@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:25.11-py3
+FROM pytorch/pytorch:2.9.1-cuda13.0-cudnn9-devel
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -22,7 +22,7 @@ RUN set -x \
 	&& sed -i 's:^USERGROUPS_ENAB .*:USERGROUPS_ENAB no:g' /etc/login.defs \
 	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 	&& apt-get update \
-	&& apt-get install -y --no-install-recommends \
+	&& : apt-get install -y --no-install-recommends \
 		unminimize \
 	&& rm -vf /etc/dpkg/dpkg.cfg.d/excludes \
 	&& yes | unminimize \
@@ -138,6 +138,12 @@ RUN set -x \
 
 ADD . /home/abc/git-repo/dconf
 RUN set -x \
+	&& sed -i -e "s|^Plugin 'ycm-core/YouCompleteMe'|\0, {'pinned': 1}|" /home/abc/git-repo/dconf/data/_vimrc.plugins \
+	&& mkdir -p /home/abc/.vim/bundle/ \
+	&& cd /home/abc/.vim/bundle/ \
+	&& git clone --branch legacy-vim-8.2 --depth 1 https://github.com/ycm-core/YouCompleteMe \
+	&& chown -R abc:abc /home/abc/.vim/ \
+	\
 	&& cd /home/abc/git-repo/dconf \
 	&& chown -R abc:abc /home/abc/git-repo \
 	&& sudo -u abc \
