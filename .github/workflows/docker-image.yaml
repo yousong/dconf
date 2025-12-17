@@ -13,7 +13,7 @@ jobs:
       matrix:
         distro:
           - ""
-          #- ".ubuntu"
+          - ".ubuntu"
     steps:
       - name: Docker meta
         id: meta
@@ -39,6 +39,20 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
