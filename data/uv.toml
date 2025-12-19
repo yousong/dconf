@@ -1,3 +1,5 @@
+python-install-mirror = 'http://mirror.nju.edu.cn/github-release/astral-sh/python-build-standalone/'
+
 [[index]]
 url = "https://mirrors.aliyun.com/pypi/simple/"
 default = true
