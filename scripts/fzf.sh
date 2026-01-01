@@ -2,7 +2,7 @@
 
 . "$TOPDIR/env.sh"
 
-fzf_ver=0.34.0
+fzf_ver=0.67.0
 
 fzf_dir="$o_homedir/.fzf"
 fzf_bindir="$o_homedir/.usr/bin"
@@ -10,6 +10,7 @@ fzf_bin="$fzf_bindir/fzf"
 
 config() {
 	local v
+	local tag="v$fzf_ver"
 
 	if [ -x "$fzf_bin" ]; then
 		v="$("$fzf_bin" --version)"
@@ -19,11 +20,11 @@ config() {
 	[ "$v" = "$fzf_ver" ] || {
 		local f url
 		case "$o_os" in
-			Darwin) f="fzf-$fzf_ver-darwin_$(goarch).zip" ;;
+			Darwin) f="fzf-$fzf_ver-darwin_$(goarch).tar.gz" ;;
 			Linux) f="fzf-$fzf_ver-linux_$(goarch).tar.gz" ;;
 			*) __error "unknown os $o_os"; false; ;;
 		esac
-		url="https://github.com/junegunn/fzf/releases/download/$fzf_ver/$f"
+		url="https://github.com/junegunn/fzf/releases/download/$tag/$f"
 
 		__info "downloading $f"
 		wget -c -O /tmp/fzf.tgz "$url"
@@ -38,7 +39,7 @@ config() {
 	if ! git \
 		--work-tree "$fzf_dir" \
 		--git-dir "$fzf_dir/.git" \
-		tag | grep -qF --line-regexp "$fzf_ver"; then
+		tag | grep -qF --line-regexp "$tag"; then
 		git \
 			--work-tree "$fzf_dir" \
 			--git-dir "$fzf_dir/.git" \
@@ -47,5 +48,5 @@ config() {
 	git \
 		--work-tree "$fzf_dir" \
 		--git-dir "$fzf_dir/.git" \
-		checkout -B "$fzf_ver" "refs/tags/$fzf_ver"
+		checkout -B "$tag" "refs/tags/$tag"
 }
