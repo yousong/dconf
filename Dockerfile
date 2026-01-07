@@ -51,6 +51,8 @@ RUN set -x \
 	&& pip3 install \
 		polysh \
 		yq \
+		uv \
+	&& uv tool install ruff \
 	&& true
 
 # We use repo settings in the build machine for installing packages.  The built

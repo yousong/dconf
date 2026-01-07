@@ -84,7 +84,9 @@ RUN set -x \
 		python3-pip \
 	&& pipx install polysh \
 	&& pipx install yq \
+	&& pipx install uv \
 	&& pip install modelscope \
+	&& uv tool install ruff \
 	&& true
 
 # We use repo settings in the build machine for installing packages.  The built
