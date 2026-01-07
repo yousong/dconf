@@ -154,13 +154,6 @@ augroup markdown_group
 	autocmd FileType markdown inoremap ` ``<Left>
 augroup END
 
-augroup python_group
-	autocmd!
-	autocmd FileType python setlocal
-				\ tabstop=4
-				\ expandtab
-augroup END
-
 " TeX editing
 augroup tex_group
 	autocmd!
