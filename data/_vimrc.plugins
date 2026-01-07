@@ -343,12 +343,14 @@ augroup ycm_group
 		\ nnoremap <buffer> <leader>t :tab split<CR>:exec("YcmCompleter GoTo")<CR>|
 		\ nnoremap <buffer> <leader>. <Esc>:exec("YcmCompleter GoTo")<Esc>|
 		\ nnoremap <buffer> <leader>e :YcmRestartServer<CR>|
+		\ nnoremap <buffer> <leader>f :YcmCompleter Format<CR>|
 		\ nmap <buffer> <leader>, <plug>(YCMHover)|
+	if executable('ruff')
+		autocmd FileType python
+			\ nnoremap <buffer> <leader>f :silent %! ruff format -<CR>|
+	endif
 augroup END
 
-function! YcmCAutoFormat()
-	autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.rs YcmCompleter Format
-endfunction
 
 "" Go
 "augroup go_group
