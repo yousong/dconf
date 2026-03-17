@@ -8,17 +8,13 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
-import pkg_resources
 import sys
 import re
 
 
 def _version():
     '''Get version.'''
-    try:
-        return pkg_resources.get_distribution('markdown2ctags').version
-    except pkg_resources.DistributionNotFound:
-        return 'dev'
+    return 'dev'
 
 
 __version__ = _version()
