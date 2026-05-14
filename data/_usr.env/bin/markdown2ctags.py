@@ -236,7 +236,7 @@ def genTagsFile(output, tags, sort):
             output.write('\n')
     else:
         for t in tags:
-            output.write(str(t).encode('latin1'))
+            output.write(str(t).encode('utf-8'))
             output.write(b'\n')
 
 
@@ -278,12 +278,11 @@ def main():
         if sys.version_info[0] == 2:
             f = open(filename, 'rb')
         else:
-            # Use a little trick here to keep things kind of sane, even though
-            # we don't really know the true encoding of the file.  Latin1 lets
-            # us treat the file like every byte is valid (unlike UTF-8 which
-            # has some invalid sequences).
-            f = open(filename, 'r', encoding='latin1', newline='')
-            filename = filename.encode(sys.getfilesystemencoding()).decode('latin1')
+            # Use UTF-8 encoding to properly handle multibyte characters.
+            # Latin1 caused issues with UTF-8 bytes like 0x85 being treated
+            # as NEL (Next Line) by splitlines(), corrupting line boundaries.
+            f = open(filename, 'r', encoding='utf-8', newline='')
+            filename = filename.encode(sys.getfilesystemencoding()).decode('utf-8')
 
         lines = f.read().splitlines()
         f.close()
