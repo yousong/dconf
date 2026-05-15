@@ -1,0 +1,66 @@
+#!/bin/sh
+
+set -e
+
+DECODE=0
+OUTPUT=""
+INPUT=""
+
+usage() {
+  cat <<EOF
+Usage: gzb [options] [file]
+
+Options:
+  -d          Decode mode: base64 -d | gunzip -c
+  -o <file>   Output to file (default: stdout)
+  -h          Show this help message
+
+Examples:
+  gzb                  Compress stdin to base64
+  gzb file             Compress file to base64
+  gzb -d               Decode base64 and decompress
+  gzb -d file          Decode file and decompress
+  gzb -o out.b64 file  Compress file to out.b64
+EOF
+  exit 0
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -d)
+      DECODE=1
+      shift
+      ;;
+    -o)
+      OUTPUT="$2"
+      shift 2
+      ;;
+    -h)
+      usage
+      ;;
+    *)
+      INPUT="$1"
+      shift
+      ;;
+  esac
+done
+
+if [ "$DECODE" -eq 1 ]; then
+  if [ -n "$INPUT" ]; then
+    CMD="base64 -d \"$INPUT\" | gunzip -c"
+  else
+    CMD="base64 -d | gunzip -c"
+  fi
+else
+  if [ -n "$INPUT" ]; then
+    CMD="gzip -c \"$INPUT\" | base64"
+  else
+    CMD="gzip -c | base64"
+  fi
+fi
+
+if [ -n "$OUTPUT" ]; then
+  eval "$CMD" > "$OUTPUT"
+else
+  eval "$CMD"
+fi
