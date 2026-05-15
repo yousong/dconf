@@ -104,12 +104,18 @@ RUN set -x \
 	&& rm -rf /home/abc/.cargo/registry \
 	&& true
 
+RUN set -x \
+	&& cd /home/abc \
+	&& curl https://mise.run | sudo -u abc sh \
+	&& sudo -u abc /home/abc/.local/bin/mise --version \
+	&& true
+
 ADD . /home/abc/git-repo/dconf
 RUN set -x \
 	&& cd /home/abc/git-repo/dconf \
 	&& chown -R abc:abc /home/abc/git-repo \
 	&& sudo -u abc \
-		PATH=/home/abc/.usr/bin:$PATH \
+		PATH=/home/abc/.local/bin:/home/abc/.usr/bin:$PATH \
 		./dconf.sh config \
 	&& cd /home/abc \
 	&& rm -rf git-repo \
