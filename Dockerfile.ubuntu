@@ -35,6 +35,7 @@ RUN set -x \
 		file \
 		git \
 		git-email \
+		git-lfs \
 		hostname \
 		iproute2 \
 		iputils-arping \

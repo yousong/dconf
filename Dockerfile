@@ -22,6 +22,7 @@ RUN set -x \
 		file \
 		git \
 		git-email \
+		git-lfs \
 		glibc-langpack-en \
 		hostname \
 		iproute \
