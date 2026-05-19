@@ -8,12 +8,33 @@ My dotfiles for initializing configuration files for the following programs
 	- Common shell functions
 	- Zsh and `.oh-my-zsh`
 	- Bash
+- Docker
+- Cargo/Rust
+- Conda
+- Pip/Python
+- npm/Node.js
+- Maven
+- Mercurial (hg)
+- GDB
+- Ctags
+- FZF
+- Rime (Wubi86)
+- Terraform
+- pwclient
+- Claude
+- OpenCode
+- mise
+- uv
+- ccache
+- Brew (macOS)
+- Maccy (macOS)
+- Notes (macOS)
 
 on following platforms
 
-- Debian Wheezy
-- Mac OS X with MacPorts
-- CentOS 7
+- Debian
+- Mac OS X with MacPorts/Homebrew
+- CentOS
 
 # How to use it.
 
@@ -56,14 +77,33 @@ Things to watch out for
 
 # Files and directories
 
+## Managed config paths
+
+The following paths are managed by this repository:
+
+- `$HOME/.bashrc`
+- `$HOME/.zshrc`
 - `$HOME/.gitconfig`
-- `$HOME/.tmux/`
 - `$HOME/.tmux.conf`
 - `$HOME/.screenrc`
-- `$HOME/.vim/`
 - `$HOME/.vimrc`
+- `$HOME/.gdbinit`
+- `$HOME/.hgrc`
+- `$HOME/.ctags`
+- `$HOME/.condarc`
+- `$HOME/.npmrc`
+- `$HOME/.pwclientrc`
+- `$HOME/.terraformrc`
+- `$HOME/.claude_settings.json`
+- `$HOME/.config/opencode/opencode.jsonc`
+- `$HOME/.mise_config.toml`
+- `$HOME/.config/uv/uv.toml`
+- `$HOME/.Brewfile`
+- `$HOME/.cargo/config`
+- `$HOME/.docker/config.json`
+- `$HOME/.m2/settings.xml`
+- `$HOME/.pip/pip.conf`
 - `$HOME/.usr.env/`
-- `$HOME/.oh-my-zsh/`
-- `$HOME/.zshrc`
-- `$HOME/.bashrc`
-- ...
+- `$HOME/.ccache`
+- Rime input method configs
+- MacPorts configuration files
