@@ -245,7 +245,7 @@ EOF
 node_env_init() {
 	export N_PREFIX=$o_usr
 	export PNPM_HOME="$HOME/.local/share/pnpm"
-	path_action PATH peek_append "$PNPM_HOME"
+	path_action PATH peek_append "$PNPM_HOME/bin"
 }
 
 jdk_select_() {
