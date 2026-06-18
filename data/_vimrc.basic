@@ -262,3 +262,79 @@ function! SourceCustomVimrc()
 	endwhile
 endfunction
 call SourceCustomVimrc()
+
+" Helper function to safely grab the exact visual selection
+function! s:GetVisualSelection()
+    let l:reg_save = getreg('v')
+    let l:regtype_save = getregtype('v')
+    normal! gv"vy
+    let l:selection = getreg('v')
+    call setreg('v', l:reg_save, l:regtype_save)
+    return l:selection
+endfunction
+
+" 1. In-Place Filter (JqFilter)
+function! JqFilter(jq_args, is_visual) range
+    " Grab exact text (selection or current line)
+    let l:text = a:is_visual ? s:GetVisualSelection() : getline(a:firstline)
+    
+    " Process with jq
+    let l:args = empty(a:jq_args) ? '.' : a:jq_args
+    let l:output = system('jq ' . l:args, l:text)
+
+    " Strip trailing newline added by system() to prevent breaking line layout
+    let l:output = substitute(l:output, '\n$', '', '')
+
+    if a:is_visual
+        " Put the output into register v and paste it exactly over the selection
+        let l:reg_save = getreg('v')
+        let l:regtype_save = getregtype('v')
+        call setreg('v', l:output, 'v')
+        normal! gv"vp
+        call setreg('v', l:reg_save, l:regtype_save)
+    else
+        " In normal mode, replace the current line
+        call setline(a:firstline, split(l:output, "\n"))
+    endif
+endfunction
+
+" 2. Preview Window Filter (JqToPreview)
+function! JqToPreview(jq_args, is_visual) range
+    " Save global messaging settings
+    let l:old_report = &report
+    " Prevent Vim from reporting line changes/yanks
+    set report=999999
+
+    let l:text = a:is_visual ? s:GetVisualSelection() : getline(a:firstline)
+    let l:args = empty(a:jq_args) ? '.' : a:jq_args
+    let l:output = system('jq ' . l:args, l:text)
+
+    " Open the new window silently to suppress message prompts
+    silent new
+    setlocal buftype=nofile bufhidden=wipe noswapfile
+
+    if l:args =~# '\v(^|\s)-[a-z]*r' || l:args =~# '--raw-output'
+        setlocal filetype=text
+    else
+        setlocal filetype=json
+    endif
+
+    nnoremap <buffer> <silent> q :close<CR>
+
+    " Silently populate and clean up the buffer
+    silent put =l:output
+    silent 1delete _
+
+    " Restore original messaging settings
+    let &report = l:old_report
+endfunction
+
+" --- Mappings ---
+
+" In-Place Filter Maps (<leader>j)
+nnoremap <silent> <leader>j :call JqFilter(input('jq args (default .): '), 0)<CR>
+xnoremap <silent> <leader>j :<C-u>call JqFilter(input('jq args (default .): '), 1)<CR>
+
+" Preview Window Maps (<leader>p)
+nnoremap <silent> <leader>p :call JqToPreview(input('jq preview args (default .): '), 0)<CR>
+xnoremap <silent> <leader>p :<C-u>call JqToPreview(input('jq preview args (default .): '), 1)<CR>
