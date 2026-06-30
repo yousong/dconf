@@ -77,9 +77,17 @@ fi
 				path_action MANPATH prepend "$o_osx_where/opt/$p/man"
 			done
 			#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
-			#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
-			export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
-			export HOMEBREW_API_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles/api"
+
+			# MirrorZ from cernet.edu.cn
+			#
+			# https://help.mirrors.cernet.edu.cn/homebrew/
+			# https://help.mirrors.cernet.edu.cn/homebrew-bottles/
+			#
+			# The git remote is for brew (self) update
+			export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.bfsu.edu.cn/git/homebrew/brew.git"
+			# The following are for bottles (compiled binaries)
+			export HOMEBREW_API_DOMAIN="https://mirrors.cernet.edu.cn/homebrew-bottles/api"
+			export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.cernet.edu.cn/homebrew-bottles"
 			;;
 	esac
 
