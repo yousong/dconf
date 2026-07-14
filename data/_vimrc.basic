@@ -338,3 +338,8 @@ xnoremap <silent> <leader>j :<C-u>call JqFilter(input('jq args (default .): '), 
 " Preview Window Maps (<leader>p)
 nnoremap <silent> <leader>p :call JqToPreview(input('jq preview args (default .): '), 0)<CR>
 xnoremap <silent> <leader>p :<C-u>call JqToPreview(input('jq preview args (default .): '), 1)<CR>
+
+" Save only layouts (wnd, tabs) to my.vim and load them with "vim -S my.vim"
+command! SaveLayout set sessionoptions=winsize,tabpages | mksession! my.vim | set sessionoptions&
+" Map to a quick key combination (e.g., Leader + L)
+nnoremap <leader>l :SaveLayout<CR>
