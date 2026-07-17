@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <yous.zhouys@alibaba-inc.com>
+Date: Fri, 17 Jul 2026 05:19:04 +0000
+Subject: [PATCH 1/2] HandleOnlyWindow: defer operations to avoid E1312 during
+ QuitPre
+
+During QuitPre autocommands, direct window/buffer operations cause
+E1312 (not allowed to switch windows) in both vim-8 and vim-9.
+
+Use timer_start(0, ...) uniformly to defer all operations until after
+the QuitPre event completes. Use bufnr(s:TagbarBufName()) instead of
+the implicit current buffer for bdelete. Use silent! to suppress errors
+from the deferred operations.
+
+Fixes https://github.com/preservim/tagbar/issues/851
+---
+ autoload/tagbar.vim | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
+
+diff --git a/autoload/tagbar.vim b/autoload/tagbar.vim
+index 6afe799..ee6529d 100644
+--- a/autoload/tagbar.vim
++++ b/autoload/tagbar.vim
+@@ -3528,7 +3528,7 @@ function! s:HandleOnlyWindow() abort
+ 
+     if vim_quitting && file_open == 2 && !g:tagbar_autoclose_netrw
+         call tagbar#debug#log('Closing Tagbar due to QuitPre - netrw only remaining window')
+-        call s:CloseWindow()
++        call timer_start(0, {-> s:CloseWindow() })
+         return
+     endif
+ 
+@@ -3541,21 +3541,9 @@ function! s:HandleOnlyWindow() abort
+         " Before quitting Vim, delete the tagbar buffer so that the '0 mark is
+         " correctly set to the previous buffer.
+         if tabpagenr('$') == 1
+-            noautocmd keepalt bdelete
++            call timer_start(0, {-> execute('noautocmd keepalt bdelete ' . bufnr(s:TagbarBufName()), 'silent!')})
+         endif
+-
+-        try
+-            try
+-                quit
+-            catch /.*/ " This can be E173 and maybe others
+-                call s:OpenWindow('')
+-                echoerr v:exception
+-            endtry
+-        catch /.*/
+-            echohl ErrorMsg
+-            echo v:exception
+-            echohl None
+-        endtry
++        call timer_start(0, {-> execute('q', 'silent!') })
+     endif
+ endfunction
+ 
