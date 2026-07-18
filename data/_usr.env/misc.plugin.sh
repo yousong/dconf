@@ -201,3 +201,64 @@ tsit() {
 		echo "$(date) | $l"
 	done
 }
+
+opc() {
+	local host="${OPC_HOST:-}"
+	local port="${OPC_PORT:-}"
+	local pass="${OPC_PASS:-}"
+	local target_host="$host"
+
+	if [ "$1" = "-h" ]; then
+		cat <<-'EOF'
+		Usage: opc [-t]
+		  Start opencode server or attach to it.
+
+		Options:
+		  -t    Attach mode (default: serve mode)
+		  -h    Show this help
+
+		Environment:
+		  OPC_HOST  Hostname for serve --hostname (default: empty)
+		  OPC_PORT  Port number, required (1-65535)
+		  OPC_PASS  Password for OPENCODE_SERVER_PASSWORD (default: empty)
+
+		Examples:
+		  OPC_PORT=4096 opc           # Start server on port 4096
+		  OPC_PORT=4096 opc -t        # Attach to server on port 4096
+		  OPC_HOST=0.0.0.0 OPC_PORT=4096 opc  # Serve on all interfaces
+		EOF
+		return 0
+	fi
+
+	if [ -z "$port" ]; then
+		__errmsg "opc: OPC_PORT is required"
+		return 1
+	fi
+	case "$port" in
+		''|*[!0-9]*)
+			__errmsg "opc: OPC_PORT is not a valid number: $port"
+			return 1
+			;;
+	esac
+	if [ "$port" -lt 1 ] || [ "$port" -gt 65535 ]; then
+		__errmsg "opc: OPC_PORT out of range (1-65535): $port"
+		return 1
+	fi
+
+	# 如果 host 是 0.0.0.0，attach 时使用 localhost
+	[ "$target_host" = "0.0.0.0" ] && target_host="localhost"
+	# 如果 host 为空，默认使用 localhost
+	[ -z "$target_host" ] && target_host="localhost"
+
+	local target="http://${target_host}:$port"
+
+	if [ "$1" = "-t" ]; then
+		shift
+		OPENCODE_SERVER_PASSWORD="$pass" opencode attach "$target" --dir "$PWD" "$@"
+	else
+		local serve_args=""
+		[ -n "$host" ] && serve_args="$serve_args --hostname $host"
+		serve_args="$serve_args --port $port"
+		OPENCODE_SERVER_PASSWORD="$pass" opencode serve $serve_args "$@"
+	fi
+}
