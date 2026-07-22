@@ -1,0 +1,84 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Yousong Zhou <yous.zhouys@alibaba-inc.com>
+Date: Wed, 22 Jul 2026 09:09:24 +0000
+Subject: [PATCH 2/3] HandleBufDelete: defer operations to avoid E1312 during
+ BufDelete/BufWipeout
+
+BufDelete/BufWipeout can fire during a restricted win_close() sequence
+(e.g. when a buffer with bufhidden=delete|wipe has its last window
+closed).  Direct window layout changes (enew, buffer, next, close,
+OpenWindow) in that context trigger E1312 in Vim 9.
+
+Defer all layout-changing operations with timer_start(0, ...) so they
+execute after the restricted context completes, consistent with the
+HandleOnlyWindow fix in 991cf33.
+---
+ autoload/tagbar.vim | 51 ++++++++++++++++++++++++---------------------
+ 1 file changed, 27 insertions(+), 24 deletions(-)
+
+diff --git a/autoload/tagbar.vim b/autoload/tagbar.vim
+index ee6529d..94d9fae 100644
+--- a/autoload/tagbar.vim
++++ b/autoload/tagbar.vim
+@@ -3573,34 +3573,37 @@ function! s:HandleBufDelete(bufname, bufnr) abort
+             " Ignore the buffer to be deleted, just in case
+             call setbufvar(a:bufname, 'tagbar_ignore', 1)
+ 
+-            if s:last_alt_bufnr == -1 || s:last_alt_bufnr == expand('<abuf>')
+-                if argc() > 1 && argidx() < argc() - 1
+-                    " We don't have an alternative buffer, but there are still
+-                    " files left in the argument list
+-                    next
+-                else
+-                    enew
+-                endif
+-            else
+-                " Save a local copy as the global value will change
+-                " during buffer switching
+-                let last_alt_bufnr = s:last_alt_bufnr
+-
+-                " Ignore the buffer we're switching to for now, it will get
+-                " processed due to the OpenWindow() call anyway
+-                call setbufvar(last_alt_bufnr, 'tagbar_ignore', 1)
+-                execute 'keepalt buffer' last_alt_bufnr
+-                call setbufvar(last_alt_bufnr, 'tagbar_ignore', 0)
+-            endif
++            " Defer window layout changes to avoid E1312 when BufDelete/
++            " BufWipeout fires during a restricted win_close() sequence.
++            let last_alt_bufnr = s:last_alt_bufnr
++            let abuf = expand('<abuf>')
++            call timer_start(0, function('s:HandleBufDeleteDeferred', [a:bufname, last_alt_bufnr, abuf]))
++        elseif exists('t:tagbar_buf_name')
++            call timer_start(0, {-> execute('close', 'silent!')})
++        endif
++    endif
++endfunction
+ 
+-            " Reset Tagbar window-local options
+-            set winfixwidth<
++function! s:HandleBufDeleteDeferred(bufname, last_alt_bufnr, abuf) abort
++    if bufwinnr(s:TagbarBufName()) == -1
++        return
++    endif
+ 
+-            call s:OpenWindow('')
+-        elseif exists('t:tagbar_buf_name')
+-            close
++    if a:last_alt_bufnr == -1 || a:last_alt_bufnr == a:abuf
++        if argc() > 1 && argidx() < argc() - 1
++            next
++        else
++            enew
+         endif
++    else
++        call setbufvar(a:last_alt_bufnr, 'tagbar_ignore', 1)
++        execute 'keepalt buffer' a:last_alt_bufnr
++        call setbufvar(a:last_alt_bufnr, 'tagbar_ignore', 0)
+     endif
++
++    set winfixwidth<
++
++    call s:OpenWindow('')
+ endfunction
+ 
+ " s:HandleBufWrite() {{{2

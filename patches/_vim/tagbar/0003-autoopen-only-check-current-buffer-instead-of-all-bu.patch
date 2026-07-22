@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Yousong Zhou <yous.zhouys@alibaba-inc.com>
 Date: Fri, 17 Jul 2026 05:19:22 +0000
-Subject: [PATCH 2/2] autoopen: only check current buffer instead of all
+Subject: [PATCH 3/3] autoopen: only check current buffer instead of all
  buffers
 
 Previously tagbar#autoopen() looped through all listed buffers (bufnr
@@ -16,10 +16,10 @@ buffer has a supported ctags filetype.
  1 file changed, 10 insertions(+), 12 deletions(-)
 
 diff --git a/autoload/tagbar.vim b/autoload/tagbar.vim
-index ee6529d..04f1dc4 100644
+index 94d9fae..9c6a15f 100644
 --- a/autoload/tagbar.vim
 +++ b/autoload/tagbar.vim
-@@ -3872,25 +3872,23 @@ function! tagbar#getusertypes() abort
+@@ -3875,25 +3875,23 @@ function! tagbar#getusertypes() abort
  endfunction
  
  " tagbar#autoopen() {{{2
