@@ -4,5 +4,6 @@
     "external_directory": {
       "/tmp/**": "allow"
     }
-  }
+  },
+  "snapshot": false
 }
