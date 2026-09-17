@@ -218,6 +218,8 @@ nmap [ol :set list<CR>
 nmap ]ol :set nolist<CR>
 
 nnoremap <leader>z :write\|bdelete<cr>
+nnoremap <leader>q :q<CR>
+
 
 "let b:tex_flavor = 'xetex'
 "compiler tex
