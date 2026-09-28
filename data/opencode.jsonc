@@ -5,5 +5,9 @@
       "/tmp/**": "allow"
     }
   },
-  "snapshot": false
+  "snapshot": false,
+  "instructions": [
+    "~/.config/opencode/_instructions/response-guidelines.md",
+    "~/.config/opencode/_instructions/git-guidelines.md"
+  ]
 }
