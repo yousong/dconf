@@ -37,10 +37,15 @@ config() {
 		if [ ! -d "$rd/rime-wubi" ]; then
 			git clone https://github.com/rime/rime-wubi.git "$rd/rime-wubi"
 		fi
+		if [ ! -d "$rd/rime-pinyin-simp" ]; then
+			git clone https://github.com/rime/rime-pinyin-simp.git "$rd/rime-pinyin-simp"
+		fi
 
 		find "$rd" -maxdepth 1 -type l | xargs rm -vf
 		ln -sf rime-wubi/wubi86.dict.yaml "$rd/wubi86.dict.yaml"
 		ln -sf rime-wubi/wubi86.schema.yaml "$rd/wubi86.schema.yaml"
+		ln -sf rime-pinyin-simp/pinyin_simp.dict.yaml "$rd/pinyin_simp.dict.yaml"
+		ln -sf rime-pinyin-simp/pinyin_simp.schema.yaml "$rd/pinyin_simp.schema.yaml"
 
 		find "$rd" -maxdepth 1 -type f -name '*.custom.yaml' | xargs rm -vf
 		rime_cp_custom_yaml "$DATA_DIR" "$rd"
@@ -58,6 +63,7 @@ collect() {
 config_private_data() {
 	local rd="$(rime_dir)"
 	local rdp="$DATA_PRIVATE_DIR/rime"
+	local dst="$rd/sync/restore"
 	local userdb_files f
 
 	if ! test -d "$rd"; then
@@ -67,11 +73,16 @@ config_private_data() {
 		return
 	fi
 	userdb_files="$(find "$rdp" -name "*.userdb.txt")"
+	if [ -z "$userdb_files" ]; then
+		return
+	fi
+	mkdir -p "$dst"
 	for f in $userdb_files; do
-		cp "$f" "$rd/${f##*/}"
+		cp "$f" "$dst/${f##*/}"
 	done
 
-	__notice_private 'rime: click "Deploy" to apply userdb config'
+	__notice_private 'rime: click "Sync user data" to restore userdb'
+	__notice_private "rime: after sync, remove '$dst' to avoid re-merging stale entries"
 }
 
 collect_private_data() {
