@@ -1,4 +1,4 @@
-FROM fedora:41
+FROM fedora:44
 
 MAINTAINER Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -76,7 +76,7 @@ RUN set -x \
 	&& chown -R abc:abc /home/abc/.usr \
 	&& true
 
-ARG GOVERSION=go1.25.5
+ARG GOVERSION=go1.27.3
 ARG GOURL=https://go.dev/dl/$GOVERSION.linux-amd64.tar.gz
 RUN set -x \
 	&& mkdir -p /home/abc/.usr/go \
