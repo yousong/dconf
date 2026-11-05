@@ -220,7 +220,7 @@ opc() {
 		Environment:
 		  OPC_HOST  Hostname for serve --hostname (default: empty)
 		  OPC_PORT  Port number, required (1-65535)
-		  OPC_PASS  Password for OPENCODE_SERVER_PASSWORD (default: empty)
+		  OPC_PASS  Password for OPENCODE_PASSWORD (default: empty)
 
 		Examples:
 		  OPC_PORT=4096 opc           # Start server on port 4096
@@ -254,11 +254,11 @@ opc() {
 
 	if [ "$1" = "-t" ]; then
 		shift
-		OPENCODE_SERVER_PASSWORD="$pass" opencode attach "$target" --dir "$PWD" "$@"
+		OPENCODE_PASSWORD="$pass" opencode --server "$target" "$@"
 	else
 		local serve_args=""
 		[ -n "$host" ] && serve_args="$serve_args --hostname $host"
 		serve_args="$serve_args --port $port"
-		OPENCODE_SERVER_PASSWORD="$pass" opencode serve $serve_args "$@"
+		OPENCODE_PASSWORD="$pass" opencode serve $serve_args "$@"
 	fi
 }
